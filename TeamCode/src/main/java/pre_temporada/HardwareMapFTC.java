@@ -11,6 +11,8 @@ public class HardwareMapFTC {
 
     // Motores
     public DcMotorEx slideH, slideV;
+
+    DigitalChannel sensorTouch;
     PID pid;
 
     // Inicializador
@@ -19,6 +21,8 @@ public class HardwareMapFTC {
         // Motores de drive
         slideV = hwMap.get(DcMotorEx.class, "slidev");
         slideH = hwMap.get(DcMotorEx.class, "slideh");
+
+        sensorTouch = hwMap.get(DigitalChannel.class, "touch");
 
 
         // Configurações comuns de motores

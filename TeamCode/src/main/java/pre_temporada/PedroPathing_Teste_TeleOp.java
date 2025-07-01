@@ -5,12 +5,18 @@ import com.pedropathing.localization.Pose;
 import com.pedropathing.util.Constants;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 import pedroPathing.constants.FConstants;
 import pedroPathing.constants.LConstants;
 
 @TeleOp(name = "Teleoperado")
 public class PedroPathing_Teste_TeleOp extends OpMode {
+
+    /*
+    1. Quando o sensor de cor for igual a false, ele está pressionado
+     */
 
     private Pose startPose = new Pose(0, 0, 0);
 
@@ -45,6 +51,10 @@ public class PedroPathing_Teste_TeleOp extends OpMode {
     }
 
     public void slideH(){
+
+        if (!robot.sensorTouch.getState()){
+            robot.slideH.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        }
 
     }
 }
