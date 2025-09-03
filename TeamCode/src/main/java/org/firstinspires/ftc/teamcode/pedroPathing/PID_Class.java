@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class PID_Class {
     double kp, ki, kd, error, integral, derivada, current, target, output, lastError = 0;
 
-    private PID_Class(double KP, double KI, double KD, int input, int target){
+    public PID_Class(double KP, double KI, double KD, int input, int target){
         this.kp = KP;
         this.ki = KI;
         this.kd = KD;
@@ -36,9 +36,8 @@ public class PID_Class {
         }else{
             motor.setPower(-output);
         }
+        motor.setPower(0);
         lastError = error;
-
-
     }
 
 }

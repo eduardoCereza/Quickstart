@@ -13,7 +13,6 @@ public class Teleoperate_Mode extends OpMode {
     private Follower follower;
 
     //String ip = "192.168.43.1:8001";
-
     Servo garra, ponta;
     DcMotor slide;
     private Hw_Others hw;
