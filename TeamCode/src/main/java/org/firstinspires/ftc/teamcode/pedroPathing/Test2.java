@@ -1,29 +1,22 @@
 package org.firstinspires.ftc.teamcode.pedroPathing;
 
 import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 import com.pedropathing.util.Timer;
-import com.qualcomm.hardware.limelightvision.LLResult;
-import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 public class Test2 extends OpMode {
     private Follower follower;
     private Timer pathTimer;
-
     String estado;
-
     private final Pose startPose = new Pose(9, 111, Math.toRadians(-90));
     private final Pose scorePose = new Pose(16, 128, Math.toRadians(-45));
     private final Pose pickup1Pose = new Pose(30, 121, Math.toRadians(0));
-    private final Pose pickup2Pose = new Pose(30, 131, Math.toRadians(0));
-    private final Pose pickup3Pose = new Pose(45, 128, Math.toRadians(90));
     private final Pose end = new Pose(68, 96, Math.toRadians(-90));
 
-    private PathChain scorePreload, grabPickup1, grabPickup2, grabPickup3, scorePickup1, scorePickup2, scorePickup3, fim;
+    private PathChain scorePickup1, fim;
 
     public void buildPaths() {
         scorePickup1 = follower.pathBuilder()
@@ -36,7 +29,7 @@ public class Test2 extends OpMode {
                 .build();
 
     }
-    public void setPathState() {
+    public void resetTimer() {
         pathTimer.resetTimer();
     }
 
@@ -44,10 +37,10 @@ public class Test2 extends OpMode {
         if (estado.equals("init")){
             follower.followPath(scorePickup1, false);
             estado = "end";
-            setPathState();
+            resetTimer();
         }else if (estado.equals("end")){
             follower.followPath(fim);
-            setPathState();
+            resetTimer();
         }
 
     }
