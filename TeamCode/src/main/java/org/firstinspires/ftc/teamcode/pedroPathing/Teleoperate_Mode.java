@@ -12,6 +12,8 @@ public class Teleoperate_Mode extends OpMode {
     //TODO: Criação das variável
     private Follower follower;
 
+    //String ip = "192.168.43.1:8001";
+
     Servo garra, ponta;
     DcMotor slide;
     private Hw_Others hw;
@@ -25,6 +27,7 @@ public class Teleoperate_Mode extends OpMode {
         follower.setStartingPose(startPose);
         hw = new Hw_Others(garra, ponta, slide);
         hw.init(hardwareMap);
+        //System.out.println("Acesse o ip: "+ ip);
     }
 
     //TODO: Método para começar o período Teleoperado
@@ -43,4 +46,19 @@ public class Teleoperate_Mode extends OpMode {
         follower.setTeleOpDrive(x, y, turn, false);
         follower.update();
     }
+
+    //TODO: Método para mover o servo motor
+
+    /*
+    public void moverServo(String aberto){
+        if (gamepad2.left_bumper)
+            aberto = "aberto";
+
+        if (aberto == "aberto")
+            garra.setPosition(1);
+        else
+            garra.setPosition(0);
+    }
+
+     */
 }

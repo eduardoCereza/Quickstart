@@ -7,11 +7,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Hw_Others{
     Servo servo1, servo2;
     DcMotor slide;
-    public Hw_Others(Servo garra, Servo ponta, DcMotor slide){
+    public Hw_Others(Servo garra, Servo ponta, DcMotor slide) {
         this.servo1 = garra;
         this.servo2 = ponta;
         this.slide = slide;
     }
+
     public void init(HardwareMap map){
         servo1 = map.get(Servo.class, "servo1");
         servo2 = map.get(Servo.class, "servo2");
