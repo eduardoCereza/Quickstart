@@ -3,6 +3,11 @@ package org.firstinspires.ftc.teamcode.pedroPathing;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+
 public class MainAuto extends OpMode {
 
     /**Essa é a classe principal. Nela, vamos poder escolher qual quer modo de autônomo de acordo com a ordem
@@ -11,6 +16,12 @@ public class MainAuto extends OpMode {
      * da câmera.*/
 
     Limelight3A limelight;
+
+    private static final boolean USE_WEBCAM = true;
+
+    private AprilTagProcessor aprilTag;
+
+    private VisionPortal visionPortal;
 
     public void init(){
         //Inicializando Limelight3A
@@ -41,6 +52,22 @@ public class MainAuto extends OpMode {
             default:
                 break;
         }
+    }
+
+    private void initAprilTag() {
+
+        // Create the AprilTag processor the easy way.
+        aprilTag = AprilTagProcessor.easyCreateWithDefaults();
+
+        // Create the vision portal the easy way.
+        if (USE_WEBCAM) {
+            visionPortal = VisionPortal.easyCreateWithDefaults(
+                    hardwareMap.get(WebcamName.class, "webcam"), aprilTag);
+        } else {
+            visionPortal = VisionPortal.easyCreateWithDefaults(
+                    BuiltinCameraDirection.BACK, aprilTag);
+        }
+
     }
 
 
