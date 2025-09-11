@@ -6,7 +6,10 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+
+import java.util.List;
 
 public class MainAuto extends OpMode {
 
@@ -28,6 +31,8 @@ public class MainAuto extends OpMode {
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         limelight.pipelineSwitch(0);
         limelight.start();
+
+        initAprilTag();
     }
 
     public void loop(){
@@ -35,10 +40,23 @@ public class MainAuto extends OpMode {
         * chamar a função de definir ordem, para assim, executar o autônomo de cada caso;
         *
         * */
+        
+        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+        // Step through the list of detections and display info for each one.
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.id == 21) {
+                definirOrdem("GPP");
+            } else if (detection.id == 23){
+                definirOrdem("PPG");
+            }else if (detection.id == 22){
+                definirOrdem("PGP");
+            }
+        }
 
     }
 
     public void definirOrdem(String ordem){
+
         switch (ordem){
             case "PPG":
                 break;
