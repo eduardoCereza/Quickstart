@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp(name = "Prototipo 1 Teste", group = "Prototipo")
 public class Prototipo1 extends OpMode {
-    DcMotor motor, motor2;
+    DcMotor motor, motor2, corerex;
 
     @Override
     public void init(){
@@ -16,6 +16,9 @@ public class Prototipo1 extends OpMode {
         motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motor2 = hardwareMap.get(DcMotor.class, "motor2");
         motor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        corerex = hardwareMap.get(DcMotor.class, "corerex");
+        corerex.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     @Override
@@ -30,6 +33,14 @@ public class Prototipo1 extends OpMode {
         else {
             motor.setPower(0);
             motor2.setPower(0);
+        }
+
+        if (gamepad1.left_bumper){
+            corerex.setPower(1);
+        } else if (gamepad1.right_bumper) {
+            corerex.setPower(-1);
+        }else {
+            corerex.setPower(0);
         }
     }
 }

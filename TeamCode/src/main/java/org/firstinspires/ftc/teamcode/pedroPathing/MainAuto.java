@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.pedroPathing;
 
+import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
@@ -20,9 +22,12 @@ public class MainAuto extends OpMode {
 
     Limelight3A limelight;
 
+    int[] IDs = {21, 22, 23};
+
     private static final boolean USE_WEBCAM = true;
 
     private AprilTagProcessor aprilTag;
+
 
     private VisionPortal visionPortal;
 
@@ -40,15 +45,16 @@ public class MainAuto extends OpMode {
         * chamar a função de definir ordem, para assim, executar o autônomo de cada caso;
         *
         * */
+
         
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         // Step through the list of detections and display info for each one.
         for (AprilTagDetection detection : currentDetections) {
-            if (detection.id == 21) {
+            if (detection.id == IDs[0]) {
                 definirOrdem("GPP");
-            } else if (detection.id == 23){
+            } else if (detection.id == IDs[2]){
                 definirOrdem("PPG");
-            }else if (detection.id == 22){
+            }else if (detection.id == IDs[1]){
                 definirOrdem("PGP");
             }
         }
@@ -59,15 +65,19 @@ public class MainAuto extends OpMode {
 
         switch (ordem){
             case "PPG":
+                telemetry.addLine("Ordem PPG");
                 break;
 
             case "PGP":
+                telemetry.addLine("Ordem PGP");
                 break;
 
             case "GPP":
+                telemetry.addLine("Ordem GPP");
                 break;
 
             default:
+                telemetry.addLine("Nenhuma é verdadeira");
                 break;
         }
     }
