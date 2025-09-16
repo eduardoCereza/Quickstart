@@ -36,12 +36,9 @@ public class MainAuto extends OpMode {
     public void init(){
         //Inicializando Limelight3A
 
-        /*
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         limelight.pipelineSwitch(0);
         limelight.start();
-
-         */
 
         initAprilTag();
     }
@@ -52,7 +49,20 @@ public class MainAuto extends OpMode {
         *
         * */
 
-        
+        List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
+        for (LLResultTypes.FiducialResult fiducial : fiducials) {
+            int id = fiducial.getFiducialId();
+
+            if (id == IDs[0]) {
+                definirOrdem("GPP");
+            } else if (id == IDs[2]){
+                definirOrdem("PPG");
+            }else if (id == IDs[1]){
+                definirOrdem("PGP");
+            }// The ID number of the fiducial
+        }
+
+        /*
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         // Step through the list of detections and display info for each one.
         for (AprilTagDetection detection : currentDetections) {
@@ -64,6 +74,8 @@ public class MainAuto extends OpMode {
                 definirOrdem("PGP");
             }
         }
+
+         */
 
     }
 
