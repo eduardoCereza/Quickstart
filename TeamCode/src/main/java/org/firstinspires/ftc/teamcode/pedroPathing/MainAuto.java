@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.pedroPathing;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
 
+@Autonomous(name = "Main Auto", group = "Regional")
 public class MainAuto extends OpMode {
 
     /**Essa é a classe principal. Nela, vamos poder escolher qual quer modo de autônomo de acordo com a ordem
@@ -33,9 +35,13 @@ public class MainAuto extends OpMode {
 
     public void init(){
         //Inicializando Limelight3A
+
+        /*
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         limelight.pipelineSwitch(0);
         limelight.start();
+
+         */
 
         initAprilTag();
     }
@@ -65,15 +71,15 @@ public class MainAuto extends OpMode {
 
         switch (ordem){
             case "PPG":
-                telemetry.addLine("Ordem PPG");
+                telemetry.addLine("Ordem é PPG");
                 break;
 
             case "PGP":
-                telemetry.addLine("Ordem PGP");
+                telemetry.addLine("Ordem é PGP");
                 break;
 
             case "GPP":
-                telemetry.addLine("Ordem GPP");
+                telemetry.addLine("Ordem é GPP");
                 break;
 
             default:
