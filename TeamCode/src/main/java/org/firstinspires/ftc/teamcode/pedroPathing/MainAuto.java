@@ -49,6 +49,8 @@ public class MainAuto extends OpMode {
         *
         * */
 
+        LLResult result = limelight.getLatestResult();
+
         List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
         for (LLResultTypes.FiducialResult fiducial : fiducials) {
             int id = fiducial.getFiducialId();
@@ -59,7 +61,7 @@ public class MainAuto extends OpMode {
                 definirOrdem("PPG");
             }else if (id == IDs[1]){
                 definirOrdem("PGP");
-            }// The ID number of the fiducial
+            }
         }
 
         /*
