@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "OpenCV Teste", group = "Prototipos")
-public class OpenCV_Teste extends OpMode {
+public class Limelight3A_Teste extends OpMode {
 
     @Override
     public void init(){
