@@ -4,9 +4,12 @@ import android.util.Size;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -18,7 +21,6 @@ public class AprilTag extends LinearOpMode {
     private static final boolean USE_WEBCAM = true;
 
     private AprilTagProcessor aprilTag;
-
     private VisionPortal visionPortal;
 
 
@@ -30,6 +32,7 @@ public class AprilTag extends LinearOpMode {
         telemetry.addData(">", "Touch START to start OpMode");
         telemetry.update();
 
+
         waitForStart();
 
         while (opModeIsActive()){
@@ -37,18 +40,17 @@ public class AprilTag extends LinearOpMode {
             List<AprilTagDetection> currentDetections = aprilTag.getDetections();
             // Step through the list of detections and display info for each one.
             for (AprilTagDetection detection : currentDetections) {
-                if (detection.id == 21) {
-                    telemetry.addLine("A ordem é: GPP");
-                } else if (detection.id == 23){
-                    telemetry.addLine("A ordem é: PPG");
-                }else if (detection.id == 22){
-                    telemetry.addLine("A ordem é: PGP");
+                if (detection.metadata != null) {
+                    telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
+                    telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)", detection.ftcPose.x, detection.ftcPose.y, detection.ftcPose.z));
+                    telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)", detection.ftcPose.pitch, detection.ftcPose.roll, detection.ftcPose.yaw));
+                    telemetry.addLine(String.format("RBE %6.1f %6.1f %6.1f  (inch, deg, deg)", detection.ftcPose.range, detection.ftcPose.bearing, detection.ftcPose.elevation));
+                } else {
+                    telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
+                    telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
                 }
             }
-
             telemetry.update();
-
-
         }
         visionPortal.close();
     }
@@ -61,11 +63,10 @@ public class AprilTag extends LinearOpMode {
         // Create the vision portal the easy way.
         if (USE_WEBCAM) {
             visionPortal = VisionPortal.easyCreateWithDefaults(
-                    hardwareMap.get(WebcamName.class, "webcam"), aprilTag);
+                    hardwareMap.get(WebcamName.class, "Webcam 1"), aprilTag);
         } else {
             visionPortal = VisionPortal.easyCreateWithDefaults(
                     BuiltinCameraDirection.BACK, aprilTag);
         }
-
-    }
+    }   // end method initAprilTag()
 }
