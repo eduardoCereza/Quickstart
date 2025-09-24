@@ -31,13 +31,13 @@ public class LimeLightServo extends OpMode {
             telemetry.addData("Ta", resultado.getTa());
             telemetry.addData("Ty", resultado.getTy());
         }
-        if (resultado.getTx() > 0.5){
+        if (resultado.getTx() > 0){
             girador.setPower(1);
         }
-        if(resultado.getTx() < 0.5){
+        if(resultado.getTx() < 0){
             girador.setPower(-1);
         }
-        else{
+        if (resultado.getTx() == 0){
             girador.setPower(0);
         }
     }
