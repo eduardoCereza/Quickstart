@@ -1,6 +1,4 @@
-package org.firstinspires.ftc.teamcode.pedroPathing.Prototipos;
-
-import android.util.Size;
+package org.firstinspires.ftc.teamcode.pedroPathing.AprilTagWebcam;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
