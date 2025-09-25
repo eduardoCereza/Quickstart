@@ -64,6 +64,7 @@ public class WebCam_Teste extends LinearOpMode {
                 .setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
                 .setLensIntrinsics(277.46, 277.46, 318.212, 238.694)
                 .build();
+
     VisionPortal visionPortal = new VisionPortal.Builder()
             .addProcessor(tagProcessor)
             .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
