@@ -56,16 +56,20 @@ public class WebCam_Teste extends LinearOpMode {
 
         servo = hardwareMap.get(CRServo.class, "girador");
         AprilTagProcessor tagProcessor = new AprilTagProcessor.Builder()
-            .setDrawAxes(true)
-            .setDrawCubeProjection(true)
-            .setDrawTagID(true)
-            .setDrawTagOutline(true)
-            .build();
-
+                .setDrawAxes(false)
+                .setDrawCubeProjection(true)
+                .setDrawTagID(true)
+                .setDrawTagOutline(true)
+                .setOutputUnits(DistanceUnit.INCH, AngleUnit.DEGREES)
+                .setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
+                .setLensIntrinsics(277.46, 277.46, 318.212, 238.694)
+                .build();
     VisionPortal visionPortal = new VisionPortal.Builder()
             .addProcessor(tagProcessor)
             .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
             .setCameraResolution(new Size(640, 480))
+            .enableLiveView(true)
+            .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
             .build();
 
 
@@ -76,20 +80,12 @@ public class WebCam_Teste extends LinearOpMode {
             if (tagProcessor.getDetections().size() > 0){
                 AprilTagDetection tag = tagProcessor.getDetections().get(0);
 
-                if (tag.id == 24){
-                    if (tag.center.x > 350){
-                        servo.setPower(1);
-                    } else if (tag.center.x < 300) {
-                        servo.setPower(-1);
-                    }else {
-                        servo.setPower(0);
-                    }
-                    //servo.setPower(0);
-                }
-                telemetry.addData("ID: ", tag.id);
-                telemetry.addData("X: ", tag.center.x);
-
-
+                telemetry.addData("x > ", tag.ftcPose.x);
+                telemetry.addData("y > ", tag.ftcPose.y);
+                telemetry.addData("z > ", tag.ftcPose.z);
+                telemetry.addData("roll > ", tag.ftcPose.roll);
+                telemetry.addData("pitch > ", tag.ftcPose.pitch);
+                telemetry.addData("yaw > ", tag.ftcPose.yaw);
             }
 
             telemetry.update();
