@@ -56,6 +56,7 @@ public class AprilTag extends OpMode {
 
         visionPortal = visionPortalBuilder.build();
 
+        //init process
         visionPortal.setProcessorEnabled(aprilTagProcessor, true);
 
     }
