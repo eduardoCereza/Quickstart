@@ -62,6 +62,7 @@ public class Shooter_Prog_V1 extends OpMode {
             //REVISAR
             power = (0.73304 * Math.cos(angulo) * velocity) / 100;
 
+
             telemetry.addData("POSITION SERVO: ", position);
 
             left.setPower(power);
