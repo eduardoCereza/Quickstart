@@ -11,10 +11,11 @@ import java.util.List;
 
 @TeleOp(group = "Prototipo")
 public class Shooter_MoveX extends OpMode {
+    private final int frameWidth = 1280;
 
     CRServo servo;
 
-    double eixoX;
+    double eixoX, power = 0.3, error;
     Limelight3A limelight3A;
 
     public void init() {
@@ -29,30 +30,25 @@ public class Shooter_MoveX extends OpMode {
 
         LLResult resultado = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = resultado.getFiducialResults();
-
-        if (resultado != null && resultado.isValid()) {
-        }
-
         eixoX = resultado.getTx();
 
+        for (LLResultTypes.FiducialResult fr : fiducialResults) {
+            telemetry.addData("Fiducial", "ID: %d, Family: %s, X: %.2f, Y: %.2f", fr.getFiducialId(), fr.getFamily(), fr.getTargetXDegrees(), fr.getTargetYDegrees());
 
-        for (LLResultTypes.FiducialResult fr : fiducialResults){
-            if (fr.getFiducialId() == 24){
-                if (eixoX > 0.1){
-                    servo.setPower(0.5);
-                } else if (eixoX < 0) {
-                    servo.setPower(-0.5);
-                }else {
+
+            if (fr.getFiducialId() == 24) {
+                if (eixoX > 0.1) {
+                    servo.setPower(power);
+                } else if (eixoX < -0.1) {
+                    servo.setPower(-power);
+                }else{
                     servo.setPower(0);
                 }
+
             }
         }
-
     }
 
-    void moverServoX(double kp){
-
-    }
 }
 
 
