@@ -35,6 +35,7 @@ public class Shooter_MoveX extends OpMode {
 
         eixoX = resultado.getTx();
 
+
         for (LLResultTypes.FiducialResult fr : fiducialResults){
             if (fr.getFiducialId() == 24){
                 if (eixoX > 0.1){
