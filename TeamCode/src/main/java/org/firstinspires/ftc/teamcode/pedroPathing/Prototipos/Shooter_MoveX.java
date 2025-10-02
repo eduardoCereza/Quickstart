@@ -36,7 +36,6 @@ public class Shooter_MoveX extends OpMode {
             double hip = k / Math.sqrt(resultado.getTa());
 
             cosseno = eixoX / hip;
-
             angulo = Math.toDegrees(Math.acos(cosseno));
             power = (0.73304 * cosseno * velocity) * 100;
 
