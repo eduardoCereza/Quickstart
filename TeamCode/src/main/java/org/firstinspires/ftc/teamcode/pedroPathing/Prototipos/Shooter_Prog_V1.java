@@ -51,28 +51,7 @@ public class Shooter_Prog_V1 extends OpMode {
             telemetry.addData("Ta", resultado.getTa());
             telemetry.addData("Ty", resultado.getTy());
 
-            /**
-             * Acha a tangente do angulo alfa, com base no calculo:
-             * CATETO OPOSTO / CATETO ADJACENTE
-             * ALTURA / DISTANCIA que o robo esta do GOAL
-             **/
-            tang_alfa = altura / distancia;
-
-            //Com base na tangente, ele acha o angulo, transformando o valor da tangente em angulação.
-            angulo = Math.toDegrees(Math.atan(tang_alfa));
-            //divindo o angulo alfa por 180 graus, achamos o valor da posição do servo
-            position = angulo / 180;
-            //REVISAR
-            power = (0.73304 * Math.cos(angulo) * velocity) / 100;
-
-
             telemetry.addData("POSITION SERVO: ", position);
-
-            left.setPower(power);
-            right.setPower(power);
-
-            servoY.setPosition(position);
-
 
             // Exibe dados da odometria (posição X, Y)
             telemetry.update();
