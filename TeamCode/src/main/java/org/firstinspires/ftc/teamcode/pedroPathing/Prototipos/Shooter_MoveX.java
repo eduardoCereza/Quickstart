@@ -12,7 +12,7 @@ import java.util.List;
 @TeleOp(group = "Prototipo")
 public class Shooter_MoveX extends OpMode {
     CRServo servo;
-    double eixoX, power, angulo, velocity = 0.0375, cosseno;
+    double eixoX, power, angulo, velocity = 0.0375, seno;
     Limelight3A limelight3A;
 
     public void init() {
@@ -35,9 +35,9 @@ public class Shooter_MoveX extends OpMode {
             double k = 130.384048104052974;
             double hip = k / Math.sqrt(resultado.getTa());
 
-            cosseno = eixoX / hip;
-            angulo = Math.toDegrees(Math.acos(cosseno));
-            power = (0.73304 * cosseno * velocity) * 100;
+            seno = eixoX / hip;
+            angulo = Math.toDegrees(Math.asin(seno));
+            power = (0.73304 * seno * velocity) * 100;
 
             if (fr.getFiducialId() == 24) {
                 if (angulo != 90) {
