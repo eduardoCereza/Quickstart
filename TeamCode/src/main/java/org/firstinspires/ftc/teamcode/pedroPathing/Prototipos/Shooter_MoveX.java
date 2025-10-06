@@ -15,6 +15,7 @@ public class Shooter_MoveX extends OpMode {
     CRServo servo;
     double eixoX, power, angulo, velocity = 0.0375, seno;
 
+    //Ajustes de variáveis físicas
     double pesoBola = 74.8, pesoTurret = 0, forcaPesoTotal;
     Limelight3A limelight3A;
 
