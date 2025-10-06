@@ -18,6 +18,7 @@ public class Shooter_MoveX extends OpMode {
     double pesoBola = 74.8, pesoTurret = 0, forcaPesoTotal;
     Limelight3A limelight3A;
 
+
     public void init() {
         servo = hardwareMap.get(CRServo.class, "servoX");
         limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
