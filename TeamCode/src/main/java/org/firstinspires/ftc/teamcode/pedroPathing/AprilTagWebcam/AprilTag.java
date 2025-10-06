@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.AprilTagWebcam;
 
+import android.util.Size;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -10,61 +13,71 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
 
 @TeleOp(name = "Teste April Tag", group = "Prototipos")
-public class AprilTag extends LinearOpMode {
-    private static final boolean USE_WEBCAM = true;
+public class AprilTag extends OpMode {
 
-    private AprilTagProcessor aprilTag;
-    private VisionPortal visionPortal;
+    AprilTagProcessor.Builder aprilTagBuilder;
+    AprilTagProcessor aprilTagProcessor;
+
+    double tagPoseX, tagPoseY, tagPoseZ;
+
+    AprilTagDetection aprilTagDetection;
+
+    VisionPortal visionPortal;
+    VisionPortal.Builder visionPortalBuilder;
+
+    public void init(){
+        //Inicializar identificador de April Tag
+        aprilTagBuilder = new AprilTagProcessor.Builder();
+        aprilTagBuilder.setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11);
+        aprilTagBuilder.setTagLibrary(AprilTagGameDatabase.getCurrentGameTagLibrary());
+        aprilTagBuilder.setDrawTagID(true); //mostra o ID
+        aprilTagBuilder.setDrawTagOutline(true); //mostra o contorno
+        aprilTagBuilder.setDrawAxes(true); //Mostra as linhas de marcação X, Y e Z
+        aprilTagBuilder.setDrawCubeProjection(true); //mostra o cubo projetado pela leitura
+
+        aprilTagProcessor = aprilTagBuilder.build();
 
 
-    @Override
-    public void runOpMode(){
+        //Inicializar visionPortal
+        visionPortalBuilder = new VisionPortal.Builder();
 
+        visionPortalBuilder.setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"));
+        visionPortalBuilder.setCameraResolution(new Size(640, 480));
+        visionPortalBuilder.addProcessor(aprilTagProcessor);
+        visionPortalBuilder.setStreamFormat(VisionPortal.StreamFormat.YUY2);
+        visionPortalBuilder.enableLiveView(true);
+        visionPortalBuilder.setAutoStopLiveView(true);
 
-        initAprilTag();
-        telemetry.addData(">", "Touch START to start OpMode");
-        telemetry.update();
+        visionPortal = visionPortalBuilder.build();
 
+        //init process
+        visionPortal.setProcessorEnabled(aprilTagProcessor, true);
 
-        waitForStart();
-
-        while (opModeIsActive()){
-
-            List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-            // Step through the list of detections and display info for each one.
-            for (AprilTagDetection detection : currentDetections) {
-                if (detection.metadata != null) {
-                    telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
-                    telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)", detection.ftcPose.x, detection.ftcPose.y, detection.ftcPose.z));
-                    telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)", detection.ftcPose.pitch, detection.ftcPose.roll, detection.ftcPose.yaw));
-                    telemetry.addLine(String.format("RBE %6.1f %6.1f %6.1f  (inch, deg, deg)", detection.ftcPose.range, detection.ftcPose.bearing, detection.ftcPose.elevation));
-                } else {
-                    telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
-                    telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
-                }
-            }
-            telemetry.update();
-        }
-        visionPortal.close();
     }
 
-    private void initAprilTag() {
+    public void loop(){
 
-        // Create the AprilTag processor the easy way.
-        aprilTag = AprilTagProcessor.easyCreateWithDefaults();
+        /*
+        tagPoseX = aprilTagDetection.ftcPose.x;
+        tagPoseY = aprilTagDetection.ftcPose.y;
+        tagPoseZ = aprilTagDetection.ftcPose.z;
 
-        // Create the vision portal the easy way.
-        if (USE_WEBCAM) {
-            visionPortal = VisionPortal.easyCreateWithDefaults(
-                    hardwareMap.get(WebcamName.class, "Webcam 1"), aprilTag);
-        } else {
-            visionPortal = VisionPortal.easyCreateWithDefaults(
-                    BuiltinCameraDirection.BACK, aprilTag);
-        }
-    }   // end method initAprilTag()
+         */
+
+        tagPoseY = aprilTagDetection.ftcPose.elevation; //angulo que a camera deve inclinar (cima/baixo) para apontar diretamente para o centro da aprilTag
+        tagPoseX = aprilTagDetection.ftcPose.bearing; //angulo que a camera deve girar (esquerda/direita) para apontar diretamente para o centro da aprilTag
+        tagPoseZ = aprilTagDetection.ftcPose.range; //distancia direta ao centro da April Tag
+
+        telemetry.addData("ELEVATION: ", tagPoseY);
+        telemetry.addData("BEARING: ", tagPoseX);
+        telemetry.addData("RANGE: ", tagPoseZ);
+        telemetry.update();
+    }
+
 }

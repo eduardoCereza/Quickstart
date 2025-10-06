@@ -4,9 +4,8 @@ import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
 
-@Autonomous
+@Autonomous(name = "limelight")
 public class LimeLightChassis extends OpMode {
     private Limelight3A limelight;
 

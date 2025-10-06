@@ -136,7 +136,7 @@ public class LimeLightChassis_follow extends OpMode {
                         Math.max(Math.abs(bl), Math.abs(br)))));
                 fl /= max; fr /= max; bl /= max; br /= max;
 
-                leftFront.setPower();
+                //leftFront.setPower();
                 rightFront.setPower(-0.1);
                 leftRear.setPower(-0.1);
                 rightRear.setPower(-0.1);
