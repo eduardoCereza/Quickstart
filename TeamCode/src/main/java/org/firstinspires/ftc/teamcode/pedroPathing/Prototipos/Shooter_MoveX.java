@@ -6,6 +6,7 @@ import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import java.util.List;
 
@@ -13,6 +14,8 @@ import java.util.List;
 public class Shooter_MoveX extends OpMode {
     CRServo servo;
     double eixoX, power, angulo, velocity = 0.0375, seno;
+
+    double pesoBola = 74.8, pesoTurret = 0, forcaPesoTotal;
     Limelight3A limelight3A;
 
     public void init() {
@@ -35,16 +38,18 @@ public class Shooter_MoveX extends OpMode {
             double k = 130.384048104052974;
             double hip = k / Math.sqrt(resultado.getTa());
 
+            forcaPesoTotal = ((pesoBola / 1000) + (pesoTurret / 1000)) * 9.8;
+
             seno = eixoX / hip;
             angulo = Math.toDegrees(Math.asin(seno));
-            power = (0.73304 * seno * velocity) * 100;
+            power = (forcaPesoTotal * seno * velocity) * 100;
 
             if (fr.getFiducialId() == 24) {
-                if (angulo != 90) {
+                if (angulo != 0) {
                     servo.setPower(power);
                 }
 
-                if(angulo == 90){
+                if(angulo == 0){
                     servo.setPower(0);
                 }
                 telemetry.addData("Power: ", power);

@@ -20,7 +20,7 @@ public class Shooter_Prog_V1 extends OpMode {
 
     CRServo servoX;
     Servo servoY;
-    double distancia, altura, position, power, velocity, tang_alfa, angulo, cos_alfa;
+    double hip, altura = 120, position, power, velocity, angulo, cos;
 
     public void init(){
         limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
@@ -32,9 +32,6 @@ public class Shooter_Prog_V1 extends OpMode {
 
         left = hardwareMap.get(DcMotorEx.class, "left");
         right = hardwareMap.get(DcMotorEx.class, "right");
-
-        altura = 120;
-        velocity = 100;
     }
 
     public void loop(){
@@ -43,7 +40,7 @@ public class Shooter_Prog_V1 extends OpMode {
         // Pega o valor de área (ta) do Limelight para calcular a distância
         double ta = limelight3A.getLatestResult().getTa();
         final double k = 130.384048104052974;
-        distancia = k / Math.sqrt(ta);
+        hip = k / Math.sqrt(ta);
 
         if (resultado != null && resultado.isValid()) {
             // Exibe dados do Limelight
@@ -51,6 +48,10 @@ public class Shooter_Prog_V1 extends OpMode {
             telemetry.addData("Ta", resultado.getTa());
             telemetry.addData("Ty", resultado.getTy());
 
+            cos = altura / hip;
+            angulo = Math.toDegrees(Math.acos(cos));
+            position = angulo / 180;
+            servoY.setPosition(position);
             telemetry.addData("POSITION SERVO: ", position);
 
             // Exibe dados da odometria (posição X, Y)
