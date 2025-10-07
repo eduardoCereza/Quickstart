@@ -1,13 +1,18 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.pedroPathing.TeleAuto_Testes;
 
+import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
+
 public class Init_Class {
+
+    Follower follower;
     String nameServoX, nameServoY, nameMotorLeft, nameMotorRight;
 
     public void setNameServo(String nameServoX, String nameServoY){
@@ -33,4 +38,13 @@ public class Init_Class {
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         limelight.pipelineSwitch(indice);
     }
+
+    public void initTeleOp(Follower follower, HardwareMap hmap, Pose startPose){
+        this.follower = follower;
+        follower = Constants.createFollower(hmap);
+        follower.setStartingPose(startPose);
+        follower.update();
+        follower.startTeleopDrive();
+    }
+    
 }
