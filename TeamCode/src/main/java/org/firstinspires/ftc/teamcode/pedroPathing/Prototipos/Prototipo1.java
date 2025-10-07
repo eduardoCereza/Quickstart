@@ -12,16 +12,15 @@ public class Prototipo1 extends OpMode {
     @Override
     public void init(){
         motor = hardwareMap.get(DcMotor.class, "motor");
-        motor.setDirection(DcMotorSimple.Direction.REVERSE);
         motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motor2 = hardwareMap.get(DcMotor.class, "motor2");
         motor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        corerex = hardwareMap.get(DcMotor.class, "corerex");
-        corerex.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //corerex = hardwareMap.get(DcMotor.class, "corerex");
+        //corerex.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        slide = hardwareMap.get(DcMotor.class, "slide");
-        slide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //slide = hardwareMap.get(DcMotor.class, "slide");
+        //slide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     @Override
@@ -38,6 +37,7 @@ public class Prototipo1 extends OpMode {
             motor2.setPower(0);
         }
 
+        /*
         if (gamepad1.left_bumper){
             corerex.setPower(1);
         } else if (gamepad1.right_bumper) {
@@ -53,5 +53,7 @@ public class Prototipo1 extends OpMode {
         }else {
             slide.setPower(0);
         }
+
+         */
     }
 }
