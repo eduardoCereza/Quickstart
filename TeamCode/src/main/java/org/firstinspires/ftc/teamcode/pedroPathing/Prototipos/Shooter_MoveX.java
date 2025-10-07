@@ -13,101 +13,143 @@ import java.util.List;
 
 @TeleOp(group = "Prototipo", name = "turret")
 public class Shooter_MoveX extends OpMode {
-    //servo que move a turret no eixo X, centraliza ele no centro da apriltag
+
+    // Servo contínuo que gira a torre (turret) no eixo X (pan) para centralizar na AprilTag.
     CRServo servoX;
 
-    //servo que move a turret no eixo Y, regula o angulo da flywheel
+    // Servo posicional que ajusta a elevação da turret (eixo Y / tilt) para definir o ângulo de arremesso.
     Servo servoY;
 
-    //motor do flywheel
+    // Motores da flywheel (lançamento da bola).
     DcMotorEx flywheelB, flywheelC;
 
-    //limelight, le o valor da apriltag a partida toda
+    // Câmera Limelight 3A (detecção de AprilTag / visão).
     Limelight3A limelight3A;
 
-    //medidas
+    // Variáveis geométricas/angulares usadas nos cálculos de mira/alcance.
     double anguloX, anguloY, angulomaior, delta, hipmenor, hipmaior, basemenor, basemaior;
 
-    //tudo relacionado a servo
-    double posdoservoy,eixoX, eixoY, power, servoXPosRad, servoYPosRad, forcaPesoTotal;
+    // Variáveis relacionadas aos servos e controle de força no eixo X.
+    double posdoservoy, eixoX, eixoY, power, servoXPosRad, servoYPosRad, forcaPesoTotal;
 
-    //flywheel
+    // Variáveis da flywheel (cinemática do disparo).
     double Vborda, rev, rpm, v;
 
-    //valores fixos
-    final double k = 186.5409338456308, velocity = 0.0375, pesoTurret = 0, pesoBola = 74.8, alturamenor = 74, alturamaior = 124, g = 980, k_lip = 0.95, r = 4.5;
+    // Constantes de projeto/físicas (unidades precisam ser coerentes — ver observações ao final).
+    // k: fator para estimar distância a partir da área (ta) da tag; velocity: ganho simples para servoX;
+    // pesos em gramas; alturas em mm (?) ; g em cm/s² (980); k_lip: perda por atrito (lip), r: raio da flywheel.
+    final double k = 186.5409338456308, velocity = 0.0375, pesoTurret = 0, pesoBola = 74.8,
+            alturamenor = 74, alturamaior = 124, g = 980, k_lip = 0.95, r = 4.5;
 
+    @Override
     public void init() {
-
-        // inicializa todos os motores, servos e componentes
+        // Mapeamento de hardware.
         flywheelB = hardwareMap.get(DcMotorEx.class, "flywheelB");
         flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelC");
         servoX = hardwareMap.get(CRServo.class, "servoX");
         servoY = hardwareMap.get(Servo.class, "servoY");
         limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
-        limelight3A.pipelineSwitch(1); //pipeline apriltag 3D todo verificar se tem como fazer algo mais com essa função
+
+        // Seleciona pipeline (ex.: AprilTag 3D) e inicia a câmera.
+        limelight3A.pipelineSwitch(1);
         limelight3A.start();
     }
 
+    @Override
     public void loop() {
-
-        //valores relativos a limelight
+        // Obtém o último resultado da Limelight (visão).
         LLResult resultado = limelight3A.getLatestResult();
+
+        // ATENÇÃO: em runtime, valide nulidade/targets antes de usar (ver observações).
         List<LLResultTypes.FiducialResult> fiducialResults = resultado.getFiducialResults();
+
+        // Deslocamentos da tag em graus (tx = horizontal; ty = vertical) conforme a Limelight.
         eixoX = resultado.getTx();
         eixoY = resultado.getTy();
 
-        //loop principal
+        // Loop sobre cada detecção de fiducial (AprilTag).
         for (LLResultTypes.FiducialResult fr : fiducialResults) {
-            telemetry.addData("Fiducial", "ID: %d, Family: %s, X: %.2f, Y: %.2f", fr.getFiducialId(), fr.getFamily(), fr.getTargetXDegrees(), fr.getTargetYDegrees());
+            telemetry.addData(
+                    "Fiducial",
+                    "ID: %d, Family: %s, X: %.2f, Y: %.2f",
+                    fr.getFiducialId(),
+                    fr.getFamily(),
+                    fr.getTargetXDegrees(),
+                    fr.getTargetYDegrees()
+            );
 
-            //calcula todas as medidas dos triangulos que compoem toda a logica para a turret mirar corretamente
+            // --------- Geometria para estimativa de distâncias/ângulos ----------
+            // hipmenor: “hipotenusa” (distância) estimada via área da tag (ta). Usa fator empírico k.
             hipmenor = k / Math.sqrt(resultado.getTa());
+
+            // basemenor: base horizontal para alvo de menor altura (pit mais próximo).
             basemenor = Math.sqrt(Math.pow(hipmenor, 2) - Math.pow(alturamenor, 2));
+
+            // basemaior: base para alvo de maior altura (ex.: gol mais alto) -> offset de 20 (unidades iguais às demais).
             basemaior = basemenor + 20;
+
+            // hipmaior: hipotenusa considerando a maior altura (alvo alto).
             hipmaior = Math.sqrt(Math.pow(alturamaior, 2) + Math.pow(basemaior, 2));
+
+            // delta / angulomaior: ângulo de tiro para alcançar a altura maior (cuidado com unidades, ver observações).
+            // Aqui delta recebe "radianos" a partir de tan(h/ b), mas usa Math.toRadians em cima de tan() (ver observações).
             delta = Math.toRadians(Math.tan(alturamaior / basemaior));
             angulomaior = Math.toDegrees(delta);
 
-            //angulo Y - servo Y / calcula a posição necessaria para que o servo Y se movimente para que a turret fique no angulo desejado
+            // --------- Ângulo Y (elevação) ---------
+            // servoYPosRad: razão altura/base -> arctan dá o ângulo em radianos.
             servoYPosRad = alturamaior / basemaior;
             anguloY = Math.toDegrees(Math.atan(servoYPosRad));
-            posdoservoy = anguloY / 180;
 
-            //angulo X - servo X / calcula a posição necessaria para que a turret se centralize no centro da apriltag
+            // Posição normalizada do servo [0..1] a partir do ângulo (simplificação).
+            posdoservoy = anguloY / 180.0;
+
+            // --------- Ângulo X (pan) ---------
+            // Usa deslocamento horizontal (eixoX) e “hipmaior” para obter ânguloX (aproximação).
+            // Observação: asin(eixoX/hipmaior) supõe eixoX em mesma unidade de comprimento da hipotenusa,
+            // mas eixoX está em graus (tx). Mantido conforme o original; ver observações.
             servoXPosRad = eixoX / hipmaior;
             anguloX = Math.toDegrees(Math.asin(servoXPosRad));
 
-            //calculo para o servo X se manter centralizado no centro da apriltag
-            forcaPesoTotal = ((pesoBola / 1000) + (pesoTurret / 1000)) * 9.8;
-            power = (forcaPesoTotal * servoXPosRad * velocity) * 200;
+            // --------- Controle simples de power no servoX ---------
+            // Força “equivalente” considerando massa (pesoBola + pesoTurret) e uma constante de velocidade.
+            // Multiplica por 200 como ganho final (tunagem empírica).
+            forcaPesoTotal = ((pesoBola / 1000.0) + (pesoTurret / 1000.0)) * 9.8;
+            power = (forcaPesoTotal * servoXPosRad * velocity) * 200.0;
 
-            //calculos da flywheel
-            v = Math.sqrt((g * Math.pow(basemaior, 2)) / (2 * Math.pow(Math.cos(angulomaior), 2) * (basemaior * Math.tan(angulomaior)  - alturamaior)));
+            // --------- Cálculos de velocidade para a flywheel ---------
+            // v: velocidade de saída necessária para alcançar a base/altura desejada (balística sem arrasto).
+            // Usa g, basemaior, angulomaior; importante garantir ângulo em radianos nas funções trigonométricas (ver observações).
+            v = Math.sqrt(
+                    (g * Math.pow(basemaior, 2)) /
+                            (2 * Math.pow(Math.cos(angulomaior), 2) * (basemaior * Math.tan(angulomaior) - alturamaior))
+            );
+
+            // Vborda: velocidade linear na borda da flywheel corrigida por perdas (k_lip).
             Vborda = v / k_lip;
-            rev = Vborda / (6.28 * r);
-            rpm = rev * 60;
 
-            //caso leia a april tag 24 (lado vermelho) / mesma logica para o lado azul, só muda o id
+            // Conversões para RPM: rev = V / (circunferência); rpm = rev * 60.
+            rev = Vborda / (6.28 * r);
+            rpm = rev * 60.0;
+
+            // Lado vermelho (ID 24). Para o lado azul, replicar lógica com o ID correspondente.
             if (fr.getFiducialId() == 24) {
 
-                //mantem a turret no centro da apriltag
+                // Mantém a turret tentando centralizar no X. Se há erro angular, aplica potência; senão zera.
                 if (anguloX != 0) {
                     servoX.setPower(power);
-                }
-
-                if(anguloX == 0){
+                } else {
                     servoX.setPower(0);
                 }
 
-                //regula a altura da turret em relação ao goal
+                // Ajusta a elevação (Y) do tiro conforme posição calculada.
                 servoY.setPosition(posdoservoy);
 
-                //atira as bolas no gol de acordo com a potência desejada
+                // Define a velocidade dos dois motores da flywheel (negativo para sentido desejado).
                 flywheelB.setVelocity(-rpm);
                 flywheelC.setVelocity(-rpm);
 
-                //telemetria para controle dos valores pelo drive hub
+                // Telemetria para depuração em campo.
                 telemetry.addData("Power: ", power);
                 telemetry.addData("Angulo servo X: ", anguloX);
                 telemetry.addData("Angulo Maior:", angulomaior);
@@ -124,5 +166,4 @@ public class Shooter_MoveX extends OpMode {
             }
         }
     }
-
 }
