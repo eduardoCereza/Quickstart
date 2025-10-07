@@ -9,15 +9,23 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class MainTeleOp_Class extends OpMode {
 
+    Init_Class initClass = new Init_Class();
+    RunPeriods run = new RunPeriods();
+
+    Pose startPose = new Pose(90, 80);
+
     @Override
     public void init(){
-
-
+        initClass.initComponents(hardwareMap, startPose,1);
     }
 
     @Override
     public void loop(){
 
+        double x = gamepad1.left_stick_x;
+        double y = gamepad1.left_stick_y;
+        double turn = gamepad1.right_stick_x;
 
+        run.TeleOp(y, x, turn);
     }
 }

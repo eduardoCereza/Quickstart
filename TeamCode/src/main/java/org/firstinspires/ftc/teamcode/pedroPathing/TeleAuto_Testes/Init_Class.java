@@ -12,39 +12,27 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class Init_Class {
 
+    public DcMotorEx left, right;
+    public CRServo x;
+    public Servo y;
+    public Limelight3A limelight;
+
     Follower follower;
-    String nameServoX, nameServoY, nameMotorLeft, nameMotorRight;
+    public void initComponents(HardwareMap hardwareMap, Pose startPose, int pipelineIndex) {
+        x = hardwareMap.get(CRServo.class, "servoX");
+        y = hardwareMap.get(Servo.class, "servoY");
 
-    public void setNameServo(String nameServoX, String nameServoY){
-        this.nameServoX = nameServoX;
-        this.nameServoY = nameServoY;
-    }
+        left = hardwareMap.get(DcMotorEx.class, "left");
+        right = hardwareMap.get(DcMotorEx.class, "right");
 
-    public void setNameMotor(String nameMotorLeft, String nameMotorRight){
-        this.nameMotorLeft = nameMotorLeft;
-        this.nameMotorRight = nameMotorRight;
-    }
-    public void initServo(CRServo x, Servo y, HardwareMap hardwareMap){
-        x = hardwareMap.get(CRServo.class, nameServoX);
-        y = hardwareMap.get(Servo.class, nameServoY);
-    }
 
-    public void initMotor(DcMotorEx left, DcMotorEx right, HardwareMap hardwareMap){
-        left = hardwareMap.get(DcMotorEx.class, nameMotorLeft);
-        right = hardwareMap.get(DcMotorEx.class, nameMotorRight);
-    }
-
-    public void initLimelight(Limelight3A limelight, HardwareMap hardwareMap, Integer indice){
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
-        limelight.pipelineSwitch(indice);
-    }
+        limelight.pipelineSwitch(pipelineIndex);
 
-    public void initTeleOp(Follower follower, HardwareMap hmap, Pose startPose){
-        this.follower = follower;
-        follower = Constants.createFollower(hmap);
+        follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(startPose);
         follower.update();
         follower.startTeleopDrive();
     }
-    
+
 }
