@@ -34,10 +34,6 @@ public class xoter extends OpMode {
         d = k / Math.sqrt(ta);
 
         //calculo distancia real do xoter até o goal
-        ca = h_tag - h_cam;
-        x = Math.sqrt(Math.pow(d, 2) - Math.pow(ca, 2));
-        cg = (h_tag + Offset) - h_cam;
-        dr = Math.sqrt(Math.pow(x, 2) + cg);
 
         //calculo do angulo
         seno = tx / dr;
