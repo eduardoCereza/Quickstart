@@ -52,7 +52,6 @@ public class xoter extends OpMode {
 
         if(resultado != null && resultado.isValid()){
 
-
             for (LLResultTypes.FiducialResult fr : fiducialResults) {
             telemetry.addData("fiducial", "ID: %d, family: %s, X: %.2f, Y: %.2f", fr.getFiducialId(), fr.getFamily(), fr.getTargetXDegrees(), fr.getTargetYDegrees());
 

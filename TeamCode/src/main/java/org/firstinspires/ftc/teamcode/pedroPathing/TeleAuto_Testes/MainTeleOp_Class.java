@@ -1,30 +1,31 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.TeleAuto_Testes;
 
+import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Init_Class;
-
 public class MainTeleOp_Class extends OpMode {
 
     Init_Class initClass = new Init_Class();
-    Servo servoY;
-    CRServo servoX;
+    RunPeriods run = new RunPeriods();
 
-    Limelight3A limelight;
+    Pose startPose = new Pose(90, 80);
 
     @Override
     public void init(){
-        initClass.setNameServo("servoX", "servoY");
-        initClass.initServo(servoX, servoY, hardwareMap);
-
-        initClass.initLimelight(limelight, hardwareMap, 1);
+        initClass.initComponents(hardwareMap, startPose,1);
     }
 
     @Override
     public void loop(){
 
+        double x = gamepad1.left_stick_x;
+        double y = gamepad1.left_stick_y;
+        double turn = gamepad1.right_stick_x;
+
+        run.TeleOp(y, x, turn);
     }
 }
