@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class Init_Class {
 
-    public DcMotorEx flywheelB, flywheelC;
+    public DcMotorEx flywheelB, flywheelC, slideL, slideR;
     public CRServo servoX;
     public Servo servoY;
     public Limelight3A limelight3A;
@@ -25,6 +25,8 @@ public class Init_Class {
         flywheelB = hardwareMap.get(DcMotorEx.class, "left");
         flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelC");
 
+        slideL = hardwareMap.get(DcMotorEx.class, "slideL");
+        slideR = hardwareMap.get(DcMotorEx.class, "slideR");
 
         limelight3A = hardwareMap.get(Limelight3A.class, "limelight3A");
         limelight3A.pipelineSwitch(pipelineIndex);

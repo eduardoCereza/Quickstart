@@ -24,8 +24,15 @@ public class MainTeleOp_Class extends OpMode {
         double y = gamepad1.left_stick_y;
         double turn = gamepad1.right_stick_x;
 
+        boolean ativador = gamepad1.a;
+        boolean desativador = gamepad1.b;
+        float levantar = gamepad1.left_trigger;
+        float descer = gamepad1.right_trigger;
+
         //run.TeleOp(y, x, turn);
 
-        run.Lançador(telemetry);
+        //run.Lançador(telemetry);
+
+        run.Levantar(levantar, descer, ativador, desativador);
     }
 }

@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.Prototipo1_Metal_REV.TeleAuto_Testes;
 
 
+import com.bylazar.gamepad.Gamepad;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -94,5 +96,41 @@ public class RunPeriods extends Init_Class{
             }
         }
 
+    }
+
+    public void Levantar(float subir, float descer, boolean ativar, boolean desativar){
+
+        int currentPosL = slideL.getCurrentPosition();
+        int currentPosR = slideR.getCurrentPosition();
+
+
+        if (ativar){
+            slideR.setMotorEnable();
+            slideL.setMotorEnable();
+        } else if (desativar) {
+            slideR.setMotorDisable();
+            slideL.setMotorDisable();
+        }
+
+        if (subir > 0.5){
+            slideL.setPower(1);
+            slideR.setPower(1);
+
+        }else if (descer > 0.5){
+            slideL.setPower(-1);
+            slideR.setPower(-1);
+        }else {
+            slideL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            slideR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            slideL.setTargetPosition(currentPosL);
+            slideR.setTargetPosition(currentPosR);
+
+            slideL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            slideR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            slideR.setPower(1);
+            slideL.setPower(1);
+        }
     }
 }
