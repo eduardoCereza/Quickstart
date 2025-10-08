@@ -3,36 +3,23 @@ package org.firstinspires.ftc.teamcode.pedroPathing.Prototipo1_Metal_REV.TeleAut
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 @TeleOp(name = "Testes - Protótipos")
 public class MainTeleOp_Class extends OpMode {
-
-    Init_Class initClass = new Init_Class();
-    RunPeriods run = new RunPeriods();
+    RunPeriods run;
 
     Pose startPose = new Pose(90, 80);
 
     @Override
     public void init(){
-        initClass.initComponents(hardwareMap, startPose,1);
+        run = new RunPeriods();
+        run.initComponents(hardwareMap, 1);
     }
 
     @Override
     public void loop(){
 
-        double x = gamepad1.left_stick_x;
-        double y = gamepad1.left_stick_y;
-        double turn = gamepad1.right_stick_x;
-
-        boolean ativador = gamepad1.a;
-        boolean desativador = gamepad1.b;
-        float levantar = gamepad1.left_trigger;
-        float descer = gamepad1.right_trigger;
-
-        //run.TeleOp(y, x, turn);
-
-        //run.Lançador(telemetry);
-
-        run.Levantar(levantar, descer, ativador, desativador);
+        run.lancar(telemetry);
     }
 }
