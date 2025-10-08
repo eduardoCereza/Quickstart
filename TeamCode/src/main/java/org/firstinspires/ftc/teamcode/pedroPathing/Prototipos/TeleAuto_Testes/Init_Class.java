@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.pedroPathing.TeleAuto_Testes;
+package org.firstinspires.ftc.teamcode.pedroPathing.Prototipos.TeleAuto_Testes;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
