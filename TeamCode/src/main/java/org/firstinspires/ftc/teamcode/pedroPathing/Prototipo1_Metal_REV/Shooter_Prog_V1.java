@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.pedroPathing.Prototipos;
+package org.firstinspires.ftc.teamcode.pedroPathing.Prototipo1_Metal_REV;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
@@ -7,8 +7,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import org.opencv.core.Mat;
 
 @TeleOp(group = "Prototipo")
 

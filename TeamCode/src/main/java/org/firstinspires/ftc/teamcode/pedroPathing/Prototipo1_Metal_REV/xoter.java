@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.pedroPathing.Prototipos;
+package org.firstinspires.ftc.teamcode.pedroPathing.Prototipo1_Metal_REV;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
@@ -6,8 +6,6 @@ import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
-
-import org.opencv.core.Mat;
 
 import java.util.List;
 

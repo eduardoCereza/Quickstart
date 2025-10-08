@@ -1,9 +1,8 @@
-package org.firstinspires.ftc.teamcode.pedroPathing.Prototipos;
+package org.firstinspires.ftc.teamcode.pedroPathing.Prototipo1_Metal_REV;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.limelight.LimeLightAim;
 
