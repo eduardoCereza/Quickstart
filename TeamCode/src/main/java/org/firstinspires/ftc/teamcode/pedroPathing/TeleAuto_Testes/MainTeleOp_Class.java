@@ -1,12 +1,10 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.TeleAuto_Testes;
 
-import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
-import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+@TeleOp(name = "Testes - Protótipos")
 public class MainTeleOp_Class extends OpMode {
 
     Init_Class initClass = new Init_Class();
@@ -26,6 +24,8 @@ public class MainTeleOp_Class extends OpMode {
         double y = gamepad1.left_stick_y;
         double turn = gamepad1.right_stick_x;
 
-        run.TeleOp(y, x, turn);
+        //run.TeleOp(y, x, turn);
+
+        run.Lançador(telemetry);
     }
 }

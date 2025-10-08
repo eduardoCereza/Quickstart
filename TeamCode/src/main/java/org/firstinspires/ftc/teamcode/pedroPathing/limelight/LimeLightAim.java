@@ -18,7 +18,7 @@ public class LimeLightAim {
 
     public LimeLightAim (HardwareMap hwMap){
         servo = hwMap.get(CRServo.class, "servoX");
-        limelight3A = hwMap.get(Limelight3A.class, "limelight");
+        limelight3A = hwMap.get(Limelight3A.class, "limelight3A");
         limelight3A.pipelineSwitch(1);
     }
 

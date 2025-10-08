@@ -82,7 +82,7 @@ public class pinpoint extends LinearOpMode {
         Set the odometry pod positions relative to the point that the odometry computer tracks around.
         The X pod offset refers to how far sideways from the tracking point the
         X (forward) odometry pod is. Left of the center is a positive number,
-        right of center is a negative number. the Y pod offset refers to how far forwards from
+        flywheelC of center is a negative number. the Y pod offset refers to how far forwards from
         the tracking point the Y (strafe) odometry pod is. forward of center is a positive number,
         backwards is a negative number.
          */
@@ -112,7 +112,7 @@ public class pinpoint extends LinearOpMode {
         the robot is a good idea to ensure that the calibration is "good".
         resetPosAndIMU will reset the position to 0,0,0 and also recalibrate the IMU.
         This is recommended before you run your autonomous, as a bad initial calibration can cause
-        an incorrect starting value for x, y, and heading.
+        an incorrect starting value for servoX, y, and heading.
          */
         //odo.recalibrateIMU();
         odo.resetPosAndIMU();
@@ -166,14 +166,14 @@ public class pinpoint extends LinearOpMode {
 
 
             /*
-            gets the current Position (x & y in mm, and heading in degrees) of the robot, and prints it.
+            gets the current Position (servoX & y in mm, and heading in degrees) of the robot, and prints it.
              */
             Pose2D pos = odo.getPosition();
             String data = String.format(Locale.US, "{X: %.3f, Y: %.3f, H: %.3f}", pos.getX(DistanceUnit.MM), pos.getY(DistanceUnit.MM), pos.getHeading(AngleUnit.DEGREES));
             telemetry.addData("Position", data);
 
             /*
-            gets the current Velocity (x & y in mm/sec and heading in degrees/sec) and prints it.
+            gets the current Velocity (servoX & y in mm/sec and heading in degrees/sec) and prints it.
              */
             String velocity = String.format(Locale.US,"{XVel: %.3f, YVel: %.3f, HVel: %.3f}", odo.getVelX(DistanceUnit.MM), odo.getVelY(DistanceUnit.MM), odo.getHeadingVelocity(UnnormalizedAngleUnit.DEGREES));
             telemetry.addData("Velocity", velocity);

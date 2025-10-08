@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 import java.util.Locale;
 
-@Autonomous(name = "limelight")
+@Autonomous(name = "limelight3A")
 public class limelightValues extends OpMode {
     private Limelight3A limelight;
 
@@ -22,7 +22,7 @@ public class limelightValues extends OpMode {
 
     @Override
     public void init() {
-        limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        limelight = hardwareMap.get(Limelight3A.class, "limelight3A");
         odo = hardwareMap.get(GoBildaPinpointDriver.class,"pinpoint");
 
         // Configurações do Pinpoint

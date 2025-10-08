@@ -5,13 +5,13 @@ import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-@Autonomous(name = "limelight")
+@Autonomous(name = "limelight3A")
 public class LimeLightChassis extends OpMode {
     private Limelight3A limelight;
 
     @Override
     public void init() {
-        limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        limelight = hardwareMap.get(Limelight3A.class, "limelight3A");
         limelight.pipelineSwitch(1); //apriltag
     }
 

@@ -13,7 +13,7 @@ public class LimeLightServo extends OpMode {
 
     @Override
     public void init() {
-        limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        limelight = hardwareMap.get(Limelight3A.class, "limelight3A");
         girador = hardwareMap.get(CRServo.class, "girador");
         limelight.pipelineSwitch(0); //apriltag
     }

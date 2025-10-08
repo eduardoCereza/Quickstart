@@ -18,7 +18,7 @@ public class Limelight3A_Teste extends OpMode {
     @Override
     public void init(){
 
-        limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        limelight = hardwareMap.get(Limelight3A.class, "limelight3A");
         telemetry.setMsTransmissionInterval(11);
         limelight.pipelineSwitch(0);
         limelight.start();

@@ -23,7 +23,7 @@ public class Shooter_Prog_V1 extends OpMode {
     double hip, altura = 120, position, power, velocity, angulo, cos;
 
     public void init(){
-        limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
+        limelight3A = hardwareMap.get(Limelight3A.class, "limelight3A");
         limelight3A.pipelineSwitch(1);
         limelight3A.start();
 
@@ -31,7 +31,7 @@ public class Shooter_Prog_V1 extends OpMode {
         servoY = hardwareMap.get(Servo.class, "servoY");
 
         left = hardwareMap.get(DcMotorEx.class, "left");
-        right = hardwareMap.get(DcMotorEx.class, "right");
+        right = hardwareMap.get(DcMotorEx.class, "flywheelC");
     }
 
     public void loop(){

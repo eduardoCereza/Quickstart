@@ -32,7 +32,7 @@ public class LimeLightChassis_follow extends OpMode {
 
     @Override
     public void init() {
-        limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        limelight = hardwareMap.get(Limelight3A.class, "limelight3A");
         //pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pintpoint");
         leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
         leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
@@ -60,7 +60,7 @@ public class LimeLightChassis_follow extends OpMode {
             telemetry.addData("Ty", resultado.getTy());
         }
         if(resultado.getTx() > 2){
-            strafePower = -0.1; // positive strafes right
+            strafePower = -0.1; // positive strafes flywheelC
             vX = strafePower;
             vY = 0.0;
             vRot = 0.0;

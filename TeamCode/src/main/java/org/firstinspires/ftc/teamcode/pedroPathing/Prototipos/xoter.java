@@ -20,7 +20,7 @@ public class xoter extends OpMode {
 
     @Override
     public void init() {
-        limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        limelight = hardwareMap.get(Limelight3A.class, "limelight3A");
         limelight.pipelineSwitch(0); //apriltag 3d
 
         servoX = hardwareMap.get(CRServo.class, "servoX");
@@ -68,8 +68,8 @@ public class xoter extends OpMode {
             }
         }
         telemetry.addData("Velocidade flywheel:", rpm);
-        telemetry.addData("Distancia limelight goal:", dr);
-        telemetry.addData("Distancia limelight apriltag:", d);
+        telemetry.addData("Distancia limelight3A goal:", dr);
+        telemetry.addData("Distancia limelight3A apriltag:", d);
         telemetry.addData("Ta:", ta);
         telemetry.addData("Tx:", tx);
         telemetry.update();

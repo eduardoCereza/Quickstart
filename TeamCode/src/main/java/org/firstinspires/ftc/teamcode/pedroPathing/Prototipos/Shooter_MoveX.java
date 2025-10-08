@@ -48,7 +48,7 @@ public class Shooter_MoveX extends OpMode {
         flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelC");
         servoX = hardwareMap.get(CRServo.class, "servoX");
         servoY = hardwareMap.get(Servo.class, "servoY");
-        limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
+        limelight3A = hardwareMap.get(Limelight3A.class, "limelight3A");
 
         // Seleciona pipeline (ex.: AprilTag 3D) e inicia a câmera.
         limelight3A.pipelineSwitch(1);

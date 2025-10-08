@@ -64,7 +64,7 @@ public class AprilTag extends OpMode {
     public void loop(){
 
         /*
-        tagPoseX = aprilTagDetection.ftcPose.x;
+        tagPoseX = aprilTagDetection.ftcPose.servoX;
         tagPoseY = aprilTagDetection.ftcPose.y;
         tagPoseZ = aprilTagDetection.ftcPose.z;
 

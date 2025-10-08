@@ -12,22 +12,22 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class Init_Class {
 
-    public DcMotorEx left, right;
-    public CRServo x;
-    public Servo y;
-    public Limelight3A limelight;
+    public DcMotorEx flywheelB, flywheelC;
+    public CRServo servoX;
+    public Servo servoY;
+    public Limelight3A limelight3A;
 
     Follower follower;
     public void initComponents(HardwareMap hardwareMap, Pose startPose, int pipelineIndex) {
-        x = hardwareMap.get(CRServo.class, "servoX");
-        y = hardwareMap.get(Servo.class, "servoY");
+        servoX = hardwareMap.get(CRServo.class, "servoX");
+        servoY = hardwareMap.get(Servo.class, "servoY");
 
-        left = hardwareMap.get(DcMotorEx.class, "left");
-        right = hardwareMap.get(DcMotorEx.class, "right");
+        flywheelB = hardwareMap.get(DcMotorEx.class, "left");
+        flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelC");
 
 
-        limelight = hardwareMap.get(Limelight3A.class, "limelight");
-        limelight.pipelineSwitch(pipelineIndex);
+        limelight3A = hardwareMap.get(Limelight3A.class, "limelight3A");
+        limelight3A.pipelineSwitch(pipelineIndex);
 
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(startPose);
