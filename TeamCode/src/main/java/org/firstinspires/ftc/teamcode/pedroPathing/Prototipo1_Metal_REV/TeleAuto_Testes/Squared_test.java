@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "square test leandro")
+//@Autonomous(name = "square test leandro")
 public class Squared_test extends OpMode {
     private Follower follower;
     private Timer pathTimer;

@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.limelight.LimeLightAim;
 
-@TeleOp(name = "Move While Aim")
+//@TeleOp(name = "Move While Aim")
 public class MoveWhileAim extends OpMode {
     private DcMotorEx rightFront, leftFront, rightRear, leftRear;
     LimeLightAim turret;

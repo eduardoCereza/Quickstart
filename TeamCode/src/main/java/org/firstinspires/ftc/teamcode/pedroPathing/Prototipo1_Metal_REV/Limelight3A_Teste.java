@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import java.util.List;
 
 
-@TeleOp(name = "Teste Limelight", group = "Prototipos")
+//@TeleOp(name = "Teste Limelight", group = "Prototipos")
 public class Limelight3A_Teste extends OpMode {
 
     int[] id = {21, 22, 23};

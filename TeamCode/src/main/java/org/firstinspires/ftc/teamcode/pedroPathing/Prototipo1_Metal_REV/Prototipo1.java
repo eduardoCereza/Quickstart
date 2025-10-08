@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@TeleOp(name = "Prototipo 1 Teste", group = "Prototipo")
+//@TeleOp(name = "Prototipo 1 Teste", group = "Prototipo")
 public class Prototipo1 extends OpMode {
     DcMotor motor, motor2, corerex, slide;
 

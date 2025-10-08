@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(group = "Prototipo")
+//@TeleOp(group = "Prototipo")
 
 public class Shooter_Prog_V1 extends OpMode {
 
