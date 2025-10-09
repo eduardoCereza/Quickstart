@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.pedroPathing.Prototipo1_Metal_REV.TeleAut
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 @TeleOp(name = "Testes - Protótipos")
 public class MainTeleOp_Class extends OpMode {
@@ -14,12 +13,12 @@ public class MainTeleOp_Class extends OpMode {
     @Override
     public void init(){
         run = new RunPeriods();
-        run.initComponents(hardwareMap, 1);
+        run.initComponents(hardwareMap, 1, startPose);
     }
 
     @Override
     public void loop(){
 
-        run.lancar(telemetry);
+        run.Lancar(telemetry);
     }
 }

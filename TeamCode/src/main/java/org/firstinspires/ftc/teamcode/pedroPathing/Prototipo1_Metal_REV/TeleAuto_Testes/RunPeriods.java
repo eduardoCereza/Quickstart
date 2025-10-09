@@ -1,16 +1,9 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.Prototipo1_Metal_REV.TeleAuto_Testes;
 
 
-import com.bylazar.gamepad.Gamepad;
-import com.pedropathing.follower.Follower;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
-import com.qualcomm.hardware.limelightvision.Limelight3A;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -29,7 +22,7 @@ public class RunPeriods extends InitClass{
 
     }
 
-    public void lancar(Telemetry telemetry){
+    public void Lancar(Telemetry telemetry){
 
         // Obtém o último resultado da Limelight (visão).
         LLResult resultado = limelight3A.getLatestResult();
