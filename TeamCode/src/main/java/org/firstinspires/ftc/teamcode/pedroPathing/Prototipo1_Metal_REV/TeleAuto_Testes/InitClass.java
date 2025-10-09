@@ -32,6 +32,7 @@ public class InitClass {
 
         limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
         limelight3A.pipelineSwitch(pipelineIndex);
+        limelight3A.start();
 
         /*
         follower = Constants.createFollower(hardwareMap);

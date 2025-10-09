@@ -136,26 +136,29 @@ public class RunPeriods extends InitClass{
                 telemetry.addData("velocity B:", flywheelB.getVelocity());
                 telemetry.addData("velocity C:", flywheelC.getVelocity());
             }
+
         }
+        telemetry.update();
+
 
     }
 
     public void Levantar(float subir, float descer, Telemetry telemetry, double power) {
 
-        //int currentPosL = slideL.getCurrentPosition();
-        //int currentPosR = slideR.getCurrentPosition();
+        int currentPosL = slideL.getCurrentPosition();
+        int currentPosR = slideR.getCurrentPosition();
 
         if (subir > 0.5) {
             slideL.setPower(power);
             slideR.setPower(power);
+            telemetry.addLine("Subindo");
 
         } else if (descer > 0.5) {
             slideL.setPower(-power);
             slideR.setPower(-power);
-        }
+            telemetry.addLine("Descendo");
 
-        /*
-        else {
+        } else {
             slideL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             slideR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
@@ -168,8 +171,9 @@ public class RunPeriods extends InitClass{
             slideR.setPower(1);
             slideL.setPower(1);
         }
-
-         */
+        telemetry.addLine("Rodando");
+        telemetry.update();
 
     }
+
 }
