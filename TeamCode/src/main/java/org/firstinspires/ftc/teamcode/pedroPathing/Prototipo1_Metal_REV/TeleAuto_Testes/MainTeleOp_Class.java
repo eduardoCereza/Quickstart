@@ -19,6 +19,5 @@ public class MainTeleOp_Class extends OpMode {
     @Override
     public void loop(){
 
-        run.Lancar(telemetry);
     }
 }

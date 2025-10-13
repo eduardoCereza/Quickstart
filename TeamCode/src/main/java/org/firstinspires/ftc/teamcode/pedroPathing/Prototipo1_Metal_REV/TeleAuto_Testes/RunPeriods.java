@@ -1,19 +1,27 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.Prototipo1_Metal_REV.TeleAuto_Testes;
 
 
+import com.pedropathing.util.Timer;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class RunPeriods extends InitClass{
 
+    private static final Logger log = LoggerFactory.getLogger(RunPeriods.class);
     double anguloX, anguloY, angulomaior, delta, hipmenor, hipmaior, basemenor, basemaior;
     double posdoservoy, eixoX, eixoY, power, servoXPosRad, servoYPosRad, forcaPesoTotal;
     double Vborda, rev, rpm, v;
+
+
+
+    int pathState;
     final double k = 186.5409338456308, velocity = 0.0375, pesoTurret = 0, pesoBola = 74.8, alturamenor = 74, alturamaior = 124, g = 980, k_lip = 0.95, r = 4.5;
 
     public void TeleOp(double y, double x, double turn){
