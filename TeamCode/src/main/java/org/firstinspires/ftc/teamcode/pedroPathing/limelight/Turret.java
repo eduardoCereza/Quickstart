@@ -8,48 +8,31 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 import java.util.List;
 
-public class Turret {
-    // Servo contínuo que gira a torre (turret) no eixo X (pan) para centralizar na AprilTag.
-    CRServo servoX;
+public class turret {
 
-    // Servo posicional que ajusta a elevação da turret (eixo Y / tilt) para definir o ângulo de arremesso.
-    Servo servoY;
-
-    // Motores da flywheel (lançamento da bola).
-    DcMotorEx flywheelB, flywheelC;
-
-    // Câmera Limelight 3A (detecção de AprilTag / visão).
-    Limelight3A limelight3A;
-
-    // Variáveis geométricas/angulares usadas nos cálculos de mira/alcance.
     double anguloX, anguloY, angulomaior, delta, hipmenor, hipmaior, basemenor, basemaior;
-
-    // Variáveis relacionadas aos servos e controle de força no eixo X.
     double posdoservoy, eixoX, eixoY, power, servoXPosRad, servoYPosRad, forcaPesoTotal;
-
-    // Variáveis da flywheel (cinemática do disparo).
     double Vborda, rev, rpm, v;
 
-    // Constantes de projeto/físicas (unidades precisam ser coerentes — ver observações ao final).
-    // k: fator para estimar distância a partir da área (ta) da tag; velocity: ganho simples para servoX;
-    // pesos em gramas; alturas em mm (?) ; g em cm/s² (980); k_lip: perda por atrito (lip), r: raio da flywheel.
-    final double k = 186.5409338456308, velocity = 0.0375, pesoTurret = 0, pesoBola = 74.8,
-            alturamenor = 74, alturamaior = 124, g = 980, k_lip = 0.95, r = 4.5;
+    Servo servoY;
+    CRServo servoX;
 
-    public Turret(HardwareMap hwmap) {
-        servoX = hwmap.get(CRServo.class, "servoX");
-        servoY = hwmap.get(Servo.class, "servoY");
+    DcMotorEx flywheelB, flywheelC;
 
-        flywheelB = hwmap.get(DcMotorEx.class, "left");
-        flywheelC = hwmap.get(DcMotorEx.class, "flywheelC");
+    Limelight3A limelight3A;
+    final double k = 186.5409338456308, velocity = 0.0375, pesoTurret = 0, pesoBola = 74.8, alturamenor = 74, alturamaior = 124, g = 980, k_lip = 0.95, r = 4.5;
+    public turret (HardwareMap hwmap){
 
-        limelight3A = hwmap.get(Limelight3A.class, "limelight3A");
-        limelight3A.pipelineSwitch(1);
     }
 
-    public void mirar() {
+    public void mirar(){}
+
+    public void atirar(Telemetry telemetry){
+        // Obtém o último resultado da Limelight (visão).
         LLResult resultado = limelight3A.getLatestResult();
 
         // ATENÇÃO: em runtime, valide nulidade/targets antes de usar (ver observações).
@@ -61,7 +44,14 @@ public class Turret {
 
         // Loop sobre cada detecção de fiducial (AprilTag).
         for (LLResultTypes.FiducialResult fr : fiducialResults) {
-
+            telemetry.addData(
+                    "Fiducial",
+                    "ID: %d, Family: %s, X: %.2f, Y: %.2f",
+                    fr.getFiducialId(),
+                    fr.getFamily(),
+                    fr.getTargetXDegrees(),
+                    fr.getTargetYDegrees()
+            );
 
             // --------- Geometria para estimativa de distâncias/ângulos ----------
             // hipmenor: “hipotenusa” (distância) estimada via área da tag (ta). Usa fator empírico k.
@@ -133,11 +123,21 @@ public class Turret {
                 // Define a velocidade dos dois motores da flywheel (negativo para sentido desejado).
                 flywheelB.setVelocity(-rpm);
                 flywheelC.setVelocity(-rpm);
+
+                // Telemetria para depuração em campo.
+                telemetry.addData("Power: ", power);
+                telemetry.addData("Angulo servo X: ", anguloX);
+                telemetry.addData("Angulo Maior:", angulomaior);
+                telemetry.addData("hip maior:", hipmaior);
+                telemetry.addData("hip menor:", hipmenor);
+                telemetry.addData("base menor:", basemenor);
+                telemetry.addData("base maior:", basemaior);
+
+                telemetry.addData("rpm:", rpm);
+                telemetry.addData("velocity B:", flywheelB.getVelocity());
+                telemetry.addData("velocity C:", flywheelC.getVelocity());
             }
-
-
         }
 
     }
 }
-
