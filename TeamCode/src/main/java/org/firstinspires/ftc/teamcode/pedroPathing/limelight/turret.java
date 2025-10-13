@@ -1,64 +1,37 @@
-package org.firstinspires.ftc.teamcode.pedroPathing.Prototipo1_Metal_REV;
+package org.firstinspires.ftc.teamcode.pedroPathing.limelight;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.List;
 
-@TeleOp(group = "Prototipo", name = "turret")
-public class Shooter_MoveX extends OpMode {
+public class turret {
 
-    // Servo contínuo que gira a torre (turret) no eixo X (pan) para centralizar na AprilTag.
-    CRServo servoX;
-
-    // Servo posicional que ajusta a elevação da turret (eixo Y / tilt) para definir o ângulo de arremesso.
-    Servo servoY;
-
-    // Motores da flywheel (lançamento da bola).
-    DcMotorEx flywheelB, flywheelC;
-
-    // Câmera Limelight 3A (detecção de AprilTag / visão).
-    Limelight3A limelight3A;
-
-    // Variáveis geométricas/angulares usadas nos cálculos de mira/alcance.
     double anguloX, anguloY, angulomaior, delta, hipmenor, hipmaior, basemenor, basemaior;
-
-    // Variáveis relacionadas aos servos e controle de força no eixo X.
     double posdoservoy, eixoX, eixoY, power, servoXPosRad, servoYPosRad, forcaPesoTotal;
-
-    // Variáveis da flywheel (cinemática do disparo).
     double Vborda, rev, rpm, v;
 
-    // Constantes de projeto/físicas (unidades precisam ser coerentes — ver observações ao final).
-    // k: fator para estimar distância a partir da área (ta) da tag; velocity: ganho simples para servoX;
-    // pesos em gramas; alturas em mm (?) ; g em cm/s² (980); k_lip: perda por atrito (lip), r: raio da flywheel.
-    final double k = 186.5409338456308, velocity = 0.0375, pesoTurret = 0, pesoBola = 74.8,
-            alturamenor = 74, alturamaior = 124, g = 980, k_lip = 0.95, r = 4.5;
+    Servo servoY;
+    CRServo servoX;
 
-    @Override
-    public void init() {
-        // Mapeamento de hardware.
-        flywheelB = hardwareMap.get(DcMotorEx.class, "flywheelB");
-        flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelC");
-        servoX = hardwareMap.get(CRServo.class, "servoX");
-        servoY = hardwareMap.get(Servo.class, "servoY");
-        limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
+    DcMotorEx flywheelB, flywheelC;
 
-        // Seleciona pipeline (ex.: AprilTag 3D) e inicia a câmera.
-        limelight3A.pipelineSwitch(1);
-        limelight3A.start();
+    Limelight3A limelight3A;
+    final double k = 186.5409338456308, velocity = 0.0375, pesoTurret = 0, pesoBola = 74.8, alturamenor = 74, alturamaior = 124, g = 980, k_lip = 0.95, r = 4.5;
+    public turret (HardwareMap hwmap){
 
-        servoY.setDirection(Servo.Direction.REVERSE);
     }
 
-    @Override
-    public void loop() {
+    public void mirar(){}
+
+    public void atirar(Telemetry telemetry){
         // Obtém o último resultado da Limelight (visão).
         LLResult resultado = limelight3A.getLatestResult();
 
@@ -163,9 +136,8 @@ public class Shooter_MoveX extends OpMode {
                 telemetry.addData("rpm:", rpm);
                 telemetry.addData("velocity B:", flywheelB.getVelocity());
                 telemetry.addData("velocity C:", flywheelC.getVelocity());
-
-                telemetry.update();
             }
         }
+
     }
 }

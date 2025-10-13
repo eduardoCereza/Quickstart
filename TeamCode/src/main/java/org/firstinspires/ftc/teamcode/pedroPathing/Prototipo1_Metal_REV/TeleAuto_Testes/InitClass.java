@@ -18,7 +18,7 @@ public class Init_Class {
     public Limelight3A limelight3A;
 
     Follower follower;
-    public void initComponentsAuto(HardwareMap hardwareMap, Pose startPose, int pipelineIndex) {
+    public void initComponents(HardwareMap hardwareMap, Pose startPose, int pipelineIndex) {
         servoX = hardwareMap.get(CRServo.class, "servoX");
         servoY = hardwareMap.get(Servo.class, "servoY");
 
@@ -34,6 +34,7 @@ public class Init_Class {
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(startPose);
         follower.update();
+        follower.startTeleopDrive();
     }
 
 }

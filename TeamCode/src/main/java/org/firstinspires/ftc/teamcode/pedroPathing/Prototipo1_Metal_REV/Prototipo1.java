@@ -4,9 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.pedroPathing.Prototipo1_Metal_REV.TeleAuto_Testes.RunPeriods;
+
 //@TeleOp(name = "Prototipo 1 Teste", group = "Prototipo")
 public class Prototipo1 extends OpMode {
     DcMotor motor, motor2, corerex, slide;
+
 
     @Override
     public void init(){
@@ -34,6 +37,7 @@ public class Prototipo1 extends OpMode {
         else {
             motor.setPower(0);
             motor2.setPower(0);
+
         }
 
         /*
