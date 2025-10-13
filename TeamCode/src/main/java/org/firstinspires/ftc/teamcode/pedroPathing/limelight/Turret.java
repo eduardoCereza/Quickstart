@@ -1,19 +1,16 @@
-package org.firstinspires.ftc.teamcode.pedroPathing.Prototipo1_Metal_REV;
+package org.firstinspires.ftc.teamcode.pedroPathing.limelight;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.List;
 
-@TeleOp(group = "Prototipo", name = "turret")
-public class Shooter_MoveX extends OpMode {
-
+public class Turret {
     // Servo contínuo que gira a torre (turret) no eixo X (pan) para centralizar na AprilTag.
     CRServo servoX;
 
@@ -41,23 +38,18 @@ public class Shooter_MoveX extends OpMode {
     final double k = 186.5409338456308, velocity = 0.0375, pesoTurret = 0, pesoBola = 74.8,
             alturamenor = 74, alturamaior = 124, g = 980, k_lip = 0.95, r = 4.5;
 
-    @Override
-    public void init() {
-        // Mapeamento de hardware.
-        flywheelB = hardwareMap.get(DcMotorEx.class, "flywheelB");
-        flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelC");
-        servoX = hardwareMap.get(CRServo.class, "servoX");
-        servoY = hardwareMap.get(Servo.class, "servoY");
-        limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
+    public Turret(HardwareMap hwmap) {
+        servoX = hwmap.get(CRServo.class, "servoX");
+        servoY = hwmap.get(Servo.class, "servoY");
 
-        // Seleciona pipeline (ex.: AprilTag 3D) e inicia a câmera.
+        flywheelB = hwmap.get(DcMotorEx.class, "left");
+        flywheelC = hwmap.get(DcMotorEx.class, "flywheelC");
+
+        limelight3A = hwmap.get(Limelight3A.class, "limelight3A");
         limelight3A.pipelineSwitch(1);
-        limelight3A.start();
     }
 
-    @Override
-    public void loop() {
-        // Obtém o último resultado da Limelight (visão).
+    public void mirar() {
         LLResult resultado = limelight3A.getLatestResult();
 
         // ATENÇÃO: em runtime, valide nulidade/targets antes de usar (ver observações).
@@ -69,14 +61,7 @@ public class Shooter_MoveX extends OpMode {
 
         // Loop sobre cada detecção de fiducial (AprilTag).
         for (LLResultTypes.FiducialResult fr : fiducialResults) {
-            telemetry.addData(
-                    "Fiducial",
-                    "ID: %d, Family: %s, X: %.2f, Y: %.2f",
-                    fr.getFiducialId(),
-                    fr.getFamily(),
-                    fr.getTargetXDegrees(),
-                    fr.getTargetYDegrees()
-            );
+
 
             // --------- Geometria para estimativa de distâncias/ângulos ----------
             // hipmenor: “hipotenusa” (distância) estimada via área da tag (ta). Usa fator empírico k.
@@ -148,22 +133,11 @@ public class Shooter_MoveX extends OpMode {
                 // Define a velocidade dos dois motores da flywheel (negativo para sentido desejado).
                 flywheelB.setVelocity(-rpm);
                 flywheelC.setVelocity(-rpm);
-
-                // Telemetria para depuração em campo.
-                telemetry.addData("Power: ", power);
-                telemetry.addData("Angulo servo X: ", anguloX);
-                telemetry.addData("Angulo Maior:", angulomaior);
-                telemetry.addData("hip maior:", hipmaior);
-                telemetry.addData("hip menor:", hipmenor);
-                telemetry.addData("base menor:", basemenor);
-                telemetry.addData("base maior:", basemaior);
-
-                telemetry.addData("rpm:", rpm);
-                telemetry.addData("velocity B:", flywheelB.getVelocity());
-                telemetry.addData("velocity C:", flywheelC.getVelocity());
-
-                telemetry.update();
             }
+
+
         }
+
     }
 }
+

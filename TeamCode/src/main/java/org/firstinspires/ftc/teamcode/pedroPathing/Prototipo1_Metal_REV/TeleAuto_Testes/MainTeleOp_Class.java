@@ -14,7 +14,7 @@ public class MainTeleOp_Class extends OpMode {
 
     @Override
     public void init(){
-        initClass.initComponents(hardwareMap, startPose,1);
+        initClass.initComponentsAuto(hardwareMap, startPose,1);
     }
 
     @Override
