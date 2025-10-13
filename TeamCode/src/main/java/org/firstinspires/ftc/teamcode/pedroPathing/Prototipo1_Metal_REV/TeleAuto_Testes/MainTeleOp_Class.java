@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name = "Testes - Protótipos")
 public class MainTeleOp_Class extends OpMode {
 
-    Init_Class initClass = new Init_Class();
+    InitClass initClass = new InitClass();
     RunPeriods run = new RunPeriods();
 
     Pose startPose = new Pose(90, 80);
@@ -24,15 +24,10 @@ public class MainTeleOp_Class extends OpMode {
         double y = gamepad1.left_stick_y;
         double turn = gamepad1.right_stick_x;
 
-        boolean ativador = gamepad1.a;
-        boolean desativador = gamepad1.b;
-        float levantar = gamepad1.left_trigger;
-        float descer = gamepad1.right_trigger;
-
-        //run.TeleOp(y, x, turn);
+        run.TeleOp(y, x, turn);
 
         //run.Lançador(telemetry);
 
-        run.Levantar(levantar, descer, ativador, desativador);
+        //run.Levantar(levantar, descer, ativador, desativador);
     }
 }

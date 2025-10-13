@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.pedroPathing.Prototipo1_Metal_REV.TeleAut
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
+import com.pedropathing.util.Timer;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -10,13 +11,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-public class Init_Class {
+public class InitClass {
 
     public DcMotorEx flywheelB, flywheelC, slideL, slideR;
     public CRServo servoX;
     public Servo servoY;
     public Limelight3A limelight3A;
 
+    Timer pathTimer, opmodeTimer;
     Follower follower;
     public void initComponents(HardwareMap hardwareMap, Pose startPose, int pipelineIndex) {
         servoX = hardwareMap.get(CRServo.class, "servoX");

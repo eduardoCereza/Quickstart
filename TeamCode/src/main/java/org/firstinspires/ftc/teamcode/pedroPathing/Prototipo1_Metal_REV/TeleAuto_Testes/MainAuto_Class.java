@@ -15,7 +15,6 @@ public class MainAuto_Class extends OpMode {
     @Override
     public void init(){
         run = new RunPeriods();
-        run.initComponents(hardwareMap, 1, startPose, false);
         
     }
 
