@@ -11,16 +11,22 @@ public class MainAuto_Class extends OpMode {
     RunPeriods run;
     private final Pose startPose = new Pose(28.5,128, Math.toRadians(180));
 
+
     @Override
     public void init(){
         run = new RunPeriods();
-        run.initComponents(hardwareMap, 1, startPose);
+        run.initComponents(hardwareMap, 1, startPose, false);
         
     }
 
     @Override
     public void loop(){
 
+    }
+    @Override
+    public void start() {
+        run.opmodeTimer.resetTimer();
+        run.setPathState(0);
     }
 
 }

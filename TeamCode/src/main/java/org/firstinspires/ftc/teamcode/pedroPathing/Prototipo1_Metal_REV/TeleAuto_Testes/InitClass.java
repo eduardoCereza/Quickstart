@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.pedroPathing.Prototipo1_Metal_REV.TeleAut
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
+import com.pedropathing.util.Timer;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -22,9 +23,14 @@ public class InitClass {
     Follower follower;
     Limelight3A limelight3A;
 
+    Timer pathTimer, opmodeTimer;
 
 
-    public void initComponents(HardwareMap hardwareMap, int pipelineIndex, Pose startPose){
+    private void buildPaths(){
+
+    }
+
+    public void initComponents(HardwareMap hardwareMap, int pipelineIndex, Pose startPose, boolean teleop){
         servoX = hardwareMap.get(CRServo.class, "servoX");
         servoY = hardwareMap.get(Servo.class, "servoY");
 
@@ -40,14 +46,22 @@ public class InitClass {
         limelight3A.pipelineSwitch(pipelineIndex);
         limelight3A.start();
 
+        pathTimer = new Timer();
+        opmodeTimer = new Timer();
+        opmodeTimer.resetTimer();
 
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(startPose);
-        follower.update();
-        follower.startTeleopDrive();
 
+
+        if (teleop){
+            follower.startTeleopDrive();
+        }else {
+            buildPaths();
+        }
 
     }
+
 
 
 }

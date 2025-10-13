@@ -27,6 +27,43 @@ public class RunPeriods extends InitClass{
     public void TeleOp(double y, double x, double turn){
 
         follower.setTeleOpDrive(y, x, turn, true);
+        follower.update();
+
+    }
+
+    public void acompanharAprilTag()
+    {
+        LLResult resultado = limelight3A.getLatestResult();
+        List<LLResultTypes.FiducialResult> fiducialResults = resultado.getFiducialResults();
+
+
+        eixoX = resultado.getTx();
+        // Loop sobre cada detecção de fiducial (AprilTag).
+        for (LLResultTypes.FiducialResult fr : fiducialResults) {
+            
+            // --------- Ângulo X (pan) ---------
+            // Usa deslocamento horizontal (eixoX) e “hipmaior” para obter ânguloX (aproximação).
+            // Observação: asin(eixoX/hipmaior) supõe eixoX em mesma unidade de comprimento da hipotenusa,
+            // mas eixoX está em graus (tx). Mantido conforme o original; ver observações.
+            servoXPosRad = eixoX / hipmaior;
+            anguloX = Math.toDegrees(Math.asin(servoXPosRad));
+
+            forcaPesoTotal = ((pesoBola / 1000.0) + (pesoTurret / 1000.0)) * 9.8;
+            power = (forcaPesoTotal * servoXPosRad * velocity) * 200.0;
+
+
+            // Lado vermelho (ID 24). Para o lado azul, replicar lógica com o ID correspondente.
+            if (fr.getFiducialId() == 24) {
+
+                // Mantém a turret tentando centralizar no X. Se há erro angular, aplica potência; senão zera.
+                if (anguloX != 0) {
+                    servoX.setPower(power);
+                } else {
+                    servoX.setPower(0);
+                }
+            }
+
+        }
 
     }
 
@@ -39,7 +76,6 @@ public class RunPeriods extends InitClass{
         List<LLResultTypes.FiducialResult> fiducialResults = resultado.getFiducialResults();
 
         // Deslocamentos da tag em graus (tx = horizontal; ty = vertical) conforme a Limelight.
-        eixoX = resultado.getTx();
         eixoY = resultado.getTy();
 
         // Loop sobre cada detecção de fiducial (AprilTag).
@@ -175,6 +211,12 @@ public class RunPeriods extends InitClass{
         telemetry.addLine("Rodando");
         telemetry.update();
 
+    }
+
+    public void setPathState(int pState)
+    {
+        pathState = pState;
+        pathTimer.resetTimer();
     }
 
 }
