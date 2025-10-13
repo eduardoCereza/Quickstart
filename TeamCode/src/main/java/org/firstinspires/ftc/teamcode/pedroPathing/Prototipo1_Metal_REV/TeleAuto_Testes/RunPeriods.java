@@ -24,6 +24,10 @@ public class RunPeriods extends InitClass{
     int pathState;
     final double k = 186.5409338456308, velocity = 0.0375, pesoTurret = 0, pesoBola = 74.8, alturamenor = 74, alturamaior = 124, g = 980, k_lip = 0.95, r = 4.5;
 
+    public void initTeleOp(){
+        follower.update();
+
+    }
     public void TeleOp(double y, double x, double turn){
 
         follower.setTeleOpDrive(y, x, turn, true);
@@ -115,18 +119,7 @@ public class RunPeriods extends InitClass{
             // Posição normalizada do servo [0..1] a partir do ângulo (simplificação).
             posdoservoy = anguloY / 180.0;
 
-            // --------- Ângulo X (pan) ---------
-            // Usa deslocamento horizontal (eixoX) e “hipmaior” para obter ânguloX (aproximação).
-            // Observação: asin(eixoX/hipmaior) supõe eixoX em mesma unidade de comprimento da hipotenusa,
-            // mas eixoX está em graus (tx). Mantido conforme o original; ver observações.
-            servoXPosRad = eixoX / hipmaior;
-            anguloX = Math.toDegrees(Math.asin(servoXPosRad));
 
-            // --------- Controle simples de power no servoX ---------
-            // Força “equivalente” considerando massa (pesoBola + pesoTurret) e uma constante de velocidade.
-            // Multiplica por 200 como ganho final (tunagem empírica).
-            forcaPesoTotal = ((pesoBola / 1000.0) + (pesoTurret / 1000.0)) * 9.8;
-            power = (forcaPesoTotal * servoXPosRad * velocity) * 200.0;
 
             // --------- Cálculos de velocidade para a flywheel ---------
             // v: velocidade de saída necessária para alcançar a base/altura desejada (balística sem arrasto).
@@ -145,13 +138,6 @@ public class RunPeriods extends InitClass{
 
             // Lado vermelho (ID 24). Para o lado azul, replicar lógica com o ID correspondente.
             if (fr.getFiducialId() == 24) {
-
-                // Mantém a turret tentando centralizar no X. Se há erro angular, aplica potência; senão zera.
-                if (anguloX != 0) {
-                    servoX.setPower(power);
-                } else {
-                    servoX.setPower(0);
-                }
 
                 // Ajusta a elevação (Y) do tiro conforme posição calculada.
                 servoY.setPosition(posdoservoy);
@@ -213,10 +199,5 @@ public class RunPeriods extends InitClass{
 
     }
 
-    public void setPathState(int pState)
-    {
-        pathState = pState;
-        pathTimer.resetTimer();
-    }
 
 }

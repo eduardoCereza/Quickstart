@@ -6,15 +6,16 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "Testes - Protótipos")
 public class MainTeleOp_Class extends OpMode {
-
-    InitClass initClass = new InitClass();
     RunPeriods run = new RunPeriods();
-
-    Pose startPose = new Pose(90, 80);
+    
+    public void start(){
+        run.follower.startTeleopDrive();
+    }
 
     @Override
     public void init(){
-        initClass.initComponents(hardwareMap, startPose,1);
+        run.initComponents(hardwareMap,1);
+
     }
 
     @Override
@@ -25,6 +26,7 @@ public class MainTeleOp_Class extends OpMode {
         double turn = gamepad1.right_stick_x;
 
         run.TeleOp(y, x, turn);
+        run.acompanharAprilTag();
 
         //run.Lançador(telemetry);
 

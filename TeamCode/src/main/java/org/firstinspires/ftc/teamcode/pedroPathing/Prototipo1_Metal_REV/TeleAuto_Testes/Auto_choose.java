@@ -72,7 +72,7 @@ public class Auto_choose extends OpMode {
     /** This method is called once at the init of the OpMode. **/
     @Override
     public void init() {
-        run.initComponents(hardwareMap, startRed, 1);
+        run.initComponents(hardwareMap, 1);
         pathTimer = new Timer();
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(startRed);

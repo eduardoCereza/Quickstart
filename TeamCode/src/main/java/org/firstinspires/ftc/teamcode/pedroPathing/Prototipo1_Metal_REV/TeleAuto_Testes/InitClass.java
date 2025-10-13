@@ -20,8 +20,11 @@ public class InitClass {
 
     Timer pathTimer, opmodeTimer;
     Follower follower;
-    public void initComponents(HardwareMap hardwareMap, Pose startPose, int pipelineIndex) {
+    Pose startPose;
+    public void initComponents(HardwareMap hardwareMap, int pipelineIndex) {
+
         servoX = hardwareMap.get(CRServo.class, "servoX");
+        /*
         servoY = hardwareMap.get(Servo.class, "servoY");
 
         flywheelB = hardwareMap.get(DcMotorEx.class, "left");
@@ -30,13 +33,14 @@ public class InitClass {
         slideL = hardwareMap.get(DcMotorEx.class, "slideL");
         slideR = hardwareMap.get(DcMotorEx.class, "slideR");
 
-        limelight3A = hardwareMap.get(Limelight3A.class, "limelight3A");
+         */
+
+        limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
         limelight3A.pipelineSwitch(pipelineIndex);
 
         follower = Constants.createFollower(hardwareMap);
-        follower.setStartingPose(startPose);
+        follower.setStartingPose(startPose == null ? new Pose() : startPose);
         follower.update();
-        follower.startTeleopDrive();
     }
 
 }
