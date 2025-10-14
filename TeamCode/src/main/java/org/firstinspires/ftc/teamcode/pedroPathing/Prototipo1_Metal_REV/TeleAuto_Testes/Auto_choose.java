@@ -8,7 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import org.firstinspires.ftc.teamcode.pedroPathing.Prototipo1_Metal_REV.TeleAuto_Testes.Turret;
+import org.firstinspires.ftc.teamcode.pedroPathing.limelight.Turret;
+
 @Autonomous(name = "AUTONOMOUS DECODE")
 public class Auto_choose extends OpMode {
     private Follower follower;
@@ -35,7 +36,7 @@ public class Auto_choose extends OpMode {
     Turret xoter = new Turret(hardwareMap);
 
     RunPeriods run = new RunPeriods();
-    InitClass init = new InitClass();
+    Init_Class init = new Init_Class();
 
     public void buildPaths() {
 
@@ -72,7 +73,7 @@ public class Auto_choose extends OpMode {
     /** This method is called once at the init of the OpMode. **/
     @Override
     public void init() {
-        run.initComponents(hardwareMap, 1);
+        init.initComponentsAuto(hardwareMap, startRed, 1);
         pathTimer = new Timer();
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(startRed);
