@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.pedroPathing.Prototipo1_Metal_REV.TeleAuto_Testes;
+package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-public class InitClass {
+public class Initialization {
 
     public DcMotorEx flywheelB, flywheelC, slideL, slideR;
     public CRServo servoX;
@@ -21,10 +21,10 @@ public class InitClass {
     Timer pathTimer, opmodeTimer;
     Follower follower;
     Pose startPose;
-    public void initComponents(HardwareMap hardwareMap, int pipelineIndex) {
+
+    public void initialization(HardwareMap hardwareMap, int pipelineIndex) {
 
         servoX = hardwareMap.get(CRServo.class, "servoX");
-        /*
         servoY = hardwareMap.get(Servo.class, "servoY");
 
         flywheelB = hardwareMap.get(DcMotorEx.class, "left");
@@ -32,8 +32,6 @@ public class InitClass {
 
         slideL = hardwareMap.get(DcMotorEx.class, "slideL");
         slideR = hardwareMap.get(DcMotorEx.class, "slideR");
-
-         */
 
         limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
         limelight3A.pipelineSwitch(pipelineIndex);

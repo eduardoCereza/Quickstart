@@ -35,8 +35,7 @@ public class RunPeriods extends InitClass{
 
     }
 
-    public void acompanharAprilTag()
-    {
+    public void acompanharAprilTag() {
         LLResult resultado = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = resultado.getFiducialResults();
 
