@@ -18,6 +18,8 @@ public class Initialization {
     public Servo servoY;
     public Limelight3A limelight3A;
 
+    double eixoX;
+
     Timer pathTimer, opmodeTimer;
     Follower follower;
     Pose startPose;
@@ -27,7 +29,9 @@ public class Initialization {
         servoX = hardwareMap.get(CRServo.class, "servoX");
         servoY = hardwareMap.get(Servo.class, "servoY");
 
-        flywheelB = hardwareMap.get(DcMotorEx.class, "left");
+        servoY.setDirection(Servo.Direction.REVERSE);
+
+        flywheelB = hardwareMap.get(DcMotorEx.class, "flywheelB");
         flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelC");
 
         slideL = hardwareMap.get(DcMotorEx.class, "slideL");
@@ -40,6 +44,14 @@ public class Initialization {
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(startPose == null ? new Pose() : startPose);
         follower.update();
+    }
+
+    public void startTeleOp(){
+        follower.startTeleopDrive();
+    }
+
+    public void setTeleOpDrive(double y, double x, double turn){
+        follower.setTeleOpDrive(y, x, turn, true);
     }
 
 }
