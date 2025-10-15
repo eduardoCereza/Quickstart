@@ -14,8 +14,6 @@ import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Teleoperado.TeleO
 @TeleOp(name="Selecionar Periodos")
 
 public class SelectPeriod extends SelectableOpMode {
-    Initialization initialization;
-
 
     public SelectPeriod() {
         super("Select OpMode", s -> {
@@ -36,7 +34,5 @@ public class SelectPeriod extends SelectableOpMode {
             });
         });
 
-        initialization = new Initialization();
-        initialization.initialization(hardwareMap, 1);
     }
 }

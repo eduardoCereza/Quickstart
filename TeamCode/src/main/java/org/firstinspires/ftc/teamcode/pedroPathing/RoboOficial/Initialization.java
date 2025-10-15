@@ -20,29 +20,29 @@ public class Initialization {
 
     public Timer pathTimer, opmodeTimer;
     public Follower follower;
-    Pose startPose;
+    Pose startPose = new Pose(0, 0);
 
     public void initialization(HardwareMap hardwareMap, int pipelineIndex) {
 
         servoX = hardwareMap.get(CRServo.class, "servoX");
-        servoY = hardwareMap.get(Servo.class, "servoY");
+        //servoY = hardwareMap.get(Servo.class, "servoY");
 
-        servoY.setDirection(Servo.Direction.REVERSE);
+        //servoY.setDirection(Servo.Direction.REVERSE);
 
-        sugador = hardwareMap.get(CRServo.class, "sugador");
+        //sugador = hardwareMap.get(CRServo.class, "sugador");
 
-        flywheelB = hardwareMap.get(DcMotorEx.class, "flywheelB");
-        flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelC");
+        //flywheelB = hardwareMap.get(DcMotorEx.class, "flywheelB");
+        //flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelC");
 
-        slideL = hardwareMap.get(DcMotorEx.class, "slideL");
-        slideR = hardwareMap.get(DcMotorEx.class, "slideR");
+        //slideL = hardwareMap.get(DcMotorEx.class, "slideL");
+        //slideR = hardwareMap.get(DcMotorEx.class, "slideR");
 
         limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
         limelight3A.pipelineSwitch(pipelineIndex);
         limelight3A.start();
 
         follower = Constants.createFollower(hardwareMap);
-        follower.setStartingPose(startPose == null ? new Pose() : startPose);
+        follower.setStartingPose(startPose);
         follower.update();
     }
 
