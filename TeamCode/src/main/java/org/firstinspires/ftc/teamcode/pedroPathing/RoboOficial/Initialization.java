@@ -20,7 +20,6 @@ public class Initialization {
 
     public Timer pathTimer, opmodeTimer;
     public Follower follower;
-    Pose startPose = new Pose(0, 0);
 
     public void initialization(HardwareMap hardwareMap, int pipelineIndex) {
 
@@ -42,7 +41,6 @@ public class Initialization {
         limelight3A.start();
 
         follower = Constants.createFollower(hardwareMap);
-        follower.setStartingPose(startPose);
         follower.update();
     }
 
