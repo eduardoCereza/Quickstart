@@ -10,24 +10,29 @@ import java.util.List;
 public class RunMode extends Initialization {
 
     //Definição do ID;
-    final int id = 24;
+    public final int id = 24;
 
     //Variáveis para o servo do eixoX
-    double eixoX, seno, ta, anguloX, power, forcaPesoTotal;
+    private double eixoX, seno, ta, anguloX, power, forcaPesoTotal;
 
     //Variáveis para o servo do eixoY
-    double eixoY, v, hipotenusaMenor, hipotenusaMaior,
+    private double eixoY, v, hipotenusaMenor, hipotenusaMaior,
             baseMenor, baseMaior,
             positionServoY,
             delta, angulomaior,anguloY, tangente,
             Vborda, rev, rpm;
 
     //Constantes necessárias
-    final double k = 186.5409338456308,
+    private final double k = 186.5409338456308,
             g = 980, velocityServoX = 0.0375,
             pesoBola = 74.8, pesoTurret = 0,
             alturaMenor = 74, alturaMaior = 124,
             k_lip = 0.95, r = 4.5;
+
+
+    public void moveChassi(double y, double x, double turn){
+        follower.setTeleOpDrive(y, x, turn, true);
+    }
 
     public void followAprilTag(){
         LLResult result = limelight3A.getLatestResult();
@@ -62,7 +67,7 @@ public class RunMode extends Initialization {
 
     }
 
-    public void moveLauncher(){
+    public void moveLauncher(float ativador){
         LLResult result = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
 
@@ -99,11 +104,19 @@ public class RunMode extends Initialization {
                 // Ajusta a elevação (Y) do tiro conforme posição calculada.
                 servoY.setPosition(positionServoY);
 
-                // Define a velocidade dos dois motores da flywheel (negativo para sentido desejado).
-                flywheelB.setVelocity(-rpm);
-                flywheelC.setVelocity(-rpm);
+                if (ativador > 0.5) {
+                    // Define a velocidade dos dois motores da flywheel (negativo para sentido desejado).
+                    flywheelB.setVelocity(-rpm);
+                    flywheelC.setVelocity(-rpm);
+                }
             }
         }
 
+    }
+
+    public void moveSucker(float ativador){
+        if (ativador > 0.5){
+            sugador.setPower(1);
+        }
     }
 }

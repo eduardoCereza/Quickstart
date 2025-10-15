@@ -14,14 +14,12 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 public class Initialization {
 
     public DcMotorEx flywheelB, flywheelC, slideL, slideR;
-    public CRServo servoX;
+    public CRServo servoX, sugador;
     public Servo servoY;
     public Limelight3A limelight3A;
 
-    double eixoX;
-
-    Timer pathTimer, opmodeTimer;
-    Follower follower;
+    public Timer pathTimer, opmodeTimer;
+    public Follower follower;
     Pose startPose;
 
     public void initialization(HardwareMap hardwareMap, int pipelineIndex) {
@@ -30,6 +28,8 @@ public class Initialization {
         servoY = hardwareMap.get(Servo.class, "servoY");
 
         servoY.setDirection(Servo.Direction.REVERSE);
+
+        sugador = hardwareMap.get(CRServo.class, "sugador");
 
         flywheelB = hardwareMap.get(DcMotorEx.class, "flywheelB");
         flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelC");
@@ -46,12 +46,5 @@ public class Initialization {
         follower.update();
     }
 
-    public void startTeleOp(){
-        follower.startTeleopDrive();
-    }
-
-    public void setTeleOpDrive(double y, double x, double turn){
-        follower.setTeleOpDrive(y, x, turn, true);
-    }
 
 }
