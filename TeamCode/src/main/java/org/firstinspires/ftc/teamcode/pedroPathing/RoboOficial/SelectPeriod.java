@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial;
 
 import com.pedropathing.telemetry.SelectableOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.AutoGPP_Blue;
@@ -10,23 +9,12 @@ import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.AutoPG
 import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.AutoPGP_Red;
 import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.AutoPPG_Blue;
 import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.AutoPPG_Red;
-
+import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Teleoperado.TeleOp_Class;
 
 @TeleOp(name="Selecionar Periodos")
 
 public class SelectPeriod extends SelectableOpMode {
     Initialization initialization;
-
-
-    public static class TeleOp_Class extends OpMode{
-        public void init(){
-        }
-
-        public void loop(){
-            telemetry.addLine("TELEOPERADO RODANDO!");
-            telemetry.update();
-        }
-    }
 
 
     public SelectPeriod() {
