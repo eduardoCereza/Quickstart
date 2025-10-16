@@ -58,10 +58,8 @@ public class SystemLauncher extends Initialization {
             rpm = rev * 60.0;
 
             if (fr.getFiducialId() == id[index]){
-                // Ajusta a elevação (Y) do tiro conforme posição calculada.
                 servoY.setPosition(positionServoY);
 
-                // Define a velocidade dos dois motores da flywheel (negativo para sentido desejado).
                 flywheelB.setVelocity(-rpm);
                 flywheelC.setVelocity(-rpm);
             }
