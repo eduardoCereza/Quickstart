@@ -15,17 +15,17 @@ public class AutoGPP_Blue extends OpMode {
     private Follower follower;
 
     private SystemLauncher systemLauncher;
-    private com.pedropathing.util.Timer pathTimer, actionTimer, opmodeTimer;
+    public com.pedropathing.util.Timer pathTimer, actionTimer, opmodeTimer;
 
-    private int pathState;
+    public int pathState;
 
-    private final Pose startPose = new Pose(28.5, 128, Math.toRadians(180)); // Start Pose of our robot.
-    private final Pose bolaVerde = new Pose(60, 85, Math.toRadians(135)); // Scoring Pose of our robot. It is facing the goal at a 135 degree angle.
-    private final Pose bolaRoxa1 = new Pose(37, 121, Math.toRadians(0)); // Highest (First Set) of Artifacts from the Spike Mark.
-    private final Pose bolaRoxa2 = new Pose(43, 130, Math.toRadians(0)); // Middle (Second Set) of Artifacts from the Spike Mark.
+    public final Pose startPose = new Pose(28.5, 128, Math.toRadians(180)); // Start Pose of our robot.
+    public final Pose bolaVerde = new Pose(60, 85, Math.toRadians(135)); // Scoring Pose of our robot. It is facing the goal at a 135 degree angle.
+    public final Pose bolaRoxa1 = new Pose(37, 121, Math.toRadians(0)); // Highest (First Set) of Artifacts from the Spike Mark.
+    public final Pose bolaRoxa2 = new Pose(43, 130, Math.toRadians(0)); // Middle (Second Set) of Artifacts from the Spike Mark.
 
-    private final Pose goal = new Pose();
-    private PathChain moveToBallPurple1, moveToBallPurple2, moveToBallGreen, moveToGoal;
+    public final Pose goal = new Pose();
+    public PathChain moveToBallPurple1, moveToBallPurple2, moveToBallGreen, moveToGoal;
 
     public void buildPaths() {
         moveToBallGreen = follower.pathBuilder()
