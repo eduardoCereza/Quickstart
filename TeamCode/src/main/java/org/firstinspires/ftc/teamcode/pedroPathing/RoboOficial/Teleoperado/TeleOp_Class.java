@@ -6,6 +6,11 @@ public class TeleOp_Class extends OpMode {
     RunMode run = new RunMode();
     int index;
 
+    double x, y, turn;
+
+    String mensagem, avisoChassi;
+    boolean invertido;
+
     @Override
     public void init(){
         run.initialization(hardwareMap, 1);
@@ -17,22 +22,46 @@ public class TeleOp_Class extends OpMode {
         //run.moveLauncher(gamepad2.left_trigger);
         //run.moveSucker(gamepad2.right_trigger);
 
+        x = gamepad1.left_stick_x;
+        y = gamepad1.left_stick_y;
+        turn = gamepad1.right_stick_x;
+
         if (gamepad1.dpad_left){
             index = 1;
-            telemetry.addLine("Aliança AZUL!");
+            mensagem = "Aliança AZUL!";
         } else if (gamepad1.dpad_right) {
             index = 0;
-            telemetry.addLine("Aliança VERMELHA!");
+            mensagem = "Aliança VERMELHA!";
         }
 
+        telemetry.addLine(mensagem);
+
+
+        if (gamepad1.cross){
+            invertido = false;
+        } else if (gamepad1.circle) {
+            invertido = true;
+        }
+
+        if (!invertido){
+            run.moveChassi(-y, -x, -turn);
+            avisoChassi = "CHASSI NORMAL";
+
+        }else {
+            run.moveChassi(y, x, turn);
+            avisoChassi = "CHASSI INVERTIDO!";
+        }
+
+        telemetry.addLine(avisoChassi);
+        telemetry.addLine("Rodando!");
         run.followAprilTag(index);
-        run.moveChassi(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+
 
         telemetry.update();
     }
 
     @Override
     public void start(){
-        run.follower.startTeleopDrive();
+        run.startTeleop();
     }
 }

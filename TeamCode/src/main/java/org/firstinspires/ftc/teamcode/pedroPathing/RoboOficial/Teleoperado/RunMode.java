@@ -31,8 +31,8 @@ public class RunMode extends Initialization {
 
 
     public void moveChassi(double y, double x, double turn){
-        follower.setTeleOpDrive(y, x, turn, true);
         follower.update();
+        follower.setTeleOpDrive(y, x, turn, true);
     }
 
     public void followAprilTag(int index){
@@ -62,6 +62,8 @@ public class RunMode extends Initialization {
                 }else {
                     servoX.setPower(0);
                 }
+            }else {
+                servoX.setPower(0);
             }
 
         }

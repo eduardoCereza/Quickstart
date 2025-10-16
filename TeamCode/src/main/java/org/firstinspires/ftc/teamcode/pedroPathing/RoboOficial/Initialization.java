@@ -18,7 +18,7 @@ public class Initialization {
     public Servo servoY;
     public Limelight3A limelight3A;
 
-    public Timer pathTimer, opmodeTimer;
+    //public Timer pathTimer, opmodeTimer;
     public Follower follower;
 
     public void initialization(HardwareMap hardwareMap, int pipelineIndex) {
@@ -42,6 +42,10 @@ public class Initialization {
 
         follower = Constants.createFollower(hardwareMap);
         follower.update();
+    }
+
+    public void startTeleop(){
+        follower.startTeleopDrive();
     }
 
 
