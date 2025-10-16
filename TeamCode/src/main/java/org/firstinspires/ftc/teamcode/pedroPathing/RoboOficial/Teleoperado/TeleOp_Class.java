@@ -35,6 +35,7 @@ public class TeleOp_Class extends OpMode {
         }
 
         telemetry.addLine(mensagem);
+        telemetry.addData("INDEX: ", index);
 
 
         if (gamepad1.cross){
