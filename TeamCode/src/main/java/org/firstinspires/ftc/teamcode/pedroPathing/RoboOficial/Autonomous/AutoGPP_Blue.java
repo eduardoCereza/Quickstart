@@ -79,7 +79,6 @@ public class AutoGPP_Blue extends OpMode {
         telemetry.update();
     }
 
-    /** This method is called once at the init of the OpMode. **/
     @Override
     public void init() {
         pathTimer = new Timer();
