@@ -1,33 +1,11 @@
-package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Teleoperado;
+package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 
-import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Initialization;
-
 import java.util.List;
 
 public class RunMode extends Initialization {
-
-    //Definição do ID;
-    public int[] id = {24, 20};
-
-    //Variáveis para o servo do eixoX
-    private double eixoX, seno, ta, anguloX, power, forcaPesoTotal;
-
-    //Variáveis para o servo do eixoY
-    private double eixoY, v, hipotenusaMenor, hipotenusaMaior,
-            baseMenor, baseMaior,
-            positionServoY,
-            delta, angulomaior,anguloY, tangente,
-            Vborda, rev, rpm;
-
-    //Constantes necessárias
-    private final double k = 186.5409338456308,
-            g = 980, velocityServoX = 0.0375,
-            pesoBola = 74.8, pesoTurret = 0,
-            alturaMenor = 74, alturaMaior = 124,
-            k_lip = 0.95, r = 4.5;
 
 
     public void moveChassi(double y, double x, double turn){

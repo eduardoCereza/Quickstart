@@ -13,6 +13,8 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 public class AutoGPP_Blue extends OpMode {
 
     private Follower follower;
+
+    private SystemLauncher systemLauncher;
     private com.pedropathing.util.Timer pathTimer, actionTimer, opmodeTimer;
 
     private int pathState;
@@ -21,7 +23,9 @@ public class AutoGPP_Blue extends OpMode {
     private final Pose bolaVerde = new Pose(60, 85, Math.toRadians(135)); // Scoring Pose of our robot. It is facing the goal at a 135 degree angle.
     private final Pose bolaRoxa1 = new Pose(37, 121, Math.toRadians(0)); // Highest (First Set) of Artifacts from the Spike Mark.
     private final Pose bolaRoxa2 = new Pose(43, 130, Math.toRadians(0)); // Middle (Second Set) of Artifacts from the Spike Mark.
-    private PathChain moveToBallPurple1, moveToBallPurple2, moveToBallGreen;
+
+    private final Pose goal = new Pose();
+    private PathChain moveToBallPurple1, moveToBallPurple2, moveToBallGreen, moveToGoal;
 
     public void buildPaths() {
         moveToBallGreen = follower.pathBuilder()
@@ -38,24 +42,37 @@ public class AutoGPP_Blue extends OpMode {
                 .addPath(new BezierLine(bolaRoxa1, bolaRoxa2))
                 .setLinearHeadingInterpolation(bolaRoxa1.getHeading(), bolaRoxa2.getHeading())
                 .build();
+
+        moveToGoal = follower.pathBuilder()
+                .addPath(new BezierLine(follower.getPose(), goal))
+                .setLinearHeadingInterpolation(follower.getHeading(), goal.getHeading())
+                .build();
     }
 
     public void autonomousPathUpdate() {
         switch (pathState) {
             case 0:
+                systemLauncher.moveLauncher("blue");
                 follower.followPath(moveToBallGreen);
+                systemLauncher.suck();
+                systemLauncher.launchBall(1);
                 setPathState(1);
                 break;
             case 1:
                 if(!follower.isBusy()) {
-
+                    systemLauncher.moveLauncher("blue");
                     follower.followPath(moveToBallPurple1,true);
+                    systemLauncher.suck();
+                    systemLauncher.launchBall(1);
                     setPathState(2);
                 }
                 break;
             case 2:
                 if(!follower.isBusy()) {
+                    systemLauncher.moveLauncher("blue");
                     follower.followPath(moveToBallPurple2,true);
+                    systemLauncher.suck();
+                    systemLauncher.launchBall(1);
                     //setPathState(3);
                 }
                 break;
@@ -84,6 +101,7 @@ public class AutoGPP_Blue extends OpMode {
         pathTimer = new Timer();
         opmodeTimer = new Timer();
         opmodeTimer.resetTimer();
+        systemLauncher = new SystemLauncher();
 
 
         follower = Constants.createFollower(hardwareMap);

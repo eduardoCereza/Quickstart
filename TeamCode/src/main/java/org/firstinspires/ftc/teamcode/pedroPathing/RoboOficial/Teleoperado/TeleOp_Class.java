@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Teleoperado;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.RunMode;
+
 public class TeleOp_Class extends OpMode {
     RunMode run = new RunMode();
     int index;
