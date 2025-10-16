@@ -10,7 +10,7 @@ import java.util.List;
 public class RunMode extends Initialization {
 
     //Definição do ID;
-    public final int id = 24;
+    public int[] id = {24, 20};
 
     //Variáveis para o servo do eixoX
     private double eixoX, seno, ta, anguloX, power, forcaPesoTotal;
@@ -32,9 +32,10 @@ public class RunMode extends Initialization {
 
     public void moveChassi(double y, double x, double turn){
         follower.setTeleOpDrive(y, x, turn, true);
+        follower.update();
     }
 
-    public void followAprilTag(){
+    public void followAprilTag(int index){
         LLResult result = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
 
@@ -55,7 +56,7 @@ public class RunMode extends Initialization {
             //Calculo de potência
             power = (velocityServoX * seno * forcaPesoTotal) * 100;
 
-            if (fr.getFiducialId() == id){
+            if (fr.getFiducialId() == id[index]){
                 if (anguloX != 0){
                     servoX.setPower(power);
                 }else {
@@ -67,7 +68,7 @@ public class RunMode extends Initialization {
 
     }
 
-    public void moveLauncher(float ativador){
+    public void moveLauncher(float ativador, int index){
         LLResult result = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
 
@@ -100,7 +101,7 @@ public class RunMode extends Initialization {
             rev = Vborda / (6.28 * r);
             rpm = rev * 60.0;
 
-            if (fr.getFiducialId() == id){
+            if (fr.getFiducialId() == id[index]){
                 // Ajusta a elevação (Y) do tiro conforme posição calculada.
                 servoY.setPosition(positionServoY);
 
