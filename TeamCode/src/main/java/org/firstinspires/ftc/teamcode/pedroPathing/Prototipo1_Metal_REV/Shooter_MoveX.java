@@ -117,7 +117,7 @@ public class Shooter_MoveX extends OpMode {
             // Força “equivalente” considerando massa (pesoBola + pesoTurret) e uma constante de velocidade.
             // Multiplica por 200 como ganho final (tunagem empírica).
             forcaPesoTotal = ((pesoBola / 1000.0) + (pesoTurret / 1000.0)) * 9.8;
-            power = (forcaPesoTotal * servoXPosRad * velocity) * 200.0;
+            power = (forcaPesoTotal * servoXPosRad * velocity) * 100.0;
 
             // --------- Cálculos de velocidade para a flywheel ---------
             // v: velocidade de saída necessária para alcançar a base/altura desejada (balística sem arrasto).
@@ -148,8 +148,8 @@ public class Shooter_MoveX extends OpMode {
                 servoY.setPosition(posdoservoy);
 
                 // Define a velocidade dos dois motores da flywheel (negativo para sentido desejado).
-                flywheelB.setVelocity(-rpm);
-                flywheelC.setVelocity(-rpm);
+                flywheelB.setVelocity(rpm);
+                flywheelC.setVelocity(rpm);
 
                 // Telemetria para depuração em campo.
                 telemetry.addData("Power: ", power);
