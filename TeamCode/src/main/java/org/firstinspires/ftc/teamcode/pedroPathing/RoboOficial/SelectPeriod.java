@@ -16,10 +16,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Teleoperado.TeleO
 public class SelectPeriod extends SelectableOpMode {
 
     public SelectPeriod() {
-        super("Select OpMode", s -> {
-            s.folder("TeleOp", t ->{
-                t.add("Modo teleoperado", TeleOp_Class::new);
-            });
+        super("Select Autonomous", s -> {
             s.folder("Autonomous", a ->{
                 a.folder("RED", r ->{
                     r.add("PPG", AutoPPG_Red::new);
