@@ -89,11 +89,7 @@ public class RunModeAuto extends Initialization {
                     servoX.setPower(0);
                 }
             }
-
-
-
         }
-
     }
 
     public void outTake(){
@@ -123,6 +119,5 @@ public class RunModeAuto extends Initialization {
 
     public void intake(){
             sugador.setPower(1);
-        }
-
+    }
 }
