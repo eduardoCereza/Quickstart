@@ -78,6 +78,7 @@ public class RunMode extends Initialization {
     }
 
     public void followAprilTag(int index){
+        calculos();
         LLResult result = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
 
@@ -95,6 +96,7 @@ public class RunMode extends Initialization {
 
     }
     public void outTake(float ativador){
+        calculos();
         LLResult result = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
 
@@ -107,6 +109,7 @@ public class RunMode extends Initialization {
         }
     }
     public void ajustePosition(int index){
+        calculos();
         LLResult result = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
 

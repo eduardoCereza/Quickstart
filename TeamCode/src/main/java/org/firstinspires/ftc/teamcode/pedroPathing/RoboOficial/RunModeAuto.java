@@ -9,24 +9,6 @@ import java.util.List;
 
 public class RunModeAuto extends Initialization {
 
-
-    //Definição do ID;
-    public int[] id = {24, 20};
-
-    double anguloX, anguloY, angulomaior, delta, hipmenor, hipmaior, basemenor, basemaior;
-
-    // Variáveis relacionadas aos servos e controle de força no eixo X.
-    double posdoservoy, eixoX, eixoY, power, servoXPosRad, servoYPosRad, forcaPesoTotal;
-
-    // Variáveis da flywheel (cinemática do disparo).
-    double Vborda, rev, rpm, v, ta;
-
-    // Constantes de projeto/físicas (unidades precisam ser coerentes — ver observações ao final).
-    // k: fator para estimar distância a partir da área (ta) da tag; velocity: ganho simples para servoX;
-    // pesos em gramas; alturas em mm (?) ; g em cm/s² (980); k_lip: perda por atrito (lip), r: raio da flywheel.
-    final double k = 186.5409338456308, velocity = 0.0375, pesoTurret = 0, pesoBola = 74.8,
-            alturamenor = 74, alturamaior = 124, g = 980, k_lip = 0.95, r = 4.5;
-
     public void calculos(){
         LLResult resultado = limelight3A.getLatestResult();
 
@@ -34,6 +16,7 @@ public class RunModeAuto extends Initialization {
         List<LLResultTypes.FiducialResult> fr = resultado.getFiducialResults();
 
         // Deslocamentos da tag em graus (tx = horizontal; ty = vertical) conforme a Limelight.
+        //Eixo invertido
         eixoX = resultado.getTx();
         eixoY = resultado.getTy();
         ta = resultado.getTa();
@@ -106,6 +89,8 @@ public class RunModeAuto extends Initialization {
                 }
             }
 
+
+
         }
 
     }
@@ -124,9 +109,6 @@ public class RunModeAuto extends Initialization {
     public void moveLauncher(int index) {
         LLResult result = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
-
-        eixoY = result.getTy();
-        ta = result.getTa();
 
         for (LLResultTypes.FiducialResult fr : fiducialResults) {
             if (fr.getFiducialId() == id[index]) {

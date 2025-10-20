@@ -26,7 +26,8 @@ public class Initialization {
     //Definição do ID;
     public int[] id = {24, 20};
 
-    double anguloX, anguloY, angulomaior, delta, hipmenor, hipmaior, basemenor, basemaior;
+    public double anguloX, anguloY;
+    double angulomaior, delta, hipmenor, hipmaior, basemenor, basemaior;
 
     // Variáveis relacionadas aos servos e controle de força no eixo X.
     double posdoservoy, eixoX, eixoY, power, servoXPosRad, servoYPosRad, forcaPesoTotal;
