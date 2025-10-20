@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous;
+package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.BLUE;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 

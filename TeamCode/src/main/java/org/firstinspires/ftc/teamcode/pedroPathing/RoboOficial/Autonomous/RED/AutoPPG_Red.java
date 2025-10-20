@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous;
+package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.RED;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierCurve;
@@ -11,9 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.RunModeAuto;
 
-import java.nio.file.Path;
-
-public class AutoGPP_Red extends OpMode{
+public class AutoPPG_Red extends OpMode{
 
     RunModeAuto run;
     private Follower follower;
@@ -45,15 +43,14 @@ public class AutoGPP_Red extends OpMode{
 
         //Pegar as 3 bolas na ordem
         getOrder1 = follower.pathBuilder()
-                .addPath(new BezierCurve(scorePose, gppReference, gpp))
+                .addPath(new BezierCurve(scorePose, ppgReference, ppg))
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
-
         //Lanças as 3 bolas
         launchOrder1 = follower.pathBuilder()
-                .addPath(new BezierLine(gpp, scorePose))
-                .setLinearHeadingInterpolation(gpp.getHeading(), scorePose.getHeading())
+                .addPath(new BezierLine(ppg, scorePose))
+                .setLinearHeadingInterpolation(ppg.getHeading(), scorePose.getHeading())
                 .build();
 
         //Pegar segunda sequencia (3 bolas) fora da ordem
@@ -69,16 +66,14 @@ public class AutoGPP_Red extends OpMode{
 
         //Pegar ultima sequencia
         getOrder3 = follower.pathBuilder()
-                .addPath(new BezierCurve(scorePose, ppgReference,ppg))
-                .setLinearHeadingInterpolation(scorePose.getHeading(), ppg.getHeading())
+                .addPath(new BezierCurve(scorePose, gppReference,gpp))
+                .setLinearHeadingInterpolation(scorePose.getHeading(), gpp.getHeading())
                 .build();
         //Lançar ultima sequencia
         launchOrder3 = follower.pathBuilder()
-                .addPath(new BezierLine(ppg, scorePose))
-                .setLinearHeadingInterpolation(ppg.getHeading(), scorePose.getHeading())
+                .addPath(new BezierLine(gpp, scorePose))
+                .setLinearHeadingInterpolation(gpp.getHeading(), scorePose.getHeading())
                 .build();
-
-
     }
 
     public void autonomousPathUpdate(){
@@ -114,9 +109,9 @@ public class AutoGPP_Red extends OpMode{
                 break;
             case 4:
                 if (!follower.isBusy()){
-                   follower.followPath(launchOrder2, true);
-                   //run.outTake();
-                   setPathState(5);
+                    follower.followPath(launchOrder2, true);
+                    //run.outTake();
+                    setPathState(5);
                 }
                 break;
             case 5:

@@ -3,13 +3,12 @@ package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial;
 import com.pedropathing.telemetry.SelectableOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.AutoGPP_Blue;
-import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.AutoGPP_Red;
-import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.AutoPGP_Blue;
-import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.AutoPGP_Red;
-import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.AutoPPG_Blue;
-import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.AutoPPG_Red;
-import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Teleoperado.TeleOp_Class;
+import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.BLUE.AutoGPP_Blue;
+import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.RED.AutoGPP_Red;
+import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.BLUE.AutoPGP_Blue;
+import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.RED.AutoPGP_Red;
+import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.BLUE.AutoPPG_Blue;
+import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.RED.AutoPPG_Red;
 
 @TeleOp(name="Selecionar Periodos")
 

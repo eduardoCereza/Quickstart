@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous;
+package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.RED;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierCurve;
@@ -10,8 +10,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.RunModeAuto;
-
-import java.nio.file.Path;
 
 public class AutoPGP_Red extends OpMode{
 
