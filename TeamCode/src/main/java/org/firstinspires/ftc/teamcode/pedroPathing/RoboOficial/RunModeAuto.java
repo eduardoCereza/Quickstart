@@ -77,6 +77,7 @@ public class RunModeAuto extends Initialization {
     }
 
     public void followAprilTag(int index){
+        calculos();
         LLResult result = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
 
@@ -96,6 +97,7 @@ public class RunModeAuto extends Initialization {
     }
 
     public void outTake(){
+        calculos();
         LLResult result = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
 
@@ -107,6 +109,7 @@ public class RunModeAuto extends Initialization {
     }
 
     public void moveLauncher(int index) {
+        calculos();
         LLResult result = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
 
