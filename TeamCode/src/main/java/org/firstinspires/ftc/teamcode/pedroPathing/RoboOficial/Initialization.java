@@ -22,25 +22,23 @@ public class Initialization {
     public Follower follower;
 
 
+
     //Definição do ID;
     public int[] id = {24, 20};
 
-    //Variáveis para o servo do eixoX
-    public double eixoX, seno, ta, anguloX, power, forcaPesoTotal;
+    double anguloX, anguloY, angulomaior, delta, hipmenor, hipmaior, basemenor, basemaior;
 
-    //Variáveis para o servo do eixoY
-    public double eixoY, v, hipotenusaMenor, hipotenusaMaior,
-            baseMenor, baseMaior,
-            positionServoY,
-            delta, angulomaior,anguloY, tangente,
-            Vborda, rev, rpm;
+    // Variáveis relacionadas aos servos e controle de força no eixo X.
+    double posdoservoy, eixoX, eixoY, power, servoXPosRad, servoYPosRad, forcaPesoTotal;
 
-    //Constantes necessárias
-    public final double k = 186.5409338456308,
-            g = 980, velocityServoX = 0.0375,
-            pesoBola = 74.8, pesoTurret = 0,
-            alturaMenor = 74, alturaMaior = 124,
-            k_lip = 0.95, r = 4.5;
+    // Variáveis da flywheel (cinemática do disparo).
+    double Vborda, rev, rpm, v, ta;
+
+    // Constantes de projeto/físicas (unidades precisam ser coerentes — ver observações ao final).
+    // k: fator para estimar distância a partir da área (ta) da tag; velocity: ganho simples para servoX;
+    // pesos em gramas; alturas em mm (?) ; g em cm/s² (980); k_lip: perda por atrito (lip), r: raio da flywheel.
+    final double k = 186.5409338456308, velocity = 0.0375, pesoTurret = 0, pesoBola = 74.8,
+            alturamenor = 74, alturamaior = 124, g = 980, k_lip = 0.95, r = 4.5;
 
 
     public void initialization(HardwareMap hardwareMap, int pipelineIndex) {

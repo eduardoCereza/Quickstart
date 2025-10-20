@@ -21,9 +21,8 @@ public class TeleOp_Class extends OpMode {
 
     @Override
     public void loop(){
-        //run.moveLauncher(gamepad2.left_trigger);
-        //run.moveSucker(gamepad2.right_trigger);
 
+        run.calculos();
         x = gamepad1.left_stick_x;
         y = gamepad1.left_stick_y;
         turn = gamepad1.right_stick_x;
@@ -55,10 +54,11 @@ public class TeleOp_Class extends OpMode {
             avisoChassi = "CHASSI INVERTIDO!";
         }
 
+
         telemetry.addLine(avisoChassi);
         telemetry.addLine("Rodando!");
         run.followAprilTag(index);
-
+        //run.ajustePosition(index);
 
         telemetry.update();
     }

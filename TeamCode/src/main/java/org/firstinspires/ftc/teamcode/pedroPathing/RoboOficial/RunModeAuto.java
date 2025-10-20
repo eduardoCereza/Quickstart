@@ -3,9 +3,30 @@ package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 
+import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Initialization;
+
 import java.util.List;
 
-public class RunMode extends Initialization {
+public class RunModeAuto extends Initialization {
+
+
+    //Definição do ID;
+    public int[] id = {24, 20};
+
+    double anguloX, anguloY, angulomaior, delta, hipmenor, hipmaior, basemenor, basemaior;
+
+    // Variáveis relacionadas aos servos e controle de força no eixo X.
+    double posdoservoy, eixoX, eixoY, power, servoXPosRad, servoYPosRad, forcaPesoTotal;
+
+    // Variáveis da flywheel (cinemática do disparo).
+    double Vborda, rev, rpm, v, ta;
+
+    // Constantes de projeto/físicas (unidades precisam ser coerentes — ver observações ao final).
+    // k: fator para estimar distância a partir da área (ta) da tag; velocity: ganho simples para servoX;
+    // pesos em gramas; alturas em mm (?) ; g em cm/s² (980); k_lip: perda por atrito (lip), r: raio da flywheel.
+    final double k = 186.5409338456308, velocity = 0.0375, pesoTurret = 0, pesoBola = 74.8,
+            alturamenor = 74, alturamaior = 124, g = 980, k_lip = 0.95, r = 4.5;
+
     public void calculos(){
         LLResult resultado = limelight3A.getLatestResult();
 
@@ -72,11 +93,6 @@ public class RunMode extends Initialization {
         rpm = rev * 60.0;
     }
 
-    public void moveChassi(double y, double x, double turn){
-        follower.update();
-        follower.setTeleOpDrive(y, x, turn, true);
-    }
-
     public void followAprilTag(int index){
         LLResult result = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
@@ -88,25 +104,24 @@ public class RunMode extends Initialization {
                 }else {
                     servoX.setPower(0);
                 }
-            }else {
-                servoX.setPower(0);
             }
+
         }
 
     }
-    public void outTake(float ativador){
+
+    public void outTake(){
         LLResult result = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
 
         for (LLResultTypes.FiducialResult fr : fiducialResults) {
-            if (ativador > 0.5) {
-                // Define a velocidade dos dois motores da flywheel (negativo para sentido desejado).
-                flywheelB.setVelocity(-rpm);
-                flywheelC.setVelocity(-rpm);
-            }
+            // Define a velocidade dos dois motores da flywheel (negativo para sentido desejado).
+            flywheelB.setVelocity(-rpm);
+            flywheelC.setVelocity(-rpm);
         }
     }
-    public void ajustePosition(int index){
+
+    public void moveLauncher(int index) {
         LLResult result = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
 
@@ -114,15 +129,15 @@ public class RunMode extends Initialization {
         ta = result.getTa();
 
         for (LLResultTypes.FiducialResult fr : fiducialResults) {
-            if (fr.getFiducialId() == id[index]){
+            if (fr.getFiducialId() == id[index]) {
                 // Ajusta a elevação (Y) do tiro conforme posição calculada.
                 servoY.setPosition(posdoservoy);
             }
         }
     }
-    public void moveSucker(float ativador){
-        if (ativador > 0.5){
+
+    public void intake(){
             sugador.setPower(1);
         }
-    }
+
 }
