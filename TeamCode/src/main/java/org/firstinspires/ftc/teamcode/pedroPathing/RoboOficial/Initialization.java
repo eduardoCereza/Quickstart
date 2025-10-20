@@ -1,10 +1,7 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial;
 
 import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.BezierCurve;
-import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
-import com.pedropathing.paths.PathChain;
 import com.pedropathing.util.Timer;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -45,24 +42,6 @@ public class Initialization {
             alturamenor = 74, alturamaior = 124, g = 980, k_lip = 0.95, r = 4.5;
 
 
-    public Timer pathTimer, actionTimer, opmodeTimer;
-    public int pathState;
-
-    public final Pose startPose = new Pose(104, 109, Math.toRadians(0));
-
-    public final Pose scorePose = new Pose(75, 70, Math.toRadians(0));
-    public final Pose pgp = new Pose(111 ,42 , Math.toRadians(0));
-    public final Pose pgpReference = new Pose(75 ,42 , Math.toRadians(0));
-
-    public final Pose gpp = new Pose(111 , 23, Math.toRadians(0));
-    public final Pose gppReference = new Pose(75 ,19 ,Math.toRadians(0));
-
-    public final Pose ppg = new Pose(111, 69 ,Math.toRadians(0));
-    public final Pose ppgReference = new Pose(75 ,71 , Math.toRadians(0));
-
-
-    private PathChain firstRelease, startGetOrder1, launchOrder1, launchOrder2, launchOrder3, getOrder1, getOrder2, getOrder3;
-
     public void initialization(HardwareMap hardwareMap, int pipelineIndex) {
 
         servoX = hardwareMap.get(CRServo.class, "servoX");
@@ -90,50 +69,5 @@ public class Initialization {
         follower.startTeleopDrive();
     }
 
-
-    public void buildPaths(){
-        //Lançar as 3 primeiras bolas na ordem
-        firstRelease = follower.pathBuilder()
-                .addPath(new BezierLine(startPose, scorePose))
-                .setConstantHeadingInterpolation(Math.toRadians(0))
-                .build();
-
-        //Pegar as 3 bolas na ordem
-        getOrder1 = follower.pathBuilder()
-                .addPath(new BezierCurve(scorePose, gppReference, gpp))
-                .setConstantHeadingInterpolation(Math.toRadians(0))
-                .build();
-
-
-        //Lanças as 3 bolas
-        launchOrder1 = follower.pathBuilder()
-                .addPath(new BezierLine(gpp, scorePose))
-                .setLinearHeadingInterpolation(gpp.getHeading(), scorePose.getHeading())
-                .build();
-
-        //Pegar segunda sequencia (3 bolas) fora da ordem
-        getOrder2 = follower.pathBuilder()
-                .addPath(new BezierCurve(scorePose, pgpReference, pgp))
-                .setLinearHeadingInterpolation(scorePose.getHeading(), pgp.getHeading())
-                .build();
-        //Lançar segunda sequencia
-        launchOrder2 = follower.pathBuilder()
-                .addPath(new BezierLine(pgp, scorePose))
-                .setLinearHeadingInterpolation(pgp.getHeading(), scorePose.getHeading())
-                .build();
-
-        //Pegar ultima sequencia
-        getOrder3 = follower.pathBuilder()
-                .addPath(new BezierCurve(scorePose, ppgReference,ppg))
-                .setLinearHeadingInterpolation(scorePose.getHeading(), ppg.getHeading())
-                .build();
-        //Lançar ultima sequencia
-        launchOrder3 = follower.pathBuilder()
-                .addPath(new BezierLine(ppg, scorePose))
-                .setLinearHeadingInterpolation(ppg.getHeading(), scorePose.getHeading())
-                .build();
-
-
-    }
 
 }

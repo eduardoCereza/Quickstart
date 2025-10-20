@@ -90,6 +90,8 @@ public class RunModeAuto extends Initialization {
                 }
             }
 
+
+
         }
 
     }
@@ -121,69 +123,6 @@ public class RunModeAuto extends Initialization {
 
     public void intake(){
             sugador.setPower(1);
-    }
-
-
-    public void autonomousPathUpdate(){
-        switch (pathState){
-            case 0:
-                follower.followPath(firstRelease, true);
-                //run.outTake();
-                setPathState(1);
-                break;
-
-            case 1:
-                if (!follower.isBusy()) {
-                    follower.followPath(getOrder1, true);
-                    //run.intake();
-                    setPathState(2);
-                }
-                break;
-
-
-            case 2:
-                if (!follower.isBusy()){
-                    follower.followPath(launchOrder1, true);
-                    //run.outTake();
-                    setPathState(3);
-                }
-                break;
-            case 3:
-                if (!follower.isBusy()){
-                    follower.followPath(getOrder2, true);
-                    //run.intake();
-                    setPathState(4);
-                }
-                break;
-            case 4:
-                if (!follower.isBusy()){
-                    follower.followPath(launchOrder2, true);
-                    //run.outTake();
-                    setPathState(5);
-                }
-                break;
-            case 5:
-                if (!follower.isBusy()){
-                    follower.followPath(getOrder3, true);
-                    //run.intake();
-                    setPathState(6);
-                }
-                break;
-            case 6:
-                if (!follower.isBusy()){
-                    follower.followPath(launchOrder3, true);
-                    //run.outTake();
-                }
-                break;
         }
-
-    }
-
-
-    public void setPathState(int pState) {
-        pathState = pState;
-        pathTimer.resetTimer();
-    }
-
 
 }
