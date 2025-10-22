@@ -26,11 +26,11 @@ public class Initialization {
     //Definição do ID;
     public int[] id = {24, 20};
 
-    public double anguloX, anguloY;
+    public double anguloX, anguloY, power;
     double angulomaior, delta, hipmenor, hipmaior, basemenor, basemaior;
 
     // Variáveis relacionadas aos servos e controle de força no eixo X.
-    double posdoservoy, eixoX, eixoY, power, servoXPosRad, servoYPosRad, forcaPesoTotal;
+    double posdoservoy, eixoX, eixoY, servoXPosRad, servoYPosRad, forcaPesoTotal;
 
     // Variáveis da flywheel (cinemática do disparo).
     double Vborda, rev, rpm, v, ta;
@@ -38,7 +38,8 @@ public class Initialization {
     // Constantes de projeto/físicas (unidades precisam ser coerentes — ver observações ao final).
     // k: fator para estimar distância a partir da área (ta) da tag; velocity: ganho simples para servoX;
     // pesos em gramas; alturas em mm (?) ; g em cm/s² (980); k_lip: perda por atrito (lip), r: raio da flywheel.
-    final double k = 186.5409338456308, velocity = 0.0375, pesoTurret = 0, pesoBola = 74.8,
+    final double k = 186.5409338456308, velocity = 0.0375, pesoTurret = 0, pesoBola = 74.8
+            ,
             alturamenor = 74, alturamaior = 124, g = 980, k_lip = 0.95, r = 4.5;
 
 

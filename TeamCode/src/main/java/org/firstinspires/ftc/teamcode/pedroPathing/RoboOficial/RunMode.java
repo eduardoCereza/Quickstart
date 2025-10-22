@@ -6,14 +6,10 @@ import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import java.util.List;
 
 public class RunMode extends Initialization {
-    public void calculos(){
+    public void calculosY(){
         LLResult resultado = limelight3A.getLatestResult();
 
-        // ATENÇÃO: em runtime, valide nulidade/targets antes de usar (ver observações).
-        List<LLResultTypes.FiducialResult> fr = resultado.getFiducialResults();
-
         // Deslocamentos da tag em graus (tx = horizontal; ty = vertical) conforme a Limelight.
-        eixoX = resultado.getTx();
         eixoY = resultado.getTy();
         ta = resultado.getTa();
 
@@ -43,19 +39,6 @@ public class RunMode extends Initialization {
         // Posição normalizada do servo [0..1] a partir do ângulo (simplificação).
         posdoservoy = anguloY / 180.0;
 
-        // --------- Ângulo X (pan) ---------
-        // Usa deslocamento horizontal (eixoX) e “hipmaior” para obter ânguloX (aproximação).
-        // Observação: asin(eixoX/hipmaior) supõe eixoX em mesma unidade de comprimento da hipotenusa,
-        // mas eixoX está em graus (tx). Mantido conforme o original; ver observações.
-        servoXPosRad = eixoX / hipmaior;
-        anguloX = Math.toDegrees(Math.asin(servoXPosRad));
-
-        // --------- Controle simples de power no servoX ---------
-        // Força “equivalente” considerando massa (pesoBola + pesoTurret) e uma constante de velocidade.
-        // Multiplica por 200 como ganho final (tunagem empírica).
-        forcaPesoTotal = ((pesoBola / 1000.0) + (pesoTurret / 1000.0)) * 9.8;
-        power = (forcaPesoTotal * servoXPosRad * velocity) * 200.0;
-
         // --------- Cálculos de velocidade para a flywheel ---------
         // v: velocidade de saída necessária para alcançar a base/altura desejada (balística sem arrasto).
         // Usa g, basemaior, angulomaior; importante garantir ângulo em radianos nas funções trigonométricas (ver observações).
@@ -78,25 +61,18 @@ public class RunMode extends Initialization {
     }
 
     public void followAprilTag(int index){
-        calculos();
         LLResult result = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
 
         for (LLResultTypes.FiducialResult fr: fiducialResults){
             if (fr.getFiducialId() == id[index]){
-                if (anguloX != 0){
-                    servoX.setPower(power);
-                }else {
-                    servoX.setPower(0);
-                }
-            }else {
-                servoX.setPower(0);
+                servoX.setPower(power);
             }
         }
 
     }
     public void outTake(float ativador){
-        calculos();
+        calculosY();
         LLResult result = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
 
@@ -109,7 +85,7 @@ public class RunMode extends Initialization {
         }
     }
     public void ajustePosition(int index){
-        calculos();
+        calculosY();
         LLResult result = limelight3A.getLatestResult();
         List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
 

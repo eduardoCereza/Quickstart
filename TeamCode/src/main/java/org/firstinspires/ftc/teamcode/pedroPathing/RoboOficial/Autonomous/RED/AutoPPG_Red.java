@@ -9,11 +9,10 @@ import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.RunModeAuto;
 
 public class AutoPPG_Red extends OpMode{
 
-    RunModeAuto run;
+    //RunModeAuto run;
     private Follower follower;
     private Timer pathTimer, actionTimer, opmodeTimer;
     private int pathState;
@@ -143,7 +142,7 @@ public class AutoPPG_Red extends OpMode{
     }
     @Override
     public void loop() {
-        //run.calculos();
+        //run.calculosY();
         //run.followAprilTag(1);
         follower.update();
         autonomousPathUpdate();
@@ -153,7 +152,7 @@ public class AutoPPG_Red extends OpMode{
 
     @Override
     public void init() {
-        run = new RunModeAuto();
+        //run = new RunModeAuto();
 
         pathTimer = new Timer();
         opmodeTimer =new Timer();

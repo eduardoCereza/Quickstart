@@ -19,13 +19,18 @@ public class TeleOp_Class extends OpMode {
     public void init(){
         run.initialization(hardwareMap, 1);
 
+
     }
 
     @Override
     public void loop(){
 
-        //run.calculos();
         run.followAprilTag(index);
+
+        telemetry.addData("POWER : ", run.power);
+        telemetry.addData("ANGULO : ", run.anguloX);
+
+
 
         x = gamepad1.left_stick_x;
         y = gamepad1.left_stick_y;

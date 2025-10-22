@@ -4,10 +4,11 @@ repositories {
 
     maven { url = 'https://maven.pedropathing.com' }
     maven { url = "https://mymaven.bylazar.com/releases" }
+    maven { url = "https://repo.dairy.foundation/releases"}
 }
 
 dependencies {
-    implementation 'org.firstinspires.ftc:Inspection:10.3.0'
+    implementation 'org.firstinspires.ftc:Inspection:11.0.0'
     implementation 'org.firstinspires.ftc:Blocks:10.3.0'
     implementation 'org.firstinspires.ftc:RobotCore:10.3.0'
     implementation 'org.firstinspires.ftc:RobotServer:10.3.0'
@@ -21,5 +22,8 @@ dependencies {
 
     implementation 'com.bylazar:fullpanels:1.0.6'
     implementation 'androidx.appcompat:appcompat:1.2.0'
+
+    implementation "org.solverslib:core:0.3.3" // core
+    implementation "org.solverslib:pedroPathing:0.3.3"
 }
 
