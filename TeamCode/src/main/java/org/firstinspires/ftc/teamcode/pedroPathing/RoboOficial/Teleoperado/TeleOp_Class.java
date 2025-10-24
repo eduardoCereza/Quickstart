@@ -25,7 +25,7 @@ public class TeleOp_Class extends OpMode {
     @Override
     public void loop(){
 
-        run.followAprilTag(index);
+        //run.followAprilTag(index);
 
         telemetry.addData("POWER : ", run.power);
         telemetry.addData("ANGULO : ", run.anguloX);
@@ -65,6 +65,7 @@ public class TeleOp_Class extends OpMode {
         telemetry.addLine(avisoChassi);
         telemetry.addLine("Rodando!");
 
+        run.outTake(gamepad2.right_trigger);
         //run.ajustePosition(index);
 
         telemetry.update();

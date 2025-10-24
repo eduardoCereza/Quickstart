@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import java.util.List;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "Limelight Follow IMU Fast", group = "Testes")
-public class Limelight_Track extends OpMode {
+public class FollowTag extends OpMode {
 
     private CRServo servo;
     private Limelight3A limelight;
@@ -53,11 +53,11 @@ public class Limelight_Track extends OpMode {
         // Limita a potência para não forçar o servo
         power = Math.max(-limite, Math.min(limite, power));
 
-            for (LLResultTypes.FiducialResult fr : fiducialResults) {
-                if (fr.getFiducialId() == 24) {
-                    servo.setPower(-power);
-                }
+        for (LLResultTypes.FiducialResult fr : fiducialResults) {
+            if (fr.getFiducialId() == 24) {
+                servo.setPower(-power);
             }
+        }
 
 
         telemetry.addData("Ângulo Robô", anguloAtual);

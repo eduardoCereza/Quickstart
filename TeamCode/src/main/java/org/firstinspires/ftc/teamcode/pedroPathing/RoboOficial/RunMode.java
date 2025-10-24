@@ -60,17 +60,6 @@ public class RunMode extends Initialization {
         follower.setTeleOpDrive(y, x, turn, true);
     }
 
-    public void followAprilTag(int index){
-        LLResult result = limelight3A.getLatestResult();
-        List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
-
-        for (LLResultTypes.FiducialResult fr: fiducialResults){
-            if (fr.getFiducialId() == id[index]){
-                servoX.setPower(power);
-            }
-        }
-
-    }
     public void outTake(float ativador){
         calculosY();
         LLResult result = limelight3A.getLatestResult();
