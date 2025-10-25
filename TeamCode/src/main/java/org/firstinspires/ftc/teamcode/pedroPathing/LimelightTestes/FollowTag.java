@@ -2,31 +2,33 @@ package org.firstinspires.ftc.teamcode.pedroPathing.LimelightTestes;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
+import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.seattlesolvers.solverslib.hardware.motors.CRServoEx;
+import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
+import com.seattlesolvers.solverslib.util.Direction;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
 import java.util.List;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "Limelight Follow IMU Fast", group = "Testes")
-public class FollowTag extends OpMode {
+@TeleOp(name = "LimelightProgramTurret")
+public class FollowTag extends LinearOpMode {
 
-    private CRServo servo;
-    private Limelight3A limelight;
-    private IMU imu;
+    double Heading;
+    CRServo servo;
+    Limelight3A limelight;
+    IMU imu;
 
-    private double anguloInicial = 0;
-    private double ganhoServo = 0.01; // <- valor maior = mais rápido
-    private double limite = 0.8;      // limite de potência do servo
 
     @Override
-    public void init() {
+    public void runOpMode() throws InterruptedException {
         servo = hardwareMap.get(CRServo.class, "servoX");
-        limelight = hardwareMap.get(Limelight3A.class, "limelight");
         imu = hardwareMap.get(IMU.class, "imu");
 
         IMU.Parameters params = new IMU.Parameters(new RevHubOrientationOnRobot(
@@ -35,34 +37,37 @@ public class FollowTag extends OpMode {
         ));
         imu.initialize(params);
 
-
-        anguloInicial = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+        limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        telemetry.setMsTransmissionInterval(11);
+        limelight.setPollRateHz(100);
+        limelight.pipelineSwitch(1);
         limelight.start();
-    }
+        //FtcDashboard.getInstance().startCameraStream(limelight, 90);
 
-    @Override
-    public void loop() {
-        LLResult result = limelight.getLatestResult();
-        List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
-        double anguloAtual = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
-        double deltaAngulo = anguloAtual - anguloInicial;
+        waitForStart();
 
-        // Aplica compensação mais rápida
-        double power = -deltaAngulo * ganhoServo;
+        while (opModeIsActive()) {
+            LLResult result = limelight.getLatestResult();
+            Pose3D botpose = result.getBotpose();
 
-        // Limita a potência para não forçar o servo
-        power = Math.max(-limite, Math.min(limite, power));
-
-        for (LLResultTypes.FiducialResult fr : fiducialResults) {
-            if (fr.getFiducialId() == 24) {
-                servo.setPower(-power);
+            if (result.isValid()) {
+                List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
+                for (LLResultTypes.FiducialResult fr : fiducialResults) {
+                    telemetry.addData("Fiducial", "ID: %d, Family: %s, X: %.2f, Y: %.2f",
+                            fr.getFiducialId(), fr.getFamily(),
+                            fr.getTargetXDegrees(), fr.getTargetYDegrees());
+                    Heading = (-fr.getTargetXDegrees() / 22);
+                }
+            } else {
+                telemetry.addData("Limelight", "No data available");
             }
+
+            servo.setPower(-Heading / 3);
+
+            telemetry.addData("Heading LL", Heading);
+            telemetry.addData("Botpose", botpose.toString());
+            telemetry.update();
+
         }
-
-
-        telemetry.addData("Ângulo Robô", anguloAtual);
-        telemetry.addData("Delta Ângulo", deltaAngulo);
-        telemetry.addData("Servo Power", power);
-        telemetry.update();
     }
 }
