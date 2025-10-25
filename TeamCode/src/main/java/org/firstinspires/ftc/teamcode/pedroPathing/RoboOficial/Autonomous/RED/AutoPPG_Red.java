@@ -1,170 +1,166 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Autonomous.RED;
 
+import com.bylazar.configurables.annotations.Configurable;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 import com.pedropathing.util.Timer;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
+import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.RobotDecodeOficial;
 
-public class AutoPPG_Red extends OpMode{
-
-    //RunModeAuto run;
+@Configurable
+@Autonomous(name = "ppg")
+public class AutoPPG_Red extends OpMode {
     private Follower follower;
-    private Timer pathTimer, actionTimer, opmodeTimer;
+    private Timer pathTimer;
     private int pathState;
 
-    private final Pose startPose = new Pose(104, 109, Math.toRadians(0));
+    public static Pose autoEndPose;
+    private final Pose startRed = new Pose(104, 109, Math.toRadians(0));
+    private final Pose preloadRed = new Pose(75, 70, Math.toRadians(0));
+    private final Pose ppgRed = new Pose(111, 69, Math.toRadians(0));
+    private final Pose ppgRedControl = new Pose(75, 71, Math.toRadians(0));
+    private final Pose pgpRed = new Pose (111, 42, Math.toRadians(0));
+    private final Pose pgpRedControl = new Pose(75, 42, Math.toRadians(0));
+    private final Pose gppRed = new Pose(111, 23, Math.toRadians(0));
+    private final Pose gppRedControl = new Pose(75, 19, Math.toRadians(0));
+    private final Pose shoot = new Pose(75,70,Math.toRadians(0));
+    private PathChain preload, ppg, pgp, gpp, shootppg, shootpgp, shootgpp;
 
-    private final Pose scorePose = new Pose(75, 70, Math.toRadians(0));
-    private final Pose pgp = new Pose(111 ,42 , Math.toRadians(0));
-    private final Pose pgpReference = new Pose(75 ,42 , Math.toRadians(0));
+    RobotDecodeOficial turret = new RobotDecodeOficial(hardwareMap, 1, telemetry);
 
-    private final Pose gpp = new Pose(111 , 23, Math.toRadians(0));
-    private final Pose gppReference = new Pose(75 ,19 ,Math.toRadians(0));
-
-    private final Pose ppg = new Pose(111, 69 ,Math.toRadians(0));
-    private final Pose ppgReference = new Pose(75 ,71 , Math.toRadians(0));
-
-
-    private PathChain firstRelease, startGetOrder1, launchOrder1, launchOrder2, launchOrder3, getOrder1, getOrder2, getOrder3;
-
-
-    public void buildPaths(){
-        //Lançar as 3 primeiras bolas na ordem
-        firstRelease = follower.pathBuilder()
-                .addPath(new BezierLine(startPose, scorePose))
+    public void buildPaths() {
+        preload = follower.pathBuilder()
+                .addPath(new BezierLine(startRed, preloadRed))
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
-        //Pegar as 3 bolas na ordem
-        getOrder1 = follower.pathBuilder()
-                .addPath(new BezierCurve(scorePose, ppgReference, ppg))
+        ppg = follower.pathBuilder()
+                .addPath(new BezierCurve(preloadRed, ppgRedControl, ppgRed))
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
-        //Lanças as 3 bolas
-        launchOrder1 = follower.pathBuilder()
-                .addPath(new BezierLine(ppg, scorePose))
-                .setLinearHeadingInterpolation(ppg.getHeading(), scorePose.getHeading())
+        pgp = follower.pathBuilder()
+                .addPath(new BezierCurve(preloadRed, pgpRedControl, pgpRed))
+                .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
-        //Pegar segunda sequencia (3 bolas) fora da ordem
-        getOrder2 = follower.pathBuilder()
-                .addPath(new BezierCurve(scorePose, pgpReference, pgp))
-                .setLinearHeadingInterpolation(scorePose.getHeading(), pgp.getHeading())
-                .build();
-        //Lançar segunda sequencia
-        launchOrder2 = follower.pathBuilder()
-                .addPath(new BezierLine(pgp, scorePose))
-                .setLinearHeadingInterpolation(pgp.getHeading(), scorePose.getHeading())
+        gpp = follower.pathBuilder()
+                .addPath(new BezierCurve(preloadRed, gppRedControl, gppRed))
+                .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
-        //Pegar ultima sequencia
-        getOrder3 = follower.pathBuilder()
-                .addPath(new BezierCurve(scorePose, gppReference,gpp))
-                .setLinearHeadingInterpolation(scorePose.getHeading(), gpp.getHeading())
+        shootppg = follower.pathBuilder()
+                .addPath(new BezierLine(ppgRed, shoot))
+                .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
-        //Lançar ultima sequencia
-        launchOrder3 = follower.pathBuilder()
-                .addPath(new BezierLine(gpp, scorePose))
-                .setLinearHeadingInterpolation(gpp.getHeading(), scorePose.getHeading())
+        shootpgp = follower.pathBuilder()
+                .addPath(new BezierLine(pgpRed, shoot))
+                .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
-    }
 
-    public void autonomousPathUpdate(){
-        switch (pathState){
-            case 0:
-                follower.followPath(firstRelease, true);
-                //run.outTake();
-                setPathState(1);
-                break;
+        shootgpp = follower.pathBuilder()
+                .addPath(new BezierLine(gppRed, shoot))
+                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .build();
 
-            case 1:
-                if (!follower.isBusy()) {
-                    follower.followPath(getOrder1, true);
-                    //run.intake();
-                    setPathState(2);
-                }
-                break;
-
-
-            case 2:
-                if (!follower.isBusy()){
-                    follower.followPath(launchOrder1, true);
-                    //run.outTake();
-                    setPathState(3);
-                }
-                break;
-            case 3:
-                if (!follower.isBusy()){
-                    follower.followPath(getOrder2, true);
-                    //run.intake();
-                    setPathState(4);
-                }
-                break;
-            case 4:
-                if (!follower.isBusy()){
-                    follower.followPath(launchOrder2, true);
-                    //run.outTake();
-                    setPathState(5);
-                }
-                break;
-            case 5:
-                if (!follower.isBusy()){
-                    follower.followPath(getOrder3, true);
-                    //run.intake();
-                    setPathState(6);
-                }
-                break;
-            case 6:
-                if (!follower.isBusy()){
-                    follower.followPath(launchOrder3, true);
-                    //run.outTake();
-                }
-                break;
-        }
 
     }
-
     public void setPathState(int pState) {
         pathState = pState;
         pathTimer.resetTimer();
     }
 
-    @Override
-    public void start(){
-        opmodeTimer.resetTimer();
-        setPathState(0);
+    public void autonomousPathUpdate() {
+        switch (pathState) {
+            case 0:
+                follower.followPath(preload, 0.7, false);
+                setPathState(11);
+                break;
+            case 1:
+                if(!follower.isBusy() && pathState == 1){
+                    follower.followPath(ppg, 0.7, false);
+                    setPathState(2);
+
+                }
+                break;
+            case 2:
+                if(!follower.isBusy() && pathState == 2){
+                    follower.followPath(shootppg, 0.7, true);
+                    setPathState(3);
+                }
+                break;
+            case 3:
+                if (!follower.isBusy() && pathState == 3){
+                    follower.followPath(pgp, 0.7, false);
+                    setPathState(4);
+
+                }
+                break;
+            case 4:
+                if (!follower.isBusy() && pathState == 4){
+                    follower.followPath(shootpgp, 0.7, true);
+                    setPathState(5);
+
+                }
+                break;
+            case 5:
+                if(!follower.isBusy() && pathState == 5){
+                    follower.followPath(gpp, 0.7, false);
+                    setPathState(6);
+
+                }
+                break;
+            case 6:
+                if(!follower.isBusy() && pathState == 6){
+                    follower.followPath(shootgpp, 0.7, true);
+                    setPathState(7);
+                }
+                break;
+            case 7:
+                break;
+            case 11:
+                if (!follower.isBusy()){
+
+                }
+        }
     }
     @Override
     public void loop() {
-        //run.calculosY();
-        //run.followAprilTag(1);
+        // Loop robot movement and odometry values
         follower.update();
+        // Loop the finite-state machine
         autonomousPathUpdate();
 
-        telemetry.addData("Path: ", pathState);
+        // Feedback to Driver Hub
+        telemetry.update();
+    }
+
+    /** This method is called once at the init of the OpMode. **/
+    @Override
+    public void init() {
+        pathTimer = new Timer();
+        follower = Constants.createFollower(hardwareMap);
+        follower.setStartingPose(startRed);
+        setPathState(0);
+        buildPaths();
+    }
+
+    /** This method is called once at the start of the OpMode. It runs all the setup actions, including building paths and starting the path system **/
+    @Override
+    public void start() {
+        setPathState(0);
     }
 
     @Override
-    public void init() {
-        //run = new RunModeAuto();
-
-        pathTimer = new Timer();
-        opmodeTimer =new Timer();
-        opmodeTimer.resetTimer();
-
-        follower = Constants.createFollower(hardwareMap);
-        buildPaths();
-        follower.setStartingPose(startPose);
-
-
-
+    public void stop(){
+        autoEndPose = follower.getPose();
+        telemetry.update();
     }
-
 }
-
