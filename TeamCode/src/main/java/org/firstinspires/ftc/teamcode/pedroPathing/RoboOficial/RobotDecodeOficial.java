@@ -58,7 +58,7 @@ public class RobotDecodeOficial{
 
     // Pose dos goals azul e vermelho
     //TODO: VERIFICAR A POSE DOS GOALS
-    private final Pose goalRed = new Pose(110, 110, Math.toRadians(0));
+    private final Pose goalRed = new Pose(122, 126, Math.toRadians(0));
     private final Pose goalBlue = new Pose(0,0,Math.toRadians(0));
 
     // Inicialização dos componentes do robô

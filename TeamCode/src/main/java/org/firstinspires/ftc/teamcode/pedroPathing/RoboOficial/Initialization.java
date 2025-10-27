@@ -14,14 +14,15 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 public class Initialization {
 
     public DcMotorEx flywheelB, flywheelC, slideL, slideR;
-    public CRServo servoX, sugador;
-    public Servo servoY;
+    public CRServo  sugador;
+    public Servo servoY, servoX;
     public Limelight3A limelight3A;
 
     //public Timer pathTimer, opmodeTimer;
     public Follower follower;
 
-
+    public final Pose goalRed = new Pose(122, 126, Math.toRadians(0));
+    public final Pose goalBlue = new Pose(0,0,Math.toRadians(0));
 
     //Definição do ID;
     public int[] id = {24, 20};
@@ -45,7 +46,7 @@ public class Initialization {
 
     public void initialization(HardwareMap hardwareMap, int pipelineIndex) {
 
-        servoX = hardwareMap.get(CRServo.class, "servoX");
+        servoX = hardwareMap.get(Servo.class, "servoX");
         //servoY = hardwareMap.get(Servo.class, "servoY");
 
         //servoY.setDirection(Servo.Direction.REVERSE);

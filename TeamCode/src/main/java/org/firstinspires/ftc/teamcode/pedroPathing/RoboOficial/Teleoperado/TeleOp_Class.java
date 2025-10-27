@@ -65,8 +65,8 @@ public class TeleOp_Class extends OpMode {
         telemetry.addLine(avisoChassi);
         telemetry.addLine("Rodando!");
 
-        run.outTake(gamepad2.right_trigger);
-        //run.ajustePosition(index);
+        //run.outTake(gamepad2.right_trigger);
+        run.followTag(run.follower.getPose().getX(), run.follower.getPose().getY(), run.follower.getPose().getHeading(), false, telemetry);
 
         telemetry.update();
     }
