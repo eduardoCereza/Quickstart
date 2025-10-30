@@ -54,5 +54,51 @@ public class RunMode extends Initialization {
         telemetry.update();
     }
 
+    public void throwBalls(Telemetry telemetry){
+        LLResult result = limelight3A.getLatestResult();
 
+        if (result != null && result.isValid()) {
+            double ta = result.getTa();
+            double d = 181.9994 / Math.sqrt(ta); // cm
+            d /= 100.0; // meters
+
+            //Required height - height up to the point where the ball leaves the field.
+            double h = 1.20 - 0.285; // m
+
+            double angulo = Math.atan(h / d);
+            double anguloDeg = Math.toDegrees(angulo);
+
+            double posServo = posMin +
+                    (anguloDeg - thetaMinDeg) * (posMax - posMin) / (thetaMaxDeg - thetaMinDeg);
+            posServo = Math.max(0.0, Math.min(1.0, posServo));
+            servoY.setPosition(posServo);
+
+            if (d * Math.tan(angulo) > h) {
+                double v = Math.sqrt((g * Math.pow(d, 2)) /
+                        (2 * Math.pow(Math.cos(angulo), 2) * (d * Math.tan(angulo) - h)));
+
+                double wRoda = v / (efficiency * r);
+                double RPM = (60.0 / (2.0 * Math.PI)) * wRoda;
+                double ticksPerSecond = (RPM * ticksAround) / 60.0;
+
+                flywheelB.setVelocity(ticksPerSecond);
+                flywheelA.setVelocity(ticksPerSecond);
+
+                //flywheelB.setVelocity(servoY.getPosition() * scalar) + constants;
+                //flywheelA.setVelocity(servoY.getPosition() * scalar) + constants;
+
+                telemetry.addData("Distance (m)", d);
+                telemetry.addData("Degrees", anguloDeg);
+                telemetry.addData("Servo pos", posServo);
+                telemetry.addData("speed (m/s)", v);
+                telemetry.addData("Target (ticks/s)", ticksPerSecond);
+            } else {
+                flywheelB.setPower(0);
+                flywheelA.setPower(0);
+            }
+        } else {
+            flywheelB.setPower(0);
+            flywheelA.setPower(0);
+        }
+    }
 }

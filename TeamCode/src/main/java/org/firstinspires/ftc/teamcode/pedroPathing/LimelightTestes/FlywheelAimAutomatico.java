@@ -80,7 +80,7 @@ public class FlywheelAimAutomatico extends OpMode {
                 flywheelA.setVelocity(ticksPerSecond);
 
                 //flywheelB.setVelocity(servoY.getPosition() * scalar) + constants;
-                //flywheelC.setVelocity(servoY.getPosition() * scalar) + constants;
+                //flywheelA.setVelocity(servoY.getPosition() * scalar) + constants;
 
                 telemetry.addData("Distance (m)", d);
                 telemetry.addData("Degrees", anguloDeg);

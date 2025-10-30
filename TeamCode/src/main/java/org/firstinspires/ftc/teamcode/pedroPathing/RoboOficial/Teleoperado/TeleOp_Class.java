@@ -8,12 +8,10 @@ import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.ClassesRun.RunMod
 @TeleOp(name = "Modo Teleoperado")
 public class TeleOp_Class extends OpMode {
     RunMode run = new RunMode();
-    int index;
 
     double x, y, turn;
 
-    String mensagem, avisoChassi;
-    boolean invertido;
+    String avisoChassi;
 
     @Override
     public void init(){
@@ -25,36 +23,11 @@ public class TeleOp_Class extends OpMode {
     @Override
     public void loop(){
 
-        x = gamepad1.left_stick_x;
-        y = gamepad1.left_stick_y;
-        turn = gamepad1.right_stick_x;
-
-        if (gamepad1.dpad_left){
-            index = 1;
-            mensagem = "Aliança AZUL!";
-        } else if (gamepad1.dpad_right) {
-            index = 0;
-            mensagem = "Aliança VERMELHA!";
-        }
-
-        telemetry.addLine(mensagem);
-
         if (gamepad1.cross){
-            invertido = false;
+            reverse(false);
         } else if (gamepad1.circle) {
-            invertido = true;
+            reverse(true);
         }
-
-        if (!invertido){
-            run.moveChassi(-y, -x, -turn);
-            avisoChassi = "CHASSI NORMAL";
-
-        }else {
-            run.moveChassi(y, x, turn);
-            avisoChassi = "CHASSI INVERTIDO!";
-        }
-
-
 
         run.followTag(run.follower.getPose().getX(), run.follower.getPose().getY(), run.follower.getPose().getHeading(), false, telemetry);
 
@@ -66,5 +39,21 @@ public class TeleOp_Class extends OpMode {
     @Override
     public void start(){
         run.startTeleop();
+    }
+
+    public void reverse(boolean reverse){
+
+        x = gamepad1.left_stick_x;
+        y = gamepad1.left_stick_y;
+        turn = gamepad1.right_stick_x;
+
+        if (!reverse){
+            run.moveChassi(-y, -x, -turn);
+            avisoChassi = "CHASSI NORMAL";
+
+        }else {
+            run.moveChassi(y, x, turn);
+            avisoChassi = "CHASSI INVERTIDO!";
+        }
     }
 }

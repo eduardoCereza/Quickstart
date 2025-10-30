@@ -235,7 +235,7 @@ class LateralTuner extends OpMode {
     /** This initializes the PoseUpdater as well as the Panels telemetry. */
     @Override
     public void init_loop() {
-        telemetryM.debug("Pull your robot to the flywheelC " + DISTANCE + " inches. Your strafe ticks to inches will be shown on the telemetry.");
+        telemetryM.debug("Pull your robot to the flywheelA " + DISTANCE + " inches. Your strafe ticks to inches will be shown on the telemetry.");
         telemetryM.update(telemetry);
         drawCurrent();
     }
@@ -411,7 +411,7 @@ class ForwardVelocityTuner extends OpMode {
 }
 
 /**
- * This is the StrafeVelocityTuner autonomous follower OpMode. This runs the robot flywheelC at max
+ * This is the StrafeVelocityTuner autonomous follower OpMode. This runs the robot flywheelA at max
  * power until it reaches some specified distance. It records the most recent velocities, and on
  * reaching the end of the distance, it averages them and prints out the velocity obtained. It is
  * recommended to run this multiple times on a full battery to get the best results. What this does
@@ -442,7 +442,7 @@ class LateralVelocityTuner extends OpMode {
      */
     @Override
     public void init_loop() {
-        telemetryM.debug("The robot will run at 1 power until it reaches " + DISTANCE + " inches to the flywheelC.");
+        telemetryM.debug("The robot will run at 1 power until it reaches " + DISTANCE + " inches to the flywheelA.");
         telemetryM.debug("Make sure you have enough room, since the robot has inertia after cutting power.");
         telemetryM.debug("After running the distance, the robot will cut power from the drivetrain and display the strafe velocity.");
         telemetryM.debug("Press B on Gamepad 1 to stop.");
@@ -452,7 +452,7 @@ class LateralVelocityTuner extends OpMode {
         drawCurrent();
     }
 
-    /** This starts the OpMode by setting the drive motors to run flywheelC at full power. */
+    /** This starts the OpMode by setting the drive motors to run flywheelA at full power. */
     @Override
     public void start() {
         for (int i = 0; i < RECORD_NUMBER; i++) {
@@ -616,7 +616,7 @@ class ForwardZeroPowerAccelerationTuner extends OpMode {
 
 /**
  * This is the LateralZeroPowerAccelerationTuner autonomous follower OpMode. This runs the robot
- * to the flywheelC until a specified velocity is achieved. Then, the robot cuts power to the motors, setting
+ * to the flywheelA until a specified velocity is achieved. Then, the robot cuts power to the motors, setting
  * them to zero power. The deceleration, or negative acceleration, is then measured until the robot
  * stops. The accelerations across the entire time the robot is slowing down is then averaged and
  * that number is then printed. This is used to determine how the robot will decelerate in the
@@ -643,7 +643,7 @@ class LateralZeroPowerAccelerationTuner extends OpMode {
     /** This initializes the drive motors as well as the Panels telemetry. */
     @Override
     public void init_loop() {
-        telemetryM.debug("The robot will run to the flywheelC until it reaches " + VELOCITY + " inches per second.");
+        telemetryM.debug("The robot will run to the flywheelA until it reaches " + VELOCITY + " inches per second.");
         telemetryM.debug("Then, it will cut power from the drivetrain and roll to a stop.");
         telemetryM.debug("Make sure you have enough room.");
         telemetryM.debug("After stopping, the lateral zero power acceleration (natural deceleration) will be displayed.");
@@ -1096,7 +1096,7 @@ class Triangle extends OpMode {
     @Override
     public void init_loop() {
         telemetryM.debug("This will run in a roughly triangular shape, starting on the bottom-middle point.");
-        telemetryM.debug("So, make sure you have enough space to the left, front, and flywheelC to run the OpMode.");
+        telemetryM.debug("So, make sure you have enough space to the left, front, and flywheelA to run the OpMode.");
         telemetryM.update(telemetry);
         follower.update();
         drawCurrent();
@@ -1151,7 +1151,7 @@ class Circle extends OpMode {
 
     @Override
     public void init_loop() {
-        telemetryM.debug("This will run in a roughly circular shape of radius " + RADIUS + ", starting on the flywheelC-most edge. ");
+        telemetryM.debug("This will run in a roughly circular shape of radius " + RADIUS + ", starting on the flywheelA-most edge. ");
         telemetryM.debug("So, make sure you have enough space to the left, front, and back to run the OpMode.");
         telemetryM.debug("It will also continuously face the center of the circle to test your heading and centripetal correction.");
         telemetryM.update(telemetry);

@@ -23,7 +23,7 @@ public class Init_Class {
         servoY = hardwareMap.get(Servo.class, "servoY");
 
         flywheelB = hardwareMap.get(DcMotorEx.class, "left");
-        flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelC");
+        flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelA");
 
         slideL = hardwareMap.get(DcMotorEx.class, "slideL");
         slideR = hardwareMap.get(DcMotorEx.class, "slideR");

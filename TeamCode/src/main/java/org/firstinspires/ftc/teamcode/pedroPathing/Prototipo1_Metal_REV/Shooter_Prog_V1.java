@@ -29,7 +29,7 @@ public class Shooter_Prog_V1 extends OpMode {
         servoY = hardwareMap.get(Servo.class, "servoY");
 
         left = hardwareMap.get(DcMotorEx.class, "left");
-        right = hardwareMap.get(DcMotorEx.class, "flywheelC");
+        right = hardwareMap.get(DcMotorEx.class, "flywheelA");
     }
 
     public void loop(){

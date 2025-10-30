@@ -46,7 +46,7 @@ public class Shooter_MoveX extends OpMode {
     public void init() {
         // Mapeamento de hardware.
         flywheelB = hardwareMap.get(DcMotorEx.class, "flywheelB");
-        flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelC");
+        flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelA");
         servoX = hardwareMap.get(CRServo.class, "servoX");
         servoY = hardwareMap.get(Servo.class, "servoY");
         limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
@@ -150,7 +150,7 @@ public class Shooter_MoveX extends OpMode {
 
                 // Define a velocidade dos dois motores da flywheel (negativo para sentido desejado).
                 //flywheelB.setVelocity(rpm);
-                //flywheelC.setVelocity(rpm);
+                //flywheelA.setVelocity(rpm);
 
                 // Telemetria para depuração em campo.
                 telemetry.addData("Power: ", power);

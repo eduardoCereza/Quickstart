@@ -196,7 +196,7 @@ public class Test extends OpMode {
 
         LLResult result = limelight.getLatestResult();
         if (result != null && result.isValid()) {
-            double tx = result.getTx(); // How far left or flywheelC the target is (degrees)
+            double tx = result.getTx(); // How far left or flywheelA the target is (degrees)
             double ty = result.getTy(); // How far up or down the target is (degrees)
             double ta = result.getTa(); // How big the target looks (0%-100% of the image)
 

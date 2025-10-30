@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.ClassesRun;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -12,7 +11,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class Initialization {
 
-    public DcMotorEx flywheelB, flywheelC, slideL, slideR;
+    public DcMotorEx flywheelB, flywheelA, slideL, slideR;
     public Servo servoY, servoX;
     public Limelight3A limelight3A;
 
@@ -22,10 +21,15 @@ public class Initialization {
     public final Pose goalRed = new Pose(122, 126, Math.toRadians(0));
     public final Pose goalBlue = new Pose(0,0,Math.toRadians(0));
 
-    //Definição do ID;
-    public int[] id = {24, 20};
+    double g = 9.81;
+    double r = 0.045;          // flywheel radius (m)
+    int ticksAround = 28;
+    double efficiency = 0.9;   // Estimated mechanical loss
 
-    public double anguloX, power;
+    double thetaMinDeg = 15.0;
+    double thetaMaxDeg = 40.0;
+    double posMin = 0.1;
+    double posMax = 1;
 
     public void initialization(HardwareMap hardwareMap, int pipelineIndex) {
 
@@ -33,9 +37,15 @@ public class Initialization {
         servoY = hardwareMap.get(Servo.class, "servoY");
 
         servoY.setDirection(Servo.Direction.REVERSE);
-        
+
         flywheelB = hardwareMap.get(DcMotorEx.class, "flywheelB");
-        flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelC");
+        flywheelA = hardwareMap.get(DcMotorEx.class, "flywheelA");
+
+        flywheelB.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+        flywheelA.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+
+        flywheelB.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        flywheelA.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
         //slideL = hardwareMap.get(DcMotorEx.class, "slideL");
         //slideR = hardwareMap.get(DcMotorEx.class, "slideR");

@@ -48,7 +48,7 @@ public class Turret {
         servoY = hwmap.get(Servo.class, "servoY");
 
         flywheelB = hwmap.get(DcMotorEx.class, "left");
-        flywheelC = hwmap.get(DcMotorEx.class, "flywheelC");
+        flywheelC = hwmap.get(DcMotorEx.class, "flywheelA");
 
         limelight3A = hwmap.get(Limelight3A.class, "limelight3A");
         limelight3A.pipelineSwitch(1);

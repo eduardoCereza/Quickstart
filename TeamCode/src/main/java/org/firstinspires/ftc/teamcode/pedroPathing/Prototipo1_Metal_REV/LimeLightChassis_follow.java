@@ -55,7 +55,7 @@ public class LimeLightChassis_follow extends OpMode {
             telemetry.addData("Ty", resultado.getTy());
         }
         if(resultado.getTx() > 2){
-            strafePower = -0.1; // positive strafes flywheelC
+            strafePower = -0.1; // positive strafes flywheelA
             vX = strafePower;
             vY = 0.0;
             vRot = 0.0;
