@@ -1,13 +1,10 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.ClassesRun;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
-import com.qualcomm.hardware.limelightvision.LLResultTypes;
-import com.qualcomm.robotcore.util.Range;
+
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-import java.util.List;
 
 public class RunMode extends Initialization {
 
@@ -23,7 +20,7 @@ public class RunMode extends Initialization {
         // Localização do robô no field
         x = x;
         y = y;
-
+        
         // Localização X e Y dos goals
         double goalX = blue ? goalBlue.getX() : goalRed.getX();
         double goalY = blue ? goalBlue.getY() : goalRed.getY();
