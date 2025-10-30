@@ -21,7 +21,7 @@ public class xoter extends OpMode {
         limelight = hardwareMap.get(Limelight3A.class, "limelight3A");
         limelight.pipelineSwitch(0); //apriltag 3d
 
-        servoX = hardwareMap.get(CRServo.class, "servoX");
+        servoX = hardwareMap.get(CRServo.class, "servoX1");
     }
     public void loop(){
         LLResult resultado = limelight.getLatestResult();

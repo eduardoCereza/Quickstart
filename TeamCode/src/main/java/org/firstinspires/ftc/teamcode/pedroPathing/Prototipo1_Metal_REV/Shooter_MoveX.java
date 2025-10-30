@@ -36,7 +36,7 @@ public class Shooter_MoveX extends OpMode {
     double Vborda, rev, rpm, v;
 
     // Constantes de projeto/físicas (unidades precisam ser coerentes — ver observações ao final).
-    // k: fator para estimar distância a partir da área (ta) da tag; velocity: ganho simples para servoX;
+    // k: fator para estimar distância a partir da área (ta) da tag; velocity: ganho simples para servoX1;
     // pesos em gramas; alturas em mm (?) ; g em cm/s² (980); k_lip: perda por atrito (lip), r: raio da flywheel.
     final double k = 186.5409338456308, velocity = 0.0375, pesoTurret = 0, pesoBola = 74.8,
             alturamenor = 74
@@ -47,7 +47,7 @@ public class Shooter_MoveX extends OpMode {
         // Mapeamento de hardware.
         flywheelB = hardwareMap.get(DcMotorEx.class, "flywheelB");
         flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelA");
-        servoX = hardwareMap.get(CRServo.class, "servoX");
+        servoX = hardwareMap.get(CRServo.class, "servoX1");
         servoY = hardwareMap.get(Servo.class, "servoY");
         limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
 
@@ -114,7 +114,7 @@ public class Shooter_MoveX extends OpMode {
             servoXPosRad = eixoX / hipmaior;
             anguloX = Math.toDegrees(Math.asin(servoXPosRad));
 
-            // --------- Controle simples de power no servoX ---------
+            // --------- Controle simples de power no servoX1 ---------
             // Força “equivalente” considerando massa (pesoBola + pesoTurret) e uma constante de velocidade.
             // Multiplica por 200 como ganho final (tunagem empírica).
             forcaPesoTotal = ((pesoBola / 1000.0) + (pesoTurret / 1000.0)) * 9.8;

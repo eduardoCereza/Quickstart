@@ -38,13 +38,13 @@ public class Turret {
     double Vborda, rev, rpm, v;
 
     // Constantes de projeto/físicas (unidades precisam ser coerentes — ver observações ao final).
-    // k: fator para estimar distância a partir da área (ta) da tag; velocity: ganho simples para servoX;
+    // k: fator para estimar distância a partir da área (ta) da tag; velocity: ganho simples para servoX1;
     // pesos em gramas; alturas em mm (?) ; g em cm/s² (980); k_lip: perda por atrito (lip), r: raio da flywheel.
     final double k = 186.5409338456308, velocity = 0.0375, pesoTurret = 0, pesoBola = 74.8,
             alturamenor = 74, alturamaior = 124, g = 980, k_lip = 0.95, r = 4.5;
 
     public Turret(HardwareMap hwmap) {
-        servoX = hwmap.get(CRServo.class, "servoX");
+        servoX = hwmap.get(CRServo.class, "servoX1");
         servoY = hwmap.get(Servo.class, "servoY");
 
         flywheelB = hwmap.get(DcMotorEx.class, "left");
@@ -101,7 +101,7 @@ public class Turret {
             servoXPosRad = eixoX / hipmaior;
             anguloX = Math.toDegrees(Math.asin(servoXPosRad));
 
-            // --------- Controle simples de power no servoX ---------
+            // --------- Controle simples de power no servoX1 ---------
             // Força “equivalente” considerando massa (pesoBola + pesoTurret) e uma constante de velocidade.
             // Multiplica por 200 como ganho final (tunagem empírica).
             forcaPesoTotal = ((pesoBola / 1000.0) + (pesoTurret / 1000.0)) * 9.8;

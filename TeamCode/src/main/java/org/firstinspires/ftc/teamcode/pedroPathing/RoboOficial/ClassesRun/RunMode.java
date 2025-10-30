@@ -43,7 +43,8 @@ public class RunMode extends Initialization {
         servoPos = Math.max(0.0, Math.min(1.0, servoPos));
 
         // Seta a posição do servo X
-        servoX.setPosition(-servoPos);
+        servoX1.setPosition(-servoPos);
+        servoX2.setPosition(-servoPos);
 
         // Telemetria
         telemetry.addData("AngleToGoal", angleToGoal);

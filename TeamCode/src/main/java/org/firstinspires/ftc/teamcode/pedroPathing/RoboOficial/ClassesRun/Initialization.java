@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 public class Initialization {
 
     public DcMotorEx flywheelB, flywheelA, slideL, slideR;
-    public Servo servoY, servoX;
+    public Servo servoY, servoX1, servoX2;
     public Limelight3A limelight3A;
 
     //public Timer pathTimer, opmodeTimer;
@@ -33,7 +33,9 @@ public class Initialization {
 
     public void initialization(HardwareMap hardwareMap, int pipelineIndex) {
 
-        servoX = hardwareMap.get(Servo.class, "servoX");
+        servoX1 = hardwareMap.get(Servo.class, "servoX1");
+        servoX2 = hardwareMap.get(Servo.class, "servoX2");
+
         servoY = hardwareMap.get(Servo.class, "servoY");
 
         servoY.setDirection(Servo.Direction.REVERSE);

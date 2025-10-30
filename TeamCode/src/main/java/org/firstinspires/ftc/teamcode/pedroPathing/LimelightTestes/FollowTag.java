@@ -31,7 +31,7 @@ public class FollowTag extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        servo = hardwareMap.get(CRServo.class, "servoX");
+        servo = hardwareMap.get(CRServo.class, "servoX1");
         imu = hardwareMap.get(IMU.class, "imu");
 
         IMU.Parameters params = new IMU.Parameters(new RevHubOrientationOnRobot(

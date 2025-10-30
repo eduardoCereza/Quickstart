@@ -55,7 +55,7 @@ public class Test2 extends OpMode {
 
         // Feedback to Driver Hub
         telemetry.addData("path state", estado);
-        telemetry.addData("servoX", follower.getPose().getX());
+        telemetry.addData("servoX1", follower.getPose().getX());
         telemetry.addData("y", follower.getPose().getY());
         telemetry.addData("heading", follower.getPose().getHeading());
         telemetry.update();

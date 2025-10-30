@@ -102,7 +102,7 @@ public class Test extends OpMode {
                  * There are many ways to check if your robot has reached its target pose.
                  * We will provide examples of all of them in this autonomous program.
                  * follower.atParametricEnd(): Checks if the t-value (path completion value) is past your pathEndTValueConstraint.
-                 * follower.atPose(): Checks if the robot is at a certain pose (servoX, y, and heading) given error constraints for each.
+                 * follower.atPose(): Checks if the robot is at a certain pose (servoX1, y, and heading) given error constraints for each.
                  * follower.getCurrentTValue(): Gets the t-value (path completion value).
                  * follower.isBusy(): Checks the robot's position and waits until the robot position is 1 inch away from its target.
                  */
@@ -152,7 +152,7 @@ public class Test extends OpMode {
                 }
                 break;
             case 6:
-                // Checks if the robot is at the scorePose given a servoX-tolerance of 1 inch, a y-tolerance of 1 inch, and a heading tolerance of 5 degrees.
+                // Checks if the robot is at the scorePose given a servoX1-tolerance of 1 inch, a y-tolerance of 1 inch, and a heading tolerance of 5 degrees.
                 if (follower.atPose(scorePose, 1, 1, Math.toRadians(5))) {
                     /* Score Sample */
                     follower.followPath(grabPickup3,true);
@@ -160,7 +160,7 @@ public class Test extends OpMode {
                 }
                 break;
             case 7:
-                // Checks if the robot is at the grabPickup3 pose given a servoX-tolerance of 1 inch, a y-tolerance of 1 inch, and a heading tolerance of 5 degrees.
+                // Checks if the robot is at the grabPickup3 pose given a servoX1-tolerance of 1 inch, a y-tolerance of 1 inch, and a heading tolerance of 5 degrees.
                 if (follower.atPose(pickup3Pose, 1, 1, Math.toRadians(5))) {
                     /* Grab Sample */
                     follower.followPath(scorePickup3, true);
@@ -209,7 +209,7 @@ public class Test extends OpMode {
 
         // Feedback to Driver Hub
         telemetry.addData("path state", pathState);
-        telemetry.addData("servoX", follower.getPose().getX());
+        telemetry.addData("servoX1", follower.getPose().getX());
         telemetry.addData("y", follower.getPose().getY());
         telemetry.addData("heading", follower.getPose().getHeading());
         telemetry.update();

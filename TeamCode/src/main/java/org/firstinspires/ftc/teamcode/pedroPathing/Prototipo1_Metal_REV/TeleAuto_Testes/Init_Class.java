@@ -19,7 +19,7 @@ public class Init_Class {
 
     Follower follower;
     public void initComponentsAuto(HardwareMap hardwareMap, Pose startPose, int pipelineIndex) {
-        servoX = hardwareMap.get(CRServo.class, "servoX");
+        servoX = hardwareMap.get(CRServo.class, "servoX1");
         servoY = hardwareMap.get(Servo.class, "servoY");
 
         flywheelB = hardwareMap.get(DcMotorEx.class, "left");

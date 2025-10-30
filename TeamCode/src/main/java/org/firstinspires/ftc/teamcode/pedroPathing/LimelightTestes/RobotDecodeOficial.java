@@ -64,7 +64,7 @@ public class RobotDecodeOficial{
     // Inicialização dos componentes do robô
     public RobotDecodeOficial(HardwareMap hardwareMap, int index, Telemetry telemetry){
         // Init dos servos X e Y
-        servoX = hardwareMap.get(Servo.class, "servoX");
+        servoX = hardwareMap.get(Servo.class, "servoX1");
         servoY = hardwareMap.get(Servo.class, "servoY");
 
         // Init das Flywheels

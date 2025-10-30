@@ -64,7 +64,7 @@ public class Auto_choose extends OpMode {
         xoter.mirar();
         // Feedback to Driver Hub
         telemetry.addData("path state", pathState);
-        telemetry.addData("servoX", follower.getPose().getX());
+        telemetry.addData("servoX1", follower.getPose().getX());
         telemetry.addData("y", follower.getPose().getY());
         telemetry.addData("heading", follower.getPose().getHeading());
         telemetry.update();

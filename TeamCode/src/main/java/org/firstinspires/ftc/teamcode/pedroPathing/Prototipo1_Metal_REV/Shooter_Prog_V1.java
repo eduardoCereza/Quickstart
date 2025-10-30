@@ -25,7 +25,7 @@ public class Shooter_Prog_V1 extends OpMode {
         limelight3A.pipelineSwitch(1);
         limelight3A.start();
 
-        servoX = hardwareMap.get(CRServo.class, "servoX");
+        servoX = hardwareMap.get(CRServo.class, "servoX1");
         servoY = hardwareMap.get(Servo.class, "servoY");
 
         left = hardwareMap.get(DcMotorEx.class, "left");

@@ -21,7 +21,7 @@ public class SubSystems extends OpMode {
 
     @Override
     public void init()  {
-        servo = hardwareMap.get(CRServo.class, "servoX");
+        servo = hardwareMap.get(CRServo.class, "servoX1");
         imu = hardwareMap.get(IMU.class, "imu");
 
         IMU.Parameters params = new IMU.Parameters(new RevHubOrientationOnRobot(
