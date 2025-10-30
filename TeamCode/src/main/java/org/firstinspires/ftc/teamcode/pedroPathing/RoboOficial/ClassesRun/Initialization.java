@@ -1,8 +1,7 @@
-package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial;
+package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.ClassesRun;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
-import com.pedropathing.util.Timer;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -14,7 +13,6 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 public class Initialization {
 
     public DcMotorEx flywheelB, flywheelC, slideL, slideR;
-    public CRServo  sugador;
     public Servo servoY, servoX;
     public Limelight3A limelight3A;
 
@@ -27,34 +25,17 @@ public class Initialization {
     //Definição do ID;
     public int[] id = {24, 20};
 
-    public double anguloX, anguloY, power;
-    double angulomaior, delta, hipmenor, hipmaior, basemenor, basemaior;
-
-    // Variáveis relacionadas aos servos e controle de força no eixo X.
-    double posdoservoy, eixoX, eixoY, servoXPosRad, servoYPosRad, forcaPesoTotal;
-
-    // Variáveis da flywheel (cinemática do disparo).
-    double Vborda, rev, rpm, v, ta;
-
-    // Constantes de projeto/físicas (unidades precisam ser coerentes — ver observações ao final).
-    // k: fator para estimar distância a partir da área (ta) da tag; velocity: ganho simples para servoX;
-    // pesos em gramas; alturas em mm (?) ; g em cm/s² (980); k_lip: perda por atrito (lip), r: raio da flywheel.
-    final double k = 186.5409338456308, velocity = 0.0375, pesoTurret = 0, pesoBola = 74.8
-            ,
-            alturamenor = 74, alturamaior = 124, g = 980, k_lip = 0.95, r = 4.5;
-
+    public double anguloX, power;
 
     public void initialization(HardwareMap hardwareMap, int pipelineIndex) {
 
         servoX = hardwareMap.get(Servo.class, "servoX");
-        //servoY = hardwareMap.get(Servo.class, "servoY");
+        servoY = hardwareMap.get(Servo.class, "servoY");
 
-        //servoY.setDirection(Servo.Direction.REVERSE);
-
-        //sugador = hardwareMap.get(CRServo.class, "sugador");
-
-        //flywheelB = hardwareMap.get(DcMotorEx.class, "flywheelB");
-        //flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelC");
+        servoY.setDirection(Servo.Direction.REVERSE);
+        
+        flywheelB = hardwareMap.get(DcMotorEx.class, "flywheelB");
+        flywheelC = hardwareMap.get(DcMotorEx.class, "flywheelC");
 
         //slideL = hardwareMap.get(DcMotorEx.class, "slideL");
         //slideR = hardwareMap.get(DcMotorEx.class, "slideR");

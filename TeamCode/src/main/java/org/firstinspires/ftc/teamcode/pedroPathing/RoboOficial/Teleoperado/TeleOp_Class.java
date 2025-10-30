@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Teleoperado;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.RunMode;
+import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.ClassesRun.RunMode;
 
 @TeleOp(name = "Modo Teleoperado")
 public class TeleOp_Class extends OpMode {
@@ -24,13 +24,6 @@ public class TeleOp_Class extends OpMode {
 
     @Override
     public void loop(){
-
-        //run.followAprilTag(index);
-
-        telemetry.addData("POWER : ", run.power);
-        telemetry.addData("ANGULO : ", run.anguloX);
-
-
 
         x = gamepad1.left_stick_x;
         y = gamepad1.left_stick_y;
@@ -62,13 +55,12 @@ public class TeleOp_Class extends OpMode {
         }
 
 
-        telemetry.addLine(avisoChassi);
-        telemetry.addLine("Rodando!");
 
-        //run.outTake(gamepad2.right_trigger);
         run.followTag(run.follower.getPose().getX(), run.follower.getPose().getY(), run.follower.getPose().getHeading(), false, telemetry);
 
         telemetry.update();
+        telemetry.addLine(avisoChassi);
+
     }
 
     @Override
