@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.ClassesRun;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -20,7 +21,7 @@ public class RunMode extends Initialization {
         // Localização do robô no field
         x = x;
         y = y;
-        
+
         // Localização X e Y dos goals
         double goalX = blue ? goalBlue.getX() : goalRed.getX();
         double goalY = blue ? goalBlue.getY() : goalRed.getY();
@@ -50,7 +51,6 @@ public class RunMode extends Initialization {
         telemetry.addData("ServoPos", servoPos);
         telemetry.update();
     }
-
     public void throwBalls(Telemetry telemetry){
         LLResult result = limelight3A.getLatestResult();
 
@@ -96,6 +96,21 @@ public class RunMode extends Initialization {
         } else {
             flywheelB.setPower(0);
             flywheelA.setPower(0);
+        }
+    }
+    public void liftRobot(boolean holding){
+        if (holding){
+            slideL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            slideR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            slideL.setTargetPosition(slideL.getCurrentPosition());
+            slideR.setTargetPosition(slideR.getCurrentPosition());
+
+            slideL.setPower(1);
+            slideR.setPower(1);
+        }else {
+            slideL.setMotorDisable();
+            slideR.setMotorDisable();
         }
     }
 }

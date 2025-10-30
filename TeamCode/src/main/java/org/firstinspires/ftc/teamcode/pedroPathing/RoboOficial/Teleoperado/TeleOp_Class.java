@@ -16,8 +16,6 @@ public class TeleOp_Class extends OpMode {
     @Override
     public void init(){
         run.initialization(hardwareMap, 1);
-
-
     }
 
     @Override
@@ -30,10 +28,12 @@ public class TeleOp_Class extends OpMode {
         }
 
         run.followTag(run.follower.getPose().getX(), run.follower.getPose().getY(), run.follower.getPose().getHeading(), false, telemetry);
+        //run.throwBalls(telemetry);
+        //run.liftRobot();
 
-        telemetry.update();
+
         telemetry.addLine(avisoChassi);
-
+        telemetry.update();
     }
 
     @Override

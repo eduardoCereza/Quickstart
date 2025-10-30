@@ -47,8 +47,8 @@ public class Initialization {
         flywheelB.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         flywheelA.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
-        //slideL = hardwareMap.get(DcMotorEx.class, "slideL");
-        //slideR = hardwareMap.get(DcMotorEx.class, "slideR");
+        slideL = hardwareMap.get(DcMotorEx.class, "slideL");
+        slideR = hardwareMap.get(DcMotorEx.class, "slideR");
 
         limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
         limelight3A.pipelineSwitch(pipelineIndex);
