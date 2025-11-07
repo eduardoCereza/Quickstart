@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.Teleoperado;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.ClassesRun.Interfaces.IRunMode;
 import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.ClassesRun.RunMode;
 
 @TeleOp(name = "Modo Teleoperado")
@@ -13,6 +15,8 @@ public class TeleOp_Class extends OpMode {
 
     String avisoChassi;
 
+    boolean holdPosition;
+
     @Override
     public void init(){
         run.initialization(hardwareMap, 1);
@@ -21,16 +25,7 @@ public class TeleOp_Class extends OpMode {
     @Override
     public void loop(){
 
-        if (gamepad1.cross){
-            reverse(false);
-        } else if (gamepad1.circle) {
-            reverse(true);
-        }
-
-        run.followTag(run.follower.getPose().getX(), run.follower.getPose().getY(), run.follower.getPose().getHeading(), false, telemetry);
-        //run.throwBalls(telemetry);
-        //run.liftRobot();
-
+        run.throwBalls(telemetry);
 
         telemetry.addLine(avisoChassi);
         telemetry.update();

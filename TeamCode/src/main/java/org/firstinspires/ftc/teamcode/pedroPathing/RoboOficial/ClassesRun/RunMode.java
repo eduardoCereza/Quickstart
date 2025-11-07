@@ -5,15 +5,18 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.ClassesRun.Interfaces.IRunMode;
+import org.opencv.core.Mat;
 
 
-public class RunMode extends Initialization {
+public class RunMode extends Initialization implements IRunMode {
 
-    public void moveChassi(double y, double x, double turn){
+    public void moveChassi(double y, double x, double turn) {
         follower.update();
         follower.setTeleOpDrive(y, x, turn, true);
     }
-    public void followTag(double x, double y, double heading, boolean blue, Telemetry telemetry){
+
+    public void followTag(double x, double y, double heading, boolean blue, Telemetry telemetry) {
 
         // Heading do robô
         double headingDeg = Math.toDegrees(heading);
@@ -52,55 +55,34 @@ public class RunMode extends Initialization {
         telemetry.addData("ServoPos", servoPos);
         telemetry.update();
     }
-    public void throwBalls(Telemetry telemetry){
+
+    public void throwBalls(Telemetry telemetry) {
         LLResult result = limelight3A.getLatestResult();
 
-        if (result != null && result.isValid()) {
-            double ta = result.getTa();
-            double d = 181.9994 / Math.sqrt(ta); // cm
-            d /= 100.0; // meters
+        double a = 20.0;
+        double b = 1500.0;
+        double MAX_RPM = 6000;
 
-            //Required height - height up to the point where the ball leaves the field.
-            double h = 1.20 - 0.285; // m
+        double distance = 181.9994 / Math.sqrt(result.getTa());
 
-            double angulo = Math.atan(h / d);
-            double anguloDeg = Math.toDegrees(angulo);
+        double targetRPM = a * distance + b;
+        targetRPM = Math.min(targetRPM, MAX_RPM);
 
-            double posServo = posMin +
-                    (anguloDeg - thetaMinDeg) * (posMax - posMin) / (thetaMaxDeg - thetaMinDeg);
-            posServo = Math.max(0.0, Math.min(1.0, posServo));
-            servoY.setPosition(posServo);
+        double TICKS_PER_REV = 28;
+        double targetVelocity = (targetRPM * TICKS_PER_REV) / 60.00;
 
-            if (d * Math.tan(angulo) > h) {
-                double v = Math.sqrt((g * Math.pow(d, 2)) /
-                        (2 * Math.pow(Math.cos(angulo), 2) * (d * Math.tan(angulo) - h)));
-
-                double wRoda = v / (efficiency * r);
-                double RPM = (60.0 / (2.0 * Math.PI)) * wRoda;
-                double ticksPerSecond = (RPM * ticksAround) / 60.0;
-
-                flywheelB.setVelocity(ticksPerSecond);
-                flywheelA.setVelocity(ticksPerSecond);
-
-                //flywheelB.setVelocity(servoY.getPosition() * scalar) + constants;
-                //flywheelA.setVelocity(servoY.getPosition() * scalar) + constants;
-
-                telemetry.addData("Distance (m)", d);
-                telemetry.addData("Degrees", anguloDeg);
-                telemetry.addData("Servo pos", posServo);
-                telemetry.addData("speed (m/s)", v);
-                telemetry.addData("Target (ticks/s)", ticksPerSecond);
-            } else {
-                flywheelB.setPower(0);
-                flywheelA.setPower(0);
-            }
-        } else {
-            flywheelB.setPower(0);
-            flywheelA.setPower(0);
+        if (result.isValid()) {
+            flywheel.setVelocity(targetVelocity);
         }
+
+        telemetry.addData("Distância (cm)", distance);
+        telemetry.addData("Target RPM", targetRPM);
+        telemetry.addData("Ticks/s", targetVelocity);
     }
-    public void liftRobot(boolean holding){
-        if (holding){
+
+
+    public void liftRobot(boolean holding) {
+        if (holding) {
             slideL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             slideR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
@@ -109,7 +91,7 @@ public class RunMode extends Initialization {
 
             slideL.setPower(1);
             slideR.setPower(1);
-        }else {
+        } else {
             slideL.setMotorDisable();
             slideR.setMotorDisable();
         }

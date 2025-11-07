@@ -9,15 +9,22 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Configurable
 @TeleOp
-public class FollowTag extends OpMode {
+public class TrackingTag extends OpMode {
+
+    private static final Logger log = LoggerFactory.getLogger(FollowTag.class);
     DcMotorEx coreHex;
     Limelight3A limelight3A;
-    public static double kp = 0.075, kd = 0.000001, ki = 0.00001;
-    double integralSum = 0, lastError = 0, derivate, error;
-    ElapsedTime timer;
 
+    public static double kp = 5, kd = 0.000001, ki = 0.00001;
+    double TICKS_PER_REVOLUTION = 288.0, integralSum = 0,lastError = 0, derivate, error;
+
+
+    ElapsedTime timer;
     @Override
     public void init() {
         coreHex = hardwareMap.get(DcMotorEx.class, "corehex");
@@ -26,7 +33,6 @@ public class FollowTag extends OpMode {
 
         limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
         limelight3A.pipelineSwitch(1);
-        limelight3A.setPollRateHz(100);
         limelight3A.start();
 
         timer = new ElapsedTime();
@@ -39,39 +45,32 @@ public class FollowTag extends OpMode {
         if (result != null && result.isValid()) {
             double tx = result.getTx();
 
-            int currentPosition = coreHex.getCurrentPosition();
+            double distance = 181.9994 / Math.sqrt(result.getTa());
 
-            error = -tx;
+            double tangente = tx / distance;
+            double angulo = Math.toDegrees(Math.atan(tangente));
+            double target = -tx * TICKS_PER_REVOLUTION;
 
-            derivate = (error - lastError) / timer.seconds();
-            integralSum = integralSum + (error * timer.seconds());
+            double position = coreHex.getCurrentPosition() + target;
 
-            double power = (kp * error) + (ki * integralSum) + (kd * derivate);
-
-            double range = 288.0 / 360.0;
-            double ticks = tx * range;
-            int target = (int) (currentPosition + ticks);
-
-            coreHex.setTargetPosition(target);
+            coreHex.setTargetPosition((int) -position);
             coreHex.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            if (Math.abs(tx) > 2.5) {
-                coreHex.setPower(power);
+            double power = (0.98 * tangente * 0.3) * kp;
+
+
+            if (angulo != 0){
+                coreHex.setPower(Math.abs(power));
             }else {
                 coreHex.setPower(0);
             }
 
-            lastError = error;
-            timer.reset();
-
-            telemetry.addData("tx (erro original)", tx);
-            telemetry.addData("Erro (invertido)", error);
-            telemetry.addData("Correção (power)", power);
-            telemetry.addData("Target Position", target);
-            telemetry.update();
+            telemetry.addData("Angulo: ", angulo);
+            telemetry.addData("Power > ", power);
 
         } else {
             coreHex.setPower(0);
         }
+
     }
 }

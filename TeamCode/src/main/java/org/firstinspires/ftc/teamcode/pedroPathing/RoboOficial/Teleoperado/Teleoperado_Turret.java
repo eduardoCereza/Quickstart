@@ -7,7 +7,7 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import org.firstinspires.ftc.teamcode.pedroPathing.LimelightTestes.RobotDecodeOficial;
+import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.ClassesRun.RobotDecodeOficial;
 
 //TODO:                                          ATENÇÃO!!!
 //TODO:                     ESSA PROGRAMAÇÃO SÓ FUNCIONA DEPOIS DO UM AUTÔNOMO

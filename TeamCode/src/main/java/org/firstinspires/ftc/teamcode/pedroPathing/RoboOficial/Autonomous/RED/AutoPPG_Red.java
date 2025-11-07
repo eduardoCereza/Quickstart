@@ -12,7 +12,7 @@ import com.pedropathing.paths.PathChain;
 import com.pedropathing.util.Timer;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import org.firstinspires.ftc.teamcode.pedroPathing.LimelightTestes.RobotDecodeOficial;
+import org.firstinspires.ftc.teamcode.pedroPathing.RoboOficial.ClassesRun.RobotDecodeOficial;
 
 @Configurable
 @Autonomous(name = "ppg")
